@@ -1,9 +1,9 @@
 import React from 'react'
 import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 import { BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './header.module.css';
+import styles from './app-header.module.css';
 
-export default function Header() {
+export default function AppHeader() {
 
     const btnConstrClss = `${styles.btn} ${styles.nav__btn} p-5`
     const constrClss = 'text text_type_main-small text_color_active ml-2'
@@ -13,7 +13,6 @@ export default function Header() {
     const lkClss = 'text text_type_main-small text_color_inactive ml-2'
 
     return (
-        <>
         <header className='m-4 mb-0'>
             <nav className={`${styles.navigation} wrap pt-4 pb-4`}>
                 <div className='align-left flex-block'>
@@ -40,7 +39,5 @@ export default function Header() {
                 </div>
             </nav>
         </header>
-            
-        </>
     )
 }

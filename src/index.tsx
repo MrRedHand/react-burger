@@ -4,7 +4,7 @@ import '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
 import '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
 import '@ya.praktikum/react-developer-burger-ui-components/dist/ui/fonts/fonts.css';
 import './index.css';
-import App from './App';
+import App from './components/app/app';
 
 
 ReactDOM.render(

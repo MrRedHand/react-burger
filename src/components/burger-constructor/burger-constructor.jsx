@@ -1,12 +1,13 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import OverflowSection from "../overflow-section/overflow-section";
-import styles from './constructor.module.css';
+import styles from './burger-constructor.module.css';
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
-export default function Constructor(props) {
+const BurgerConstructor = (props) => {
 
     return (
         <>
@@ -26,9 +27,11 @@ export default function Constructor(props) {
             <OverflowSection height={420}>
                 {
 
-                    props.data.map((elem, index) => {  
+                    props.data.map((elem, index) => {
                         
-                        return <div key={elem._id}  className={`${styles.constructor_elem_wrap} pl-8 mb-4 mr-4`}>
+                        if (elem.type !== 'bun') {
+                            return (
+                                <div key={elem._id}  className={`${styles.constructor_elem_wrap} pl-8 mb-4 mr-4`}>
                                     <div className={styles.drag_icon}>
                                         <DragIcon />
                                     </div>
@@ -39,7 +42,9 @@ export default function Constructor(props) {
                                         price={elem.price}
                                         />
                                     
-                                </div>
+                                    </div>
+                            )
+                        }
                     })
                 }
                 
@@ -69,5 +74,18 @@ export default function Constructor(props) {
         </>
     )
 }
+
+BurgerConstructor.propTypes = {
+    props: PropTypes.shape({
+        type: PropTypes.string.isRequired,
+        isLocked: PropTypes.bool.isRequired,
+        text: PropTypes.string.isRequired,
+        thumbnail: PropTypes.string.isRequired,
+        price: PropTypes.number.isRequired,
+        props: PropTypes.arrayOf.isRequired,
+    })
+}
+
+export default BurgerConstructor
 
 

@@ -1,21 +1,23 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import styles from "./main.module.css";
-import Ingredients from "../ingredients/ingredients";
-import Constructor from "../constructor/constructor";
+import BurgerIngredients from "../burger-ingredients/burger-ingredients";
+import BurgerConstructor from "../burger-constructor/burger-constructor";
 
-export default function Main(props) {
+const Main = (props) => {
 
     console.log(props)
     return (
-        <>
-            <main className={`${styles.main} wrap pb-20`}>
-                <section style={{height : '912px'}}>
-                    <Ingredients data={props.data}/>
-                </section>
-                <section style={{height : '912px'}}>
-                    <Constructor data={props.data}/>
-                </section>
-            </main>
-        </>
+        <main className={`${styles.main} wrap pb-20`}>
+            <section style={{height : '912px'}}>
+                <BurgerIngredients data={props.data}/>
+            </section>
+            <section style={{height : '912px'}}>
+                <BurgerConstructor data={props.data}/>
+            </section>
+        </main>
     )
 }
+
+
+export default Main

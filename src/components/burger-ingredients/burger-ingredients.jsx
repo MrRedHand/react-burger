@@ -1,13 +1,14 @@
 import React, { state, useState, useEffect, useRef } from "react";
+import PropTypes from 'prop-types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import OverflowSection from "../overflow-section/overflow-section";
-import styles from './ingredients.module.css';
+import styles from './burger-ingredients.module.css';
 import IngredientCard from "../ingredient-card/ingredient-card";
 import IngredientsTitle from "../ingredients-title/ingredients-title";
 import IngredientsGrid from "../ingredients-grid/ingredients-grid";
 
 
-const Ingredients = (props) => {
+const BurgerIngredients = (props) => {
 
     const [current, setCurrent] = useState('one')
 
@@ -41,14 +42,15 @@ const Ingredients = (props) => {
                     {
                         props.data.map(elem => {
                             if (elem.type === 'bun') {
-                                return <IngredientCard 
-                                        key={elem._id}
-                                        imglink={elem.image}
-                                        title={elem.name}
-                                        price={elem.price}
-                                        count={1}
-                                        onClick={() => console.log('клик')}
-                                    />;   
+                                return ( <IngredientCard 
+                                            key={elem._id}
+                                            imglink={elem.image}
+                                            title={elem.name}
+                                            price={elem.price}
+                                            count={1}
+                                            onClick={() => console.log('клик')}
+                                        /> 
+                                )  
                             }
                         })
                     }
@@ -60,12 +62,13 @@ const Ingredients = (props) => {
                     {
                         props.data.map(elem => {
                             if (elem.type === 'sauce') {
-                                return <IngredientCard 
-                                        key={elem._id}
-                                        imglink={elem.image}
-                                        title={elem.name}
-                                        price={elem.price}
-                                    />;   
+                                return ( <IngredientCard 
+                                            key={elem._id}
+                                            imglink={elem.image}
+                                            title={elem.name}
+                                            price={elem.price}
+                                            />
+                                )  
                             }
                         })
                     }
@@ -78,12 +81,13 @@ const Ingredients = (props) => {
                     {
                         props.data.map(elem => {
                             if (elem.type === 'main') {
-                                return <IngredientCard 
-                                        key={elem._id}
-                                        imglink={elem.image}
-                                        title={elem.name}
-                                        price={elem.price}
-                                    />;   
+                                return ( <IngredientCard 
+                                            key={elem._id}
+                                            imglink={elem.image}
+                                            title={elem.name}
+                                            price={elem.price}
+                                        /> 
+                                )  
                             }
                         })
                     }
@@ -110,4 +114,13 @@ const Ingredients = (props) => {
     )
 }
 
-export default Ingredients
+BurgerIngredients.propTypes = {
+    props: PropTypes.shape({
+        imglink: PropTypes.string.isRequired,
+        price: PropTypes.number.isRequired,
+        title: PropTypes.string.isRequired,
+        props: PropTypes.arrayOf.isRequired,
+    })
+}
+
+export default BurgerIngredients
