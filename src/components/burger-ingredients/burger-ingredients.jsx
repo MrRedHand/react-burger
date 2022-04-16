@@ -10,7 +10,39 @@ import IngredientsGrid from "../ingredients-grid/ingredients-grid";
 
 const BurgerIngredients = (props) => {
 
-    const [current, setCurrent] = useState('one')
+    let [current, setCurrent] = useState('one')
+
+    function scrollTo(where) {
+        setCurrent(
+            current = where,
+        )
+    }
+
+    const [popupInfo, setPopup] = React.useState({
+        image : 'https://dummyimage.com/300',
+        title : 'Placeholder',
+        price : 99999,
+        active: false,
+    })
+
+    const showPopup = (newImage, newTitle, newPrice) => {
+        
+        setPopup({
+            image : newImage,
+            title : newTitle,
+            price : newPrice,
+            active : true,
+        })
+
+        console.log(popupInfo)
+    }
+
+    function closePopup() {
+        setPopup(
+            popupInfo.active = false,
+        )
+    }
+
 
     return(
         <>
@@ -18,13 +50,13 @@ const BurgerIngredients = (props) => {
             <section className={styles.absolute_header}>
                 <h1 className={`${styles.heading} text text_type_main-large mb-5`}>Соберите бургер</h1>
                 <div className="flex-block">
-                    <Tab value="one" active={current === 'one'} onClick={setCurrent}>
+                    <Tab value="one" active={current === 'one'} onClick={() => scrollTo('one')}>
                         Булки
                     </Tab>
-                    <Tab value="two" active={current === 'two'} onClick={setCurrent}>
+                    <Tab value="two" active={current === 'two'} onClick={() => scrollTo('two')}>
                         Соусы
                     </Tab>
-                    <Tab value="three" active={current === 'three'} onClick={setCurrent}>
+                    <Tab value="three" active={current === 'three'} onClick={() => scrollTo('three')}>
                         Начинки
                     </Tab>
                 </div>
@@ -48,7 +80,7 @@ const BurgerIngredients = (props) => {
                                             title={elem.name}
                                             price={elem.price}
                                             count={1}
-                                            onClick={() => console.log('клик')}
+                                            onClick={() => showPopup(elem.image, elem.name, elem.price)}
                                         /> 
                                 )  
                             }
@@ -67,6 +99,7 @@ const BurgerIngredients = (props) => {
                                             imglink={elem.image}
                                             title={elem.name}
                                             price={elem.price}
+                                            onClick={() => showPopup(elem.image, elem.name, elem.price)}
                                             />
                                 )  
                             }
@@ -86,6 +119,7 @@ const BurgerIngredients = (props) => {
                                             imglink={elem.image}
                                             title={elem.name}
                                             price={elem.price}
+                                            onClick={() => showPopup(elem.image, elem.name, elem.price)}
                                         /> 
                                 )  
                             }
@@ -97,19 +131,22 @@ const BurgerIngredients = (props) => {
             </OverflowSection>         
         </section>
 
-        {/* <section className={styles.ingredient_popup}>
+        <section className={`${styles.ingredient_popup} ${popupInfo.active === true ? 'show' : 'hide'}`}>
             <section className={`${styles.popup__body} p-10`}>
                 <p className="text text_type_main-medium">Детали ингредиента</p>
-                <img src={props.data[0].image_large} />
+                <button onClick={() => {closePopup()}}></button>
+                <img src={popupInfo.image} />
                 <p className="text text_type_main-default">
-                    {props.data[0].name}
+                    {popupInfo.title}
                 </p>
                 <div className="info">
                     <p className="text text_type_main-default text_color_inactive">Калории,ккал</p>
                     <p className="text text_type_digits-default text_color_inactive">244,4</p>
                 </div>
+
+                
             </section>
-        </section> */}
+        </section>
         </>
     )
 }

@@ -28,6 +28,7 @@ IngredientCard.propTypes = {
         imglink: PropTypes.string.isRequired,
         price: PropTypes.number.isRequired,
         title: PropTypes.string.isRequired,
+        onClick: PropTypes.func.isRequired,
         props: PropTypes.arrayOf.isRequired,
     })
 }
