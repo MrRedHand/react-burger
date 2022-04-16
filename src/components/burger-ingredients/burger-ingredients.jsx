@@ -1,6 +1,6 @@
 import React, { state, useState, useEffect, useRef } from "react";
 import PropTypes from 'prop-types';
-import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Tab, CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import OverflowSection from "../overflow-section/overflow-section";
 import styles from './burger-ingredients.module.css';
 import IngredientCard from "../ingredient-card/ingredient-card";
@@ -134,7 +134,9 @@ const BurgerIngredients = (props) => {
         <section className={`${styles.ingredient_popup} ${popupInfo.active === true ? 'show' : 'hide'}`}>
             <section className={`${styles.popup__body} p-10`}>
                 <p className="text text_type_main-medium">Детали ингредиента</p>
-                <button onClick={() => {closePopup()}}></button>
+                <button onClick={() => {closePopup()}} className={styles.close}>
+                    <CloseIcon />
+                </button>
                 <img src={popupInfo.image} />
                 <p className="text text_type_main-default">
                     {popupInfo.title}

@@ -31,3 +31,13 @@
     transform: translate(-50%, -50%);
     min-width: 640px;
 }
+
+.close {
+    background-color: transparent;
+    border:none;
+    outline: none;
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    cursor: pointer;
+}
