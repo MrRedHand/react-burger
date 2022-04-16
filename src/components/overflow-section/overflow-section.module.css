@@ -4,6 +4,7 @@
 
 .overflow_section::-webkit-scrollbar {
     background-color: darkgrey;
+    width: 10px;
 }
 
 .overflow_section::-webkit-scrollbar-track {

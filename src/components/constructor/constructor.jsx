@@ -1,43 +1,73 @@
 import React from "react";
 import OverflowSection from "../overflow-section/overflow-section";
-import style from './constructor.module.css';
+import styles from './constructor.module.css';
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
 export default function Constructor(props) {
+
     return (
         <>
-        <div>   
-            <OverflowSection height={600}>
+        <section style={{height : '196px'}}>
+            
+        </section>
+        <section className={styles.constructor_area}>
+            <section className={`${styles.top_locked} pl-8`}>
+                <ConstructorElement 
+                type="top"
+                isLocked={true}
+                text={`${props.data[0].name} (верх)`}
+                thumbnail={props.data[0].image} 
+                />
+            </section>
+            
+            <OverflowSection height={420}>
                 {
-                    props.data.map((elem, index) => {
-                       
-                       let curType;
 
-                       if (index === 0)
-                            curType = 'top'
-                        else if (index === props.data.length)   
-                            curType = 'bottom' 
-                        else  
-                            curType = undefined    
+                    props.data.map((elem, index) => {  
                         
-                       return <div key={elem._id}  className={`${style.constructor_elem_wrap} mb-4`}>
-                                <div className="mr-3">
-                                    <DragIcon />
-                                </div>
-                                <ConstructorElement 
-                                    key={elem._id} 
-                                    text={elem.name} 
-                                    thumbnail={elem.image} 
-                                    price={elem.price}
-                                    type={curType}/>
+                        return <div key={elem._id}  className={`${styles.constructor_elem_wrap} pl-8 mb-4 mr-4`}>
+                                    <div className={styles.drag_icon}>
+                                        <DragIcon />
+                                    </div>
+                                    <ConstructorElement 
+                                        key={elem._id} 
+                                        text={elem.name} 
+                                        thumbnail={elem.image} 
+                                        price={elem.price}
+                                        />
                                     
-                              </div>
+                                </div>
                     })
                 }
                 
-            </OverflowSection>
-        </div>
+            </OverflowSection>  
+
+            <section className={`${styles.bottom_locked} pl-8`}>
+                <ConstructorElement 
+                    type="bottom"
+                    isLocked={true}
+                    text={`${props.data[0].name} (низ)`}
+                    thumbnail={props.data[0].image} 
+                    />
+            </section>
+        </section>   
+        
+        
+
+        <section className={styles.total}>
+            <div className={`${styles.total__price} mr-10`}>
+                <p className="text text_type_digits-medium">
+                    610
+                </p>
+                <CurrencyIcon />
+            </div>
+            <Button type="primary" size="large">Оформить заказ</Button>
+        </section> 
         </>
     )
 }
+
+

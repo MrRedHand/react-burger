@@ -40,3 +40,8 @@
 .simplebar-scrollbar.simplebar-visible:before {
   display: none;
 }
+
+
+.constructor-element {
+  width: 100%;
+}

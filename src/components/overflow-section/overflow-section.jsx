@@ -5,7 +5,7 @@ import styles from './overflow-section.module.css'
 const OverflowSection = (props) => {
     return (
         <>
-            <section style={{height : props.height}} className={styles.overflow_section}>
+            <section style={{height : props.height}} className={`${styles.overflow_section} ${props.className}`}>
                 {props.children}
             </section>
         </>

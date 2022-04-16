@@ -1,4 +1,48 @@
 .constructor_elem_wrap {
+    align-items: center;
+    position: relative;
+}
+
+
+.drag_icon {
+    position: absolute;
+    left: 0;
+    top:50%;
+    transform: translate(0, -50%);
+}
+
+.constructor_area {
+    position: relative;
+}
+
+.top_locked {
+    position: absolute;
+    top: -100px;
+    left: 0;
+    right: 10px;
+}
+
+.bottom_locked {
+    position: absolute;
+    bottom: -100px;
+    left: 0;
+    right: 10px;
+}
+
+.total {
     display: flex;
     align-items: center;
+    padding: 160px 0 0;
+    justify-content: end;
+}
+
+.total__price {
+    display: flex;
+    align-items: center;
+}
+
+.total__price svg {
+    width: 33px;
+    height: 33px;
+    margin-left: 10px;
 }

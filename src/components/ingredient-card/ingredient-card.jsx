@@ -1,14 +1,15 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import styles from './ingredient-card.module.css';
 import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 
-export default function IngredientCard(props) {
+const IngredientCard = (props) => {
 
     const countStyle = props.count > 0 ? 'visible' : 'hidden'
 
     return (
         <>
-            <section className={`${styles.ingredient_card} mt-6`}>
+            <section className={`${styles.ingredient_card} mt-6`} onClick={props.onClick}>
 
                 <span className={`${styles.ingredient_count} text text_type_main-small`} style={{visibility : countStyle}}>{props.count}</span>
 
@@ -22,3 +23,16 @@ export default function IngredientCard(props) {
         </>
     )
 }
+
+
+IngredientCard.propTypes = {
+    props: PropTypes.shape({
+        type: PropTypes.string,
+        isLocked: PropTypes.bool,
+        text: PropTypes.string,
+        thumbnail: PropTypes.string,
+        price: PropTypes.number,
+    })
+}
+
+export default IngredientCard
