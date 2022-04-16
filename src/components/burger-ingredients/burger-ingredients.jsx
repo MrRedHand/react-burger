@@ -14,29 +14,29 @@ const BurgerIngredients = (props) => {
 
     return(
         <>
-        <section style={{height : '196px', position: 'relative'}}>
-            <section style={{position: 'absolute', bottom : '0'}}>
-            <h1 className={`${styles.heading} text text_type_main-large mb-5`}>Соберите бургер</h1>
-            <div style={{ display: 'flex' }}>
-                <Tab value="one" active={current === 'one'} onClick={setCurrent}>
-                    Булки
-                </Tab>
-                <Tab value="two" active={current === 'two'} onClick={setCurrent}>
-                    Соусы
-                </Tab>
-                <Tab value="three" active={current === 'three'} onClick={setCurrent}>
-                    Начинки
-                </Tab>
-            </div>
+        <section className="relative-filler">
+            <section className={styles.absolute_header}>
+                <h1 className={`${styles.heading} text text_type_main-large mb-5`}>Соберите бургер</h1>
+                <div className="flex-block">
+                    <Tab value="one" active={current === 'one'} onClick={setCurrent}>
+                        Булки
+                    </Tab>
+                    <Tab value="two" active={current === 'two'} onClick={setCurrent}>
+                        Соусы
+                    </Tab>
+                    <Tab value="three" active={current === 'three'} onClick={setCurrent}>
+                        Начинки
+                    </Tab>
+                </div>
             </section>
         </section>
 
         <section className={`${styles.ingredients}`}>
             <OverflowSection height={450}>
 
-                <div style={{paddingRight : '20px'}}>
+                <div className="pr-2">
 
-                <IngredientsTitle anchor={'one'}>Булки</IngredientsTitle>
+                <IngredientsTitle>Булки</IngredientsTitle>
 
                 <IngredientsGrid className={styles.ingredients__grid}>
                     {
@@ -56,7 +56,7 @@ const BurgerIngredients = (props) => {
                     }
                 </IngredientsGrid>
 
-                <IngredientsTitle id='one' anchor={'two'}>Соусы</IngredientsTitle>
+                <IngredientsTitle>Соусы</IngredientsTitle>
 
                 <IngredientsGrid className={styles.ingredients__grid}>
                     {

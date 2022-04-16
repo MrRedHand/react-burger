@@ -27,7 +27,7 @@ export default function AppHeader() {
                     </button>
                 </div>
 
-                <div className='align-middle flex-block' style={{alignItems: 'center'}}>
+                <div className='align-middle align-center flex-block'>
                     <Logo />
                 </div>
 

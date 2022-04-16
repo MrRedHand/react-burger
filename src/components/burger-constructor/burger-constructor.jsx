@@ -11,7 +11,7 @@ const BurgerConstructor = (props) => {
 
     return (
         <>
-        <section style={{height : '196px'}}>
+        <section className="relative-filler">
             
         </section>
         <section className={styles.constructor_area}>

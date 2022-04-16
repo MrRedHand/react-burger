@@ -1,5 +1,6 @@
-.ingredients {
-
+.absolute_header {
+    position: absolute;
+    bottom : 0;
 }
 
 .ingredients__grid {

@@ -23,6 +23,10 @@
   justify-content: end;
 }
 
+.align-center {
+  align-items: center;
+}
+
 .simplebar-track {
   background-color: #2F2F37;
 }
@@ -45,3 +49,9 @@
 .constructor-element {
   width: 100%;
 }
+
+.relative-filler {
+  height : 196px;
+  position: relative;
+}
+

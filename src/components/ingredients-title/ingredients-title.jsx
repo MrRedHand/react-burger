@@ -1,9 +1,18 @@
 import React from "react";
+import PropTypes from 'prop-types';
 
-export default function IngredientsTitle(props) {
+const IngredientsTitle = (props) => {
     return (
-        <h2 className="text text_type_main-medium mt-10 mb-6" data-anchor={props.anchor}>
+        <h2 className="text text_type_main-medium mt-10 mb-6">
             {props.children}
         </h2>
     )
 }
+
+IngredientsTitle.propTypes = {
+    props: PropTypes.shape({
+        props: PropTypes.string.isRequired
+    })
+}
+
+export default IngredientsTitle
