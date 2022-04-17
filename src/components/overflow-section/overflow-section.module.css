@@ -1,0 +1,20 @@
+.overflow_section {
+    overflow-y: scroll;
+}
+
+.overflow_section::-webkit-scrollbar {
+    background-color: darkgrey;
+    width: 10px;
+}
+
+.overflow_section::-webkit-scrollbar-track {
+    background-color: #2F2F37;
+}
+
+.overflow_section::-webkit-scrollbar-thumb {
+    background-color: #8585AD;
+}
+
+.overflow_section::-webkit-scrollbar-thumb:hover {
+    background-color: #9898c4;
+}

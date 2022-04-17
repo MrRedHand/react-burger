@@ -1,0 +1,21 @@
+header {
+    background-color: #1C1C21;
+  }
+
+.navigation {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+}
+
+.btn {
+    background: transparent;
+    outline: none;
+    border:none;
+    cursor: pointer;
+}
+
+.nav__btn {
+    display: flex;
+    align-items: center;
+    color: #fff;
+}

@@ -1,0 +1,66 @@
+.text-center {
+  text-align: center;
+}
+
+.wrap {
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.flex-block {
+  display: flex;
+}
+
+.align-left {
+  justify-content: start;
+}
+
+.align-middle {
+  justify-content: center;
+}
+
+.align-right {
+  justify-content: end;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.simplebar-track {
+  background-color: #2F2F37;
+}
+
+.simplebar-scrollbar {
+  border-radius: 0;
+  background-color: #8585AD;
+  box-shadow: none;
+}
+
+.simplebar-scrollbar.simplebar-hover {
+  background-color: #9595c0;
+}
+
+.simplebar-scrollbar.simplebar-visible:before {
+  display: none;
+}
+
+
+.constructor-element {
+  width: 100%;
+}
+
+.relative-filler {
+  height : 196px;
+  position: relative;
+}
+
+.show {
+  visibility: visible;
+  opacity: 1;
+}
+
+.hide {
+  visibility: hidden;
+  opacity: 0;
+}
