@@ -11,9 +11,7 @@ const OverflowSection = (props) => {
 }
 
 OverflowSection.propTypes = {
-    props: PropTypes.shape({
-        height: PropTypes.number
-    })
+    height: PropTypes.number
 }
 
 export default OverflowSection
