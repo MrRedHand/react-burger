@@ -11,9 +11,7 @@ const IngredientsGrid = (props) => {
 
 
 IngredientsGrid.propTypes = {
-  props: PropTypes.shape({
-      imglink: PropTypes.string.isRequired
-  })
+  children : PropTypes.node.isRequired
 }
 
 export default IngredientsGrid

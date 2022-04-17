@@ -7,7 +7,7 @@ import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
-const BurgerConstructor = (props) => {
+const BurgerConstructor = ({data}) => {
 
     return (
         <>
@@ -19,15 +19,15 @@ const BurgerConstructor = (props) => {
                 <ConstructorElement 
                 type="top"
                 isLocked={true}
-                text={`${props.data[0].name} (верх)`}
-                thumbnail={props.data[0].image} 
+                text={`${data[0].name} (верх)`}
+                thumbnail={data[0].image} 
                 />
             </section>
             
             <OverflowSection height={420}>
                 {
 
-                    props.data.map((elem, index) => {
+                    data.map((elem, index) => {
                         
                         if (elem.type !== 'bun') {
                             return (
@@ -54,8 +54,8 @@ const BurgerConstructor = (props) => {
                 <ConstructorElement 
                     type="bottom"
                     isLocked={true}
-                    text={`${props.data[0].name} (низ)`}
-                    thumbnail={props.data[0].image} 
+                    text={`${data[0].name} (низ)`}
+                    thumbnail={data[0].image} 
                     />
             </section>
         </section>   
@@ -76,14 +76,7 @@ const BurgerConstructor = (props) => {
 }
 
 BurgerConstructor.propTypes = {
-    props: PropTypes.shape({
-        type: PropTypes.string.isRequired,
-        isLocked: PropTypes.bool.isRequired,
-        text: PropTypes.string.isRequired,
-        thumbnail: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-        props: PropTypes.arrayOf.isRequired,
-    })
+    data: PropTypes.array.isRequired
 }
 
 export default BurgerConstructor

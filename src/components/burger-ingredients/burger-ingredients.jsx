@@ -8,7 +8,7 @@ import IngredientsTitle from "../ingredients-title/ingredients-title";
 import IngredientsGrid from "../ingredients-grid/ingredients-grid";
 
 
-const BurgerIngredients = (props) => {
+const BurgerIngredients = ({data}) => {
 
     let [current, setCurrent] = useState('one')
 
@@ -72,7 +72,7 @@ const BurgerIngredients = (props) => {
 
                 <IngredientsGrid className={styles.ingredients__grid}>
                     {
-                        props.data.map(elem => {
+                        data.map(elem => {
                             if (elem.type === 'bun') {
                                 return ( <IngredientCard 
                                             key={elem._id}
@@ -80,7 +80,7 @@ const BurgerIngredients = (props) => {
                                             title={elem.name}
                                             price={elem.price}
                                             count={1}
-                                            onClick={() => showPopup(elem.image, elem.name, elem.price)}
+                                            onClick={() => showPopup(elem.image_large, elem.name, elem.price)}
                                         /> 
                                 )  
                             }
@@ -92,14 +92,14 @@ const BurgerIngredients = (props) => {
 
                 <IngredientsGrid className={styles.ingredients__grid}>
                     {
-                        props.data.map(elem => {
+                        data.map(elem => {
                             if (elem.type === 'sauce') {
                                 return ( <IngredientCard 
                                             key={elem._id}
                                             imglink={elem.image}
                                             title={elem.name}
                                             price={elem.price}
-                                            onClick={() => showPopup(elem.image, elem.name, elem.price)}
+                                            onClick={() => showPopup(elem.image_large, elem.name, elem.price)}
                                             />
                                 )  
                             }
@@ -112,14 +112,14 @@ const BurgerIngredients = (props) => {
 
                 <IngredientsGrid className={styles.ingredients__grid}>
                     {
-                        props.data.map(elem => {
+                        data.map(elem => {
                             if (elem.type === 'main') {
                                 return ( <IngredientCard 
                                             key={elem._id}
                                             imglink={elem.image}
                                             title={elem.name}
                                             price={elem.price}
-                                            onClick={() => showPopup(elem.image, elem.name, elem.price)}
+                                            onClick={() => showPopup(elem.image_large, elem.name, elem.price)}
                                         /> 
                                 )  
                             }
@@ -154,12 +154,7 @@ const BurgerIngredients = (props) => {
 }
 
 BurgerIngredients.propTypes = {
-    props: PropTypes.shape({
-        imglink: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-        title: PropTypes.string.isRequired,
-        props: PropTypes.arrayOf.isRequired,
-    })
+    data: PropTypes.array.isRequired
 }
 
 export default BurgerIngredients

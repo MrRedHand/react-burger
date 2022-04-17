@@ -10,9 +10,7 @@ const IngredientsTitle = (props) => {
 }
 
 IngredientsTitle.propTypes = {
-    props: PropTypes.shape({
-        props: PropTypes.string.isRequired
-    })
+    children : PropTypes.node.isRequired
 }
 
 export default IngredientsTitle
