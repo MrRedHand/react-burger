@@ -1,0 +1,14 @@
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-column-gap: 20px;
+}
+
+.text_center {
+    text-align: center;
+}
+
+.img {
+    margin: auto;
+    display: block;
+}

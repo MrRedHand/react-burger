@@ -1,10 +1,9 @@
 import React from 'react'
+import st from './modal-overlay.module.css'
 
-const ModalOverlay = () => {
+const ModalOverlay = ({onClick,activity}) => {
     return (
-        <>
-        <div className='modal-overlay'></div>
-        </>
+        <div onClick={onClick} className={`${st.overlay} ${activity === true ? st.active : ''}`}></div>
     )
 }
 

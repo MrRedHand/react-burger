@@ -6,43 +6,26 @@ import styles from './burger-ingredients.module.css';
 import IngredientCard from "../ingredient-card/ingredient-card";
 import IngredientsTitle from "../ingredients-title/ingredients-title";
 import IngredientsGrid from "../ingredients-grid/ingredients-grid";
+import Modal from "../modal/modal";
+import IngredientDetails from "../app/ingredient-details/ingredient-details";
 
 
 const BurgerIngredients = ({data}) => {
 
+    const [modalState, setModal] = React.useState({
+        active : false,
+        content: '',
+    })
+
     let [current, setCurrent] = useState('one')
+
+    let modalContent;
 
     function scrollTo(where) {
         setCurrent(
             current = where,
         )
     }
-
-    const [popupInfo, setPopup] = React.useState({
-        image : 'https://dummyimage.com/300',
-        title : 'Placeholder',
-        price : 99999,
-        active: false,
-    })
-
-    const showPopup = (newImage, newTitle, newPrice) => {
-        
-        setPopup({
-            image : newImage,
-            title : newTitle,
-            price : newPrice,
-            active : true,
-        })
-
-        console.log(popupInfo)
-    }
-
-    function closePopup() {
-        setPopup(
-            popupInfo.active = false,
-        )
-    }
-
 
     return(
         <>
@@ -75,13 +58,15 @@ const BurgerIngredients = ({data}) => {
                         data.map(elem => {
                             if (elem.type === 'bun') {
                                 return ( <IngredientCard 
-                                            key={elem._id}
-                                            imglink={elem.image}
-                                            title={elem.name}
-                                            price={elem.price}
-                                            count={1}
-                                            onClick={() => showPopup(elem.image_large, elem.name, elem.price)}
-                                        /> 
+                                            key={elem._id} 
+                                            {...elem} 
+                                            onClick={() => {
+                                                    setModal({
+                                                        active : true,
+                                                        content : <IngredientDetails {...elem}/>
+                                                    })
+                                                }}
+                                            />
                                 )  
                             }
                         })
@@ -95,13 +80,16 @@ const BurgerIngredients = ({data}) => {
                         data.map(elem => {
                             if (elem.type === 'sauce') {
                                 return ( <IngredientCard 
-                                            key={elem._id}
-                                            imglink={elem.image}
-                                            title={elem.name}
-                                            price={elem.price}
-                                            onClick={() => showPopup(elem.image_large, elem.name, elem.price)}
-                                            />
-                                )  
+                                    key={elem._id} 
+                                    {...elem} 
+                                    onClick={() => {
+                                            setModal({
+                                                active : true,
+                                                content : <IngredientDetails {...elem}/>
+                                            })
+                                        }}
+                                    />
+                                )   
                             }
                         })
                     }
@@ -115,12 +103,15 @@ const BurgerIngredients = ({data}) => {
                         data.map(elem => {
                             if (elem.type === 'main') {
                                 return ( <IngredientCard 
-                                            key={elem._id}
-                                            imglink={elem.image}
-                                            title={elem.name}
-                                            price={elem.price}
-                                            onClick={() => showPopup(elem.image_large, elem.name, elem.price)}
-                                        /> 
+                                    key={elem._id} 
+                                    {...elem} 
+                                    onClick={() => {
+                                            setModal({
+                                                active : true,
+                                                content : <IngredientDetails {...elem}/>
+                                            })
+                                        }}
+                                    />
                                 )  
                             }
                         })
@@ -128,27 +119,12 @@ const BurgerIngredients = ({data}) => {
                 </IngredientsGrid>
 
                 </div>
-            </OverflowSection>         
+            </OverflowSection>  
+
+            <Modal active={modalState.active} setActive={setModal} children={modalState.content}/>  
         </section>
 
-        <section className={`${styles.ingredient_popup} ${popupInfo.active === true ? 'show' : 'hide'}`}>
-            <section className={`${styles.popup__body} p-10`}>
-                <p className="text text_type_main-medium">Детали ингредиента</p>
-                <button onClick={() => {closePopup()}} className={styles.close}>
-                    <CloseIcon />
-                </button>
-                <img src={popupInfo.image} />
-                <p className="text text_type_main-default">
-                    {popupInfo.title}
-                </p>
-                <div className="info">
-                    <p className="text text_type_main-default text_color_inactive">Калории,ккал</p>
-                    <p className="text text_type_digits-default text_color_inactive">244,4</p>
-                </div>
-
-                
-            </section>
-        </section>
+        
         </>
     )
 }
