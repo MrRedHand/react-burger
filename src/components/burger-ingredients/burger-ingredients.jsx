@@ -7,7 +7,7 @@ import IngredientCard from "../ingredient-card/ingredient-card";
 import IngredientsTitle from "../ingredients-title/ingredients-title";
 import IngredientsGrid from "../ingredients-grid/ingredients-grid";
 import Modal from "../modal/modal";
-import IngredientDetails from "../app/ingredient-details/ingredient-details";
+import IngredientDetails from "../ingredient-details/ingredient-details";
 
 
 const BurgerIngredients = ({data}) => {
@@ -58,6 +58,7 @@ const BurgerIngredients = ({data}) => {
                                 return ( <IngredientCard 
                                             key={elem._id} 
                                             {...elem} 
+                                            count = {Math.floor(Math.random() * (1 + 1))}
                                             onClick={() => {
                                                     setModal({
                                                         active : true,
@@ -80,6 +81,7 @@ const BurgerIngredients = ({data}) => {
                                 return ( <IngredientCard 
                                     key={elem._id} 
                                     {...elem} 
+                                    count = {Math.floor(Math.random() * (1 + 1))}
                                     onClick={() => {
                                             setModal({
                                                 active : true,
@@ -103,6 +105,7 @@ const BurgerIngredients = ({data}) => {
                                 return ( <IngredientCard 
                                     key={elem._id} 
                                     {...elem} 
+                                    count = {Math.floor(Math.random() * (1 + 1))}
                                     onClick={() => {
                                             setModal({
                                                 active : true,

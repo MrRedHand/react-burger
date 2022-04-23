@@ -21,12 +21,17 @@ const Modal = ({active, setActive, children, heading}) => {
 
     React.useEffect(() => {
         active ? body.classList.add('modal-active') : body.classList.remove('modal-active')
-        document.addEventListener('keydown', (e) => {
+
+        const closeOnEsc = (e) => {
             if( e.key === "Escape") {
                 closeModal()
             }
-        });
-    })
+        }
+
+        document.addEventListener('keydown', closeOnEsc)
+
+        return () => document.removeEventListener('keydown', closeOnEsc)
+    }, [active])
 
     return ReactDOM.createPortal ( 
     <>
