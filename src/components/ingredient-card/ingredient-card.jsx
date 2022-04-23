@@ -5,8 +5,6 @@ import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 
 const IngredientCard = (props) => {
 
-    console.log(props.count)
-
     const countStyle = props.count > 0 ? 'visible' : 'hidden'
 
     return (
