@@ -1,0 +1,27 @@
+.order_number {
+    text-shadow: 0 0 12px #4C4CFF;
+}
+
+.check_bg {
+    width: 102px;
+    height: 102px;
+}
+
+.check_wrap {
+    position: relative;
+    width: 102px;
+    height: 102px;
+    margin: auto;
+}
+
+.check_svg {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.check_svg svg {
+    width: 48px;
+    height: 48px;
+}

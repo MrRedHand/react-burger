@@ -1,5 +1,6 @@
 import React from 'react'
-import st from './ingredient-details.module.css'
+import PropTypes from 'prop-types';
+import st from './ingredient-details.module.css';
 
 const IngredientDetails = (details) => {
 
@@ -32,6 +33,10 @@ const IngredientDetails = (details) => {
             </div>
         </>
     )
+}
+
+IngredientDetails.propTypes = {
+    details: PropTypes.array.isRequired
 }
 
 

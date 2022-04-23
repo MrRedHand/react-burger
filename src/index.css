@@ -1,5 +1,22 @@
+body.modal-active {
+  overflow: hidden;
+  padding-right: 22px;
+}
+
+body.modal-active #react-modals {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
 .text-center {
   text-align: center;
+}
+
+.text-bold {
+  font-weight: bold;
 }
 
 .wrap {

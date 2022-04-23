@@ -6,8 +6,15 @@ import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-comp
 import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import Modal from "../modal/modal";
+import OrderDetails from "../order-details/order-details";
 
 const BurgerConstructor = ({data}) => {
+
+    const [modalState, setModal] = React.useState({
+        active : false,
+        content: '',
+    })
 
     return (
         <>
@@ -69,8 +76,19 @@ const BurgerConstructor = ({data}) => {
                 </p>
                 <CurrencyIcon />
             </div>
-            <Button type="primary" size="large">Оформить заказ</Button>
-        </section> 
+            <Button type="primary" size="large" onClick={() => {
+                setModal({
+                    active : true,
+                    content : <OrderDetails />
+                })
+            }}>Оформить заказ</Button>
+        </section>
+
+        <Modal 
+            active={modalState.active} 
+            setActive={setModal} 
+            children={modalState.content}
+            />  
         </>
     )
 }

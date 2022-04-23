@@ -19,8 +19,6 @@ const BurgerIngredients = ({data}) => {
 
     let [current, setCurrent] = useState('one')
 
-    let modalContent;
-
     function scrollTo(where) {
         setCurrent(
             current = where,
@@ -121,7 +119,12 @@ const BurgerIngredients = ({data}) => {
                 </div>
             </OverflowSection>  
 
-            <Modal active={modalState.active} setActive={setModal} children={modalState.content}/>  
+            <Modal 
+            active={modalState.active} 
+            setActive={setModal} 
+            heading={'Детали ингредиента'} 
+            children={modalState.content}
+            />  
         </section>
 
         
