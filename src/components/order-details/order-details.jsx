@@ -16,13 +16,19 @@ const OrderDetails = () => {
         name : ''
     })
 
+    let ingredientsArr = []
+
+    products.map(elem => {
+        ingredientsArr = [...ingredientsArr, elem._id]
+    })
+
     useEffect(() => {
 
         const getData = ()  => {
             fetch(apiUrl, {
                 headers: {'Content-Type' : 'application/json'},
                 method: 'POST',
-                body: JSON.stringify({ingredients : [products[3]._id, products[4]._id]})
+                body: JSON.stringify({ingredients : ingredientsArr})
             })
             .then((response) => {
               if (response.ok) {
@@ -36,7 +42,7 @@ const OrderDetails = () => {
                 number : data.order.number,
                 name : data.name
               })  
-              console.log('Получен ответ', products.response)
+              console.log('Получен ответ', data)
             })
             .catch((error) => {
               console.log(error)
