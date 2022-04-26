@@ -1,5 +1,4 @@
 import React, { state, useState, useEffect, useRef, useContext } from "react";
-import PropTypes from 'prop-types';
 import { Tab, CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import OverflowSection from "../overflow-section/overflow-section";
 import styles from './burger-ingredients.module.css';
@@ -138,8 +137,5 @@ const BurgerIngredients = () => {
     )
 }
 
-BurgerIngredients.propTypes = {
-    //products: PropTypes.array.isRequired
-}
 
 export default BurgerIngredients
