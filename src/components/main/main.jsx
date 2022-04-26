@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styles from "./main.module.css";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import { BurgerContext } from "../../services/burgerContext";
+import { ProductsContext } from "../../services/productsContext";
 
 
 
@@ -14,12 +14,14 @@ const Main = ({data}) => {
     return (
         <main className={`${styles.main} wrap pb-20`}>
             <section>
-            <BurgerContext.Provider value={products}>
-                <BurgerIngredients/>
-            </BurgerContext.Provider>    
+            <ProductsContext.Provider value={products}>   
+                <BurgerIngredients/> 
+            </ProductsContext.Provider>     
             </section>
             <section>
-                <BurgerConstructor data={data}/>
+            <ProductsContext.Provider value={products}>       
+                <BurgerConstructor/>
+            </ProductsContext.Provider>      
             </section>
         </main>
     )

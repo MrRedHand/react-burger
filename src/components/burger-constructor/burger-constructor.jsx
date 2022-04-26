@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useReducer, useContext} from "react";
 import PropTypes from 'prop-types';
 import OverflowSection from "../overflow-section/overflow-section";
 import styles from './burger-constructor.module.css';
@@ -8,13 +8,42 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
+import { ProductsContext } from "../../services/productsContext";
 
-const BurgerConstructor = ({data}) => {
+
+
+
+const BurgerConstructor = () => {
+
+    function reducer(state, action) {
+        switch (action.type) {
+          case "plus":
+            return { totalPrice: state.totalPrice + action.payload };
+          case "minus":
+            return { totalPrice: state.totalPrice - action.payload };
+          default:
+            throw new Error(`Wrong type of action: ${action.type}`);
+        }
+      }
+
+    const [state, dispatch] = useReducer(reducer, 0);
+
+
+    const plusTotal = (price) => {
+        dispatch({ type: "plus" , payload : price });
+    };
+
+    const minusTotal = (price) => {
+        dispatch({ type: "minus", payload : price });
+    };
+
+    const products = useContext(ProductsContext);
 
     const [modalState, setModal] = React.useState({
         active : false,
         content: '',
     })
+
 
     return (
         <>
@@ -26,16 +55,15 @@ const BurgerConstructor = ({data}) => {
                 <ConstructorElement 
                 type="top"
                 isLocked={true}
-                text={`${data[0].name} (верх)`}
-                thumbnail={data[0].image} 
-                />   
+                text={`${products[0].name} (верх)`}
+                thumbnail={products[0].image} 
+                />  
             </section>
             
             <OverflowSection height={420}>
                 {
 
-                    data.map((elem, index) => {
-                        
+                    products.map(elem => {
                         if (elem.type !== 'bun') {
                             return (
                                 <div key={elem._id}  className={`${styles.constructor_elem_wrap} pl-8 mb-4 mr-4`}>
@@ -50,6 +78,7 @@ const BurgerConstructor = ({data}) => {
                                         />
                                     
                                     </div>
+                                    
                             )
                         }
                     })
@@ -61,8 +90,8 @@ const BurgerConstructor = ({data}) => {
                 <ConstructorElement 
                     type="bottom"
                     isLocked={true}
-                    text={`${data[0].name} (низ)`}
-                    thumbnail={data[0].image} 
+                    text={`${products[0].name} (низ)`}
+                    thumbnail={products[0].image} 
                     />
             </section>
         </section>   
@@ -72,7 +101,7 @@ const BurgerConstructor = ({data}) => {
         <section className={styles.total}>
             <div className={`${styles.total__price} mr-10`}>
                 <p className="text text_type_digits-medium">
-                    610
+                    {state}
                 </p>
                 <CurrencyIcon />
             </div>
@@ -94,7 +123,7 @@ const BurgerConstructor = ({data}) => {
 }
 
 BurgerConstructor.propTypes = {
-    data: PropTypes.array.isRequired
+    //data: PropTypes.array.isRequired
 }
 
 export default BurgerConstructor

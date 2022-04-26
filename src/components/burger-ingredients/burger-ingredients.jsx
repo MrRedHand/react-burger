@@ -8,12 +8,12 @@ import IngredientsTitle from "../ingredients-title/ingredients-title";
 import IngredientsGrid from "../ingredients-grid/ingredients-grid";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
-import { BurgerContext } from "../../services/burgerContext";
+import { ProductsContext } from "../../services/productsContext";
 
 
 const BurgerIngredients = () => {
 
-    const products = useContext(BurgerContext);
+    const products = useContext(ProductsContext);
 
     const [modalState, setModal] = React.useState({
         active : false,
