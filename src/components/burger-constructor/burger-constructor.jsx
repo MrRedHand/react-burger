@@ -28,7 +28,7 @@ const BurgerConstructor = ({data}) => {
                 isLocked={true}
                 text={`${data[0].name} (верх)`}
                 thumbnail={data[0].image} 
-                />
+                />   
             </section>
             
             <OverflowSection height={420}>

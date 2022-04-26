@@ -23,7 +23,7 @@ function App() {
           }
         })
         .then((data) => {
-          console.log(data.data)
+          console.log('got json', data.data)
           setDataState({
               ...dataParams,
               dataReady : true,
@@ -44,6 +44,7 @@ function App() {
 
     }, [])
 
+    
   return (
     <>
       <AppHeader />
