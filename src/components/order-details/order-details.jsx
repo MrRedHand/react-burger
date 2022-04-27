@@ -3,11 +3,10 @@ import st from './order-details.module.css';
 import checkBg from '../../images/order-details-check-bg.svg';
 import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ProductsContext } from "../../services/productsContext";
+import { apiUrl } from '../../services/apiUrl';
 
 
 const OrderDetails = () => {
-
-    const apiUrl = 'https://norma.nomoreparties.space/api/orders'
 
     const products = useContext(ProductsContext);
 
@@ -30,13 +29,7 @@ const OrderDetails = () => {
                 method: 'POST',
                 body: JSON.stringify({ingredients : ingredientsArr})
             })
-            .then((response) => {
-              if (response.ok) {
-                return response.json();
-              } else {
-                return Promise.reject(`Ошибка ${response.status}`);
-              }
-            })
+            .then(checkResponse)
             .then((data) => {
               setOrder({
                 number : data.order.number,
@@ -47,7 +40,16 @@ const OrderDetails = () => {
             .catch((error) => {
               console.log(error)
             });
+        }
+
+        function checkResponse(response) {
+            if (response.ok) {
+              return response.json();
+            } else {
+              return Promise.reject(`Ошибка ${response.status}`);
+            }
           }
+
         getData();
 
     }, [])
