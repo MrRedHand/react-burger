@@ -24,7 +24,7 @@ const OrderDetails = () => {
     useEffect(() => {
 
         const getData = ()  => {
-            fetch(apiUrl, {
+            fetch(apiUrl + 'orders/', {
                 headers: {'Content-Type' : 'application/json'},
                 method: 'POST',
                 body: JSON.stringify({ingredients : ingredientsArr})

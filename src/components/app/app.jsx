@@ -9,7 +9,6 @@ function App() {
 
 
   const [dataParams, setDataState] = React.useState({
-    url: apiUrl,
     data : [],
     dataReady : false,
     gotErrors : false
@@ -18,7 +17,7 @@ function App() {
     useEffect(() => {
 
       const getData = ()  => {
-        fetch(dataParams.url)
+        fetch(apiUrl + 'ingredients/')
         .then(checkResponse)
         .then((data) => {
           console.log('got json', data.data)
