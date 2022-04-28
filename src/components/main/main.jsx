@@ -29,4 +29,5 @@ Main.propTypes = {
     data : PropTypes.array.isRequired
 }
 
+
 export default Main
