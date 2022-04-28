@@ -1,5 +1,4 @@
-import React, { state, useState, useEffect, useRef } from "react";
-import PropTypes from 'prop-types';
+import React, { state, useState, useEffect, useRef, useContext } from "react";
 import { Tab, CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import OverflowSection from "../overflow-section/overflow-section";
 import styles from './burger-ingredients.module.css';
@@ -8,9 +7,12 @@ import IngredientsTitle from "../ingredients-title/ingredients-title";
 import IngredientsGrid from "../ingredients-grid/ingredients-grid";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
+import { ProductsContext } from "../../services/productsContext";
 
 
-const BurgerIngredients = ({data}) => {
+const BurgerIngredients = () => {
+
+    const products = useContext(ProductsContext);
 
     const [modalState, setModal] = React.useState({
         active : false,
@@ -53,7 +55,7 @@ const BurgerIngredients = ({data}) => {
 
                 <IngredientsGrid className={styles.ingredients__grid}>
                     {
-                        data.map(elem => {
+                        products.map(elem => {
                             if (elem.type === 'bun') {
                                 return ( <IngredientCard 
                                             key={elem._id} 
@@ -76,7 +78,7 @@ const BurgerIngredients = ({data}) => {
 
                 <IngredientsGrid className={styles.ingredients__grid}>
                     {
-                        data.map(elem => {
+                        products.map(elem => {
                             if (elem.type === 'sauce') {
                                 return ( <IngredientCard 
                                     key={elem._id} 
@@ -100,7 +102,7 @@ const BurgerIngredients = ({data}) => {
 
                 <IngredientsGrid className={styles.ingredients__grid}>
                     {
-                        data.map(elem => {
+                        products.map(elem => {
                             if (elem.type === 'main') {
                                 return ( <IngredientCard 
                                     key={elem._id} 
@@ -135,8 +137,5 @@ const BurgerIngredients = ({data}) => {
     )
 }
 
-BurgerIngredients.propTypes = {
-    data: PropTypes.array.isRequired
-}
 
 export default BurgerIngredients

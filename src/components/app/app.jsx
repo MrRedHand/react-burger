@@ -1,11 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import AppHeader from '../app-header/app-header';
 import Main from '../main/main';
+import { apiUrl } from '../../utils/apiUrl';
+import checkResponse from '../../utils/checkResponse';
+import { ProductsContext } from "../../services/productsContext";
+
 
 function App() {
 
+
   const [dataParams, setDataState] = React.useState({
-    url: 'https://norma.nomoreparties.space/api/ingredients',
     data : [],
     dataReady : false,
     gotErrors : false
@@ -14,16 +18,10 @@ function App() {
     useEffect(() => {
 
       const getData = ()  => {
-        fetch(dataParams.url)
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          } else {
-            return Promise.reject(`Ошибка ${response.status}`);
-          }
-        })
+        fetch(apiUrl + 'ingredients/')
+        .then(checkResponse)
         .then((data) => {
-          console.log(data.data)
+          console.log('got json', data.data)
           setDataState({
               ...dataParams,
               dataReady : true,
@@ -44,12 +42,19 @@ function App() {
 
     }, [])
 
+    
   return (
     <>
       <AppHeader />
 
       {
-        dataParams.dataReady ? <Main data={dataParams.data}/> : 'ЗАГРУЗКА'
+        
+          dataParams.dataReady 
+          ? <ProductsContext.Provider value={dataParams.data}> 
+              <Main/> 
+            </ProductsContext.Provider>
+          : 'ЗАГРУЗКА'
+        
       }
     </>
   );
