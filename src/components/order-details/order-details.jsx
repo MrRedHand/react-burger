@@ -3,7 +3,8 @@ import st from './order-details.module.css';
 import checkBg from '../../images/order-details-check-bg.svg';
 import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ProductsContext } from "../../services/productsContext";
-import { apiUrl } from '../../services/apiUrl';
+import { apiUrl } from '../../utils/apiUrl';
+import checkResponse from '../../utils/checkResponse';
 
 
 const OrderDetails = () => {
@@ -41,14 +42,6 @@ const OrderDetails = () => {
               console.log(error)
             });
         }
-
-        function checkResponse(response) {
-            if (response.ok) {
-              return response.json();
-            } else {
-              return Promise.reject(`Ошибка ${response.status}`);
-            }
-          }
 
         getData();
 

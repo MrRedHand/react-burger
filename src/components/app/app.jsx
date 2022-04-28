@@ -1,7 +1,8 @@
 import React, { useEffect, useContext } from 'react';
 import AppHeader from '../app-header/app-header';
 import Main from '../main/main';
-import { apiUrl } from '../../services/apiUrl';
+import { apiUrl } from '../../utils/apiUrl';
+import checkResponse from '../../utils/checkResponse';
 import { ProductsContext } from "../../services/productsContext";
 
 
@@ -35,14 +36,6 @@ function App() {
             })
           console.log(error)
         });
-      }
-
-      function checkResponse(response) {
-        if (response.ok) {
-          return response.json();
-        } else {
-          return Promise.reject(`Ошибка ${response.status}`);
-        }
       }
 
       getData();
