@@ -20,7 +20,7 @@ const Main = ({data}) => {
                 <section>     
                     <BurgerConstructor/>
                 </section>
-            </ProductsContext.Provider> 
+            </ProductsContext.Provider>
         </main>
     )
 }
