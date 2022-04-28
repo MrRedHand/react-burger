@@ -48,7 +48,13 @@ function App() {
       <AppHeader />
 
       {
-        dataParams.dataReady ? <Main data={dataParams.data}/> : 'ЗАГРУЗКА'
+        
+          dataParams.dataReady 
+          ? <ProductsContext.Provider value={dataParams.data}> 
+              <Main/> 
+            </ProductsContext.Provider>
+          : 'ЗАГРУЗКА'
+        
       }
     </>
   );
