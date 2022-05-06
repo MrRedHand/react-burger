@@ -14,7 +14,7 @@ const Main = () => {
                     <BurgerIngredients/>    
                 </section>
                 <section>     
-                    <BurgerConstructor/>
+                    {/*<BurgerConstructor/>*/}
                 </section>
         </main>
     )

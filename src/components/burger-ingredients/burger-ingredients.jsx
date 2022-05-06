@@ -1,5 +1,5 @@
-import React, { state, useState, useEffect, useRef, useContext } from "react";
-import { Tab, CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import React, {useState} from "react";
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import OverflowSection from "../overflow-section/overflow-section";
 import styles from './burger-ingredients.module.css';
 import IngredientCard from "../ingredient-card/ingredient-card";
@@ -7,17 +7,28 @@ import IngredientsTitle from "../ingredients-title/ingredients-title";
 import IngredientsGrid from "../ingredients-grid/ingredients-grid";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
-import { ProductsContext } from "../../services/productsContext";
+import {useDispatch, useSelector} from "react-redux";
+import {SET_INGREDIENT_INFO} from "../../services/actions/main";
 
 
 const BurgerIngredients = () => {
 
-    const products = useContext(ProductsContext);
+    const {allIngredients} = useSelector(state => state.main)
+
+    const dispatch = useDispatch();
 
     const [modalState, setModal] = React.useState({
         active : false,
         content: '',
     })
+
+    const showModal = (props) => {
+        setModal({
+            active : true,
+            content : <IngredientDetails {...props}/>
+        })
+        dispatch({type : 'SET_INGREDIENT_INFO', payload : props})
+    }
 
     let [current, setCurrent] = useState('one')
 
@@ -55,18 +66,13 @@ const BurgerIngredients = () => {
 
                 <IngredientsGrid className={styles.ingredients__grid}>
                     {
-                        products.map(elem => {
+                        allIngredients.map(elem => {
                             if (elem.type === 'bun') {
                                 return ( <IngredientCard 
                                             key={elem._id} 
                                             {...elem} 
                                             count = {Math.floor(Math.random() * (1 + 1))}
-                                            onClick={() => {
-                                                    setModal({
-                                                        active : true,
-                                                        content : <IngredientDetails {...elem}/>
-                                                    })
-                                                }}
+                                            onClick={() => showModal(elem)}
                                             />
                                 )  
                             }
@@ -78,18 +84,13 @@ const BurgerIngredients = () => {
 
                 <IngredientsGrid className={styles.ingredients__grid}>
                     {
-                        products.map(elem => {
+                        allIngredients.map(elem => {
                             if (elem.type === 'sauce') {
                                 return ( <IngredientCard 
                                     key={elem._id} 
                                     {...elem} 
                                     count = {Math.floor(Math.random() * (1 + 1))}
-                                    onClick={() => {
-                                            setModal({
-                                                active : true,
-                                                content : <IngredientDetails {...elem}/>
-                                            })
-                                        }}
+                                    onClick={() => showModal(elem)}
                                     />
                                 )   
                             }
@@ -102,18 +103,13 @@ const BurgerIngredients = () => {
 
                 <IngredientsGrid className={styles.ingredients__grid}>
                     {
-                        products.map(elem => {
+                        allIngredients.map(elem => {
                             if (elem.type === 'main') {
                                 return ( <IngredientCard 
                                     key={elem._id} 
                                     {...elem} 
                                     count = {Math.floor(Math.random() * (1 + 1))}
-                                    onClick={() => {
-                                            setModal({
-                                                active : true,
-                                                content : <IngredientDetails {...elem}/>
-                                            })
-                                        }}
+                                    onClick={() => showModal(elem)}
                                     />
                                 )  
                             }

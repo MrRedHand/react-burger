@@ -1,61 +1,31 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect} from 'react';
 import AppHeader from '../app-header/app-header';
 import Main from '../main/main';
-import { apiUrl } from '../../utils/apiUrl';
-import checkResponse from '../../utils/checkResponse';
-import { ProductsContext } from "../../services/productsContext";
+import {useDispatch, useSelector} from "react-redux";
+import {getFullData} from "../../services/middleware/getFullData";
 
 
 function App() {
 
+  const dispatch = useDispatch();
 
-  const [dataParams, setDataState] = React.useState({
-    data : [],
-    dataReady : false,
-    gotErrors : false
-    })
+  const {fullDataRecieved} = useSelector(store => store.main);
 
-    useEffect(() => {
+  useEffect(() => {
 
-      const getData = ()  => {
-        fetch(apiUrl + 'ingredients/')
-        .then(checkResponse)
-        .then((data) => {
-          console.log('got json', data.data)
-          setDataState({
-              ...dataParams,
-              dataReady : true,
-              data : data.data
-          })
-        })
-        .catch((error) => {
-          setDataState({
-              ...dataParams,
-              dataReady : false,
-              gotErrors : true
-            })
-          console.log(error)
-        });
-      }
+    dispatch(getFullData())
 
-      getData();
-
-    }, [])
-
+  }, [])
     
   return (
     <>
       <AppHeader />
+        {
+            fullDataRecieved
+            ? <Main/>
+            : 'ЗАГРУЗКА'
+        }
 
-      {
-        
-          dataParams.dataReady 
-          ? <ProductsContext.Provider value={dataParams.data}> 
-              <Main/> 
-            </ProductsContext.Provider>
-          : 'ЗАГРУЗКА'
-        
-      }
     </>
   );
 }

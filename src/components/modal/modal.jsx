@@ -5,8 +5,11 @@ import ModalOverlay from '../modal-overlay/modal-overlay';
 import st from './modal.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalHeader from '../modal-header/modal-header';
+import {useDispatch} from "react-redux";
 
 const Modal = ({active, setActive, children, heading}) => {
+
+    const dispatch = useDispatch();
 
     const modalRoot = document.getElementById("react-modals");
 
@@ -17,6 +20,7 @@ const Modal = ({active, setActive, children, heading}) => {
             ...prevState,
             active : false
         }))
+        dispatch({type : 'CLEAR_INGREDIENT_INFO'})
     }
 
     React.useEffect(() => {
