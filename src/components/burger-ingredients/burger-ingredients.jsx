@@ -38,6 +38,8 @@ const BurgerIngredients = () => {
         )
     }
 
+
+
     return(
         <>
         <section className="relative-filler">
@@ -68,10 +70,9 @@ const BurgerIngredients = () => {
                     {
                         allIngredients.map(elem => {
                             if (elem.type === 'bun') {
-                                return ( <IngredientCard 
-                                            key={elem._id} 
-                                            {...elem} 
-                                            count = {Math.floor(Math.random() * (1 + 1))}
+                                return ( <IngredientCard
+                                            key={elem._id}
+                                            {...elem}
                                             onClick={() => showModal(elem)}
                                             />
                                 )  
@@ -86,10 +87,9 @@ const BurgerIngredients = () => {
                     {
                         allIngredients.map(elem => {
                             if (elem.type === 'sauce') {
-                                return ( <IngredientCard 
-                                    key={elem._id} 
-                                    {...elem} 
-                                    count = {Math.floor(Math.random() * (1 + 1))}
+                                return ( <IngredientCard
+                                    key={elem._id}
+                                    {...elem}
                                     onClick={() => showModal(elem)}
                                     />
                                 )   
@@ -105,10 +105,9 @@ const BurgerIngredients = () => {
                     {
                         allIngredients.map(elem => {
                             if (elem.type === 'main') {
-                                return ( <IngredientCard 
-                                    key={elem._id} 
-                                    {...elem} 
-                                    count = {Math.floor(Math.random() * (1 + 1))}
+                                return ( <IngredientCard
+                                    key={elem._id}
+                                    {...elem}
                                     onClick={() => showModal(elem)}
                                     />
                                 )  

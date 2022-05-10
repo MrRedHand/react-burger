@@ -46,3 +46,15 @@
     height: 33px;
     margin-left: 10px;
 }
+
+.drop_area__nonhovered {
+    box-shadow: 0 0 0 12px transparent;
+    border-radius: 12px;
+    transition: all ease-in 0.1s;
+}
+
+.drop_area__hover {
+    box-shadow: 0 0 0 12px #62b765;
+    transition: all ease-in 0.1s;
+    border-radius: 12px;
+}
