@@ -2,9 +2,9 @@ import React from "react";
 import PropTypes from 'prop-types';
 import styles from './overflow-section.module.css'
 
-const OverflowSection = (props) => {
+const OverflowSection = (props, {ref}) => {
     return (
-        <section style={{height : props.height}} className={`${styles.overflow_section} ${props.className}`}>
+        <section ref={ref} style={{height : props.height}} className={`${styles.overflow_section} ${props.className}`}>
             {props.children}
         </section>
     )

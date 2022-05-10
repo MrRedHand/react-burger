@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {createRef, useEffect, useRef, useState} from "react";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import OverflowSection from "../overflow-section/overflow-section";
 import styles from './burger-ingredients.module.css';
@@ -13,7 +13,7 @@ import {SET_INGREDIENT_INFO} from "../../services/actions/main";
 
 const BurgerIngredients = () => {
 
-    const {allIngredients} = useSelector(state => state.main)
+    const {allIngredients,viewIngredient} = useSelector(state => state.main)
 
     const dispatch = useDispatch();
 
@@ -23,11 +23,11 @@ const BurgerIngredients = () => {
     })
 
     const showModal = (props) => {
+        dispatch({type : SET_INGREDIENT_INFO, payload: props})
         setModal({
             active : true,
             content : <IngredientDetails {...props}/>
         })
-        dispatch({type : 'SET_INGREDIENT_INFO', payload : props})
     }
 
     let [current, setCurrent] = useState('one')
@@ -36,9 +36,8 @@ const BurgerIngredients = () => {
         setCurrent(
             current = where,
         )
+
     }
-
-
 
     return(
         <>
@@ -62,7 +61,7 @@ const BurgerIngredients = () => {
         <section className={`${styles.ingredients}`}>
             <OverflowSection height={450}>
 
-                <div className="pr-2">
+                <div className="pr-2" ref={scrollRef}>
 
                 <IngredientsTitle>Булки</IngredientsTitle>
 
@@ -71,7 +70,11 @@ const BurgerIngredients = () => {
                         allIngredients.map(elem => {
                             if (elem.type === 'bun') {
                                 return ( <IngredientCard
+                                            board={'default'}
+                                            thumbnail={elem.image}
+                                            text={elem.name}
                                             key={elem._id}
+                                            id={elem._id}
                                             {...elem}
                                             onClick={() => showModal(elem)}
                                             />
@@ -88,9 +91,13 @@ const BurgerIngredients = () => {
                         allIngredients.map(elem => {
                             if (elem.type === 'sauce') {
                                 return ( <IngredientCard
-                                    key={elem._id}
-                                    {...elem}
-                                    onClick={() => showModal(elem)}
+                                        board={'default'}
+                                        thumbnail={elem.image}
+                                        text={elem.name}
+                                        key={elem._id}
+                                        id={elem._id}
+                                        {...elem}
+                                        onClick={() => showModal(elem)}
                                     />
                                 )   
                             }
@@ -106,9 +113,13 @@ const BurgerIngredients = () => {
                         allIngredients.map(elem => {
                             if (elem.type === 'main') {
                                 return ( <IngredientCard
-                                    key={elem._id}
-                                    {...elem}
-                                    onClick={() => showModal(elem)}
+                                        board={'default'}
+                                        thumbnail={elem.image}
+                                        text={elem.name}
+                                        key={elem._id}
+                                        id={elem._id}
+                                        {...elem}
+                                        onClick={() => showModal(elem)}
                                     />
                                 )  
                             }

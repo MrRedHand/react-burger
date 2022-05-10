@@ -1,70 +1,69 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useEffect} from 'react'
 import st from './order-details.module.css';
 import checkBg from '../../images/order-details-check-bg.svg';
 import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { ProductsContext } from "../../services/productsContext";
-import { apiUrl } from '../../utils/apiUrl';
-import checkResponse from '../../utils/checkResponse';
+import {fetchOrder} from "../../services/middleware/fetchOrder";
+import {useDispatch, useSelector} from "react-redux";
 
 
 const OrderDetails = () => {
 
-    const products = useContext(ProductsContext);
+    const dispatch = useDispatch();
 
-    const [order, setOrder] = React.useState({
-        number : 0,
-        name : ''
-    })
+    const {orderDetails, currentBun, constructorIngredients, orderDetailsRecieved} = useSelector(state => state.main)
 
-    let ingredientsArr = []
-
-    products.map(elem => {
-        ingredientsArr = [...ingredientsArr, elem._id]
-    })
 
     useEffect(() => {
 
-        const getData = ()  => {
-            fetch(apiUrl + 'orders/', {
-                headers: {'Content-Type' : 'application/json'},
-                method: 'POST',
-                body: JSON.stringify({ingredients : ingredientsArr})
+        if (currentBun !== null && constructorIngredients.length > 0) {
+
+            let ingredientsArr = []
+
+            constructorIngredients.map(elem => {
+                ingredientsArr = [...ingredientsArr, elem._id]
             })
-            .then(checkResponse)
-            .then((data) => {
-              setOrder({
-                number : data.order.number,
-                name : data.name
-              })  
-              console.log('Получен ответ', data)
-            })
-            .catch((error) => {
-              console.log(error)
-            });
+
+            ingredientsArr.unshift(currentBun._id)
+            ingredientsArr.push(currentBun._id)
+
+            dispatch(fetchOrder(ingredientsArr))
         }
 
-        getData();
-
-    }, [])
+    }, [currentBun, constructorIngredients])
 
     return (
         <section className='text-center'>
-            <p className={`${st.order_number} text text_type_digits-large`}>
-                {order.number}
-            </p>
-            <p className='text text_type_main-medium mb-15'>идентификатор заказа</p>
-            <div className={`${st.check_wrap}`}>
-                <div className={st.check_svg}>
-                    <CheckMarkIcon />
-                </div>
-                <img src={checkBg} className={st.check_bg}/>
-            </div>
-            <p className='text text_type_main-default mb-2 mt-15'>
-                {`Ваш заказ "${order.name}" начали готовить`}
-            </p>
-            <p className='text text_type_main-default text_color_inactive mb-10'>
-                Дождитесь готовности на орбитальной станции
-            </p>
+            {
+                (currentBun !== null && constructorIngredients.length > 0)
+                ? (
+                        orderDetailsRecieved
+                            ? (
+                                <>
+                                    <p className={`${st.order_number} text text_type_digits-large`}>
+                                        {orderDetails.order.number}
+                                    </p>
+                                    <p className='text text_type_main-medium mb-15'>идентификатор заказа</p>
+                                    <div className={`${st.check_wrap}`}>
+                                        <div className={st.check_svg}>
+                                            <CheckMarkIcon />
+                                        </div>
+                                        <img src={checkBg} className={st.check_bg}/>
+                                    </div>
+                                    <p className='text text_type_main-default mb-2 mt-15'>
+                                        {`Ваш заказ "${orderDetails.name}" начали готовить`}
+                                    </p>
+                                    <p className='text text_type_main-default text_color_inactive mb-10'>
+                                        Дождитесь готовности на орбитальной станции
+                                    </p>
+                                </>
+                            )
+                            : 'ЗАГРУЗКА'
+                    )
+                : 'похоже вы еще не собрали бургер'
+
+
+            }
+
         </section>
     )
 }

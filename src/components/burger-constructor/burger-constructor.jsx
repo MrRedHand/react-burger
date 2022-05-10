@@ -3,7 +3,7 @@ import OverflowSection from "../overflow-section/overflow-section";
 import styles from './burger-constructor.module.css';
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import ConstructorIngredient from "../constructor-ingredient/constructor-ingredient";
+import IngredientCard from "../ingredient-card/ingredient-card";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import {useDispatch, useSelector} from "react-redux";
@@ -11,8 +11,7 @@ import {useDrop} from "react-dnd";
 import {
     ADD_BUN_TO_CONSTRUCTOR,
     ADD_INGREDIENT_TO_CONSTRUCTOR,
-    REFRESH_TOTAL,
-    REMOVE_INGREDIENT
+    REFRESH_TOTAL
 } from "../../services/actions/main";
 
 
@@ -62,6 +61,11 @@ const BurgerConstructor = ({children, onDropHandler}) => {
     }, [currentBun, constructorIngredients])
 
 
+    const moveCard = (dragIndex, hoverIndex) => {
+
+    }
+
+
     return (
         <>
         <section className="relative-filler">
@@ -71,7 +75,8 @@ const BurgerConstructor = ({children, onDropHandler}) => {
             <section className={`${styles.top_locked}`}>
                 {
                     currentBun !== null
-                    && <ConstructorIngredient
+                    && <IngredientCard
+                        key={currentBun._id + Math.random()}
                         id={currentBun._id}
                         type="top"
                         isLocked={true}
@@ -85,14 +90,14 @@ const BurgerConstructor = ({children, onDropHandler}) => {
             <OverflowSection height={420}>
                 {
                     constructorIngredients
-                        .map(elem => {
-                            return (<ConstructorIngredient
+                        .map((elem, index) => {
+                            return (<IngredientCard
                                     key={elem._id + Math.random()}
-                                    id={elem._id}
                                     isLocked={false}
                                     text={elem.name}
                                     thumbnail={elem.image}
                                     price={elem.price}
+                                    index={index}
                                 />
                             )
                         })
@@ -104,14 +109,14 @@ const BurgerConstructor = ({children, onDropHandler}) => {
             <section className={`${styles.bottom_locked}`}>
                 {
                     currentBun !== null
-                    && <ConstructorIngredient
+                    && <IngredientCard
+                        key={currentBun._id + Math.random()}
                         id={currentBun._id}
                         type="bottom"
                         isLocked={true}
                         text={`${currentBun.name} (низ)`}
                         thumbnail={currentBun.image}
                         price={currentBun.price}
-                        {...currentBun}
                     />
                 }
             </section>
@@ -144,7 +149,6 @@ const BurgerConstructor = ({children, onDropHandler}) => {
 }
 
 BurgerConstructor.propTypes = {
-    //data: PropTypes.array.isRequired
 }
 
 export default BurgerConstructor

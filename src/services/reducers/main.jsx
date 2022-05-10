@@ -4,7 +4,7 @@ import {
     CLEAR_INGREDIENT_INFO,
     GET_FULLDATA_FAILED,
     GET_FULLDATA_REQUEST,
-    GET_FULLDATA_SUCCESS, REFRESH_TOTAL,
+    GET_FULLDATA_SUCCESS, GET_ORDER_REQUEST, GET_ORDER_SUCCESS, REFRESH_TOTAL,
     REMOVE_INGREDIENT,
     SET_INGREDIENT_INFO
 } from "../actions/main";
@@ -15,7 +15,8 @@ const initialState = {
     currentBun : null,
     constructorIngredients: [],
     viewIngredient: {},
-    orderDetails: {},
+    orderDetails: [],
+    orderDetailsRecieved: false,
     totalPrice: 0,
     fullDataRecieved : false,
     fullDataError : false,
@@ -60,6 +61,7 @@ export const mainReducer = (state = initialState, action) => {
         case REMOVE_INGREDIENT :
             return {
                 ...state,
+                constructorIngredients: [...state.constructorIngredients.filter((value, index) => {return index !== action.payload})]
             }    
         case ADD_BUN_TO_CONSTRUCTOR :
             return {
@@ -70,6 +72,14 @@ export const mainReducer = (state = initialState, action) => {
             return {
                 ...state,
                 totalPrice: action.payload
+            }
+        case GET_ORDER_REQUEST :
+            return state;
+        case GET_ORDER_SUCCESS :
+            return {
+                ...state,
+                orderDetails : action.payload,
+                orderDetailsRecieved : true,
             }
         default: {
             return  state;
