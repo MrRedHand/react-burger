@@ -84,8 +84,7 @@ const IngredientCard = ({id, ingredientType,  text, thumbnail, type, isLocked, p
 
 
 IngredientCard.propTypes = {
-    id: PropTypes.string.isRequired,
-    ingredientType : PropTypes.string.isRequired,
+    id: PropTypes.string,
     text : PropTypes.string.isRequired,
     thumbnail : PropTypes.string.isRequired,
     price : PropTypes.number.isRequired,
