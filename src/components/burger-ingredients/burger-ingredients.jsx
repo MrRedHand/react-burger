@@ -13,6 +13,11 @@ import {SET_INGREDIENT_INFO} from "../../services/actions/main";
 
 const BurgerIngredients = () => {
 
+    const one = useRef();
+    const two = useRef();
+    const three = useRef();
+    const scrollPane = useRef();
+
     const {allIngredients,viewIngredient} = useSelector(state => state.main)
 
     const dispatch = useDispatch();
@@ -36,7 +41,39 @@ const BurgerIngredients = () => {
         setCurrent(
             current = where,
         )
+    }
+    //
+    // useEffect(() => {
+    //
+    //     if (scroller && scroller.current) {
+    //         scroller.current.addEventListener("scroll",e => updateScrollPosition(e));
+    //         return function cleanup() {
+    //             scroller.current.removeEventListener("scroll", e => updateScrollPosition(e));
+    //         };
+    //     }
+    // }, [])
 
+
+    function updateScrollPosition() {
+        if (scrollPane && scrollPane.current) {
+            let scrollPaneOffset = scrollPane.current.getBoundingClientRect();
+            let oneOffset = one.current.getBoundingClientRect();
+            let twoOffset = two.current.getBoundingClientRect();
+            let threeOffset = three.current.getBoundingClientRect();
+
+            const scrollPosition = scrollPaneOffset.top + window.scrollY - scrollPane.current.offsetTop
+            const onePosition = oneOffset.top + window.scrollY - scrollPane.current.offsetTop
+            const twoPosition = twoOffset.top + window.scrollY - scrollPane.current.offsetTop
+            const threePosition = threeOffset.top + window.scrollY - scrollPane.current.offsetTop
+
+            if (onePosition > -20 && onePosition < 20) {
+                scrollTo('one')
+            } else if (twoPosition > -20 && twoPosition < 20) {
+                scrollTo('two')
+            } else if (threePosition  > -20 && threePosition < 20) {
+                scrollTo('three')
+            }
+        }
     }
 
     return(
@@ -59,11 +96,13 @@ const BurgerIngredients = () => {
         </section>
 
         <section className={`${styles.ingredients}`}>
-            <OverflowSection height={450}>
+            <div >
+            <OverflowSection height={450} onScroll={e => updateScrollPosition()}>
 
-                <div className="pr-2" ref={scrollRef}>
+                <div className="pr-2" ref={scrollPane}>
 
-                <IngredientsTitle>Булки</IngredientsTitle>
+                <div ref={one}>
+                    <IngredientsTitle>Булки</IngredientsTitle>
 
                 <IngredientsGrid className={styles.ingredients__grid}>
                     {
@@ -75,6 +114,7 @@ const BurgerIngredients = () => {
                                             text={elem.name}
                                             key={elem._id}
                                             id={elem._id}
+                                            ingredientType={elem.type}
                                             {...elem}
                                             onClick={() => showModal(elem)}
                                             />
@@ -83,8 +123,10 @@ const BurgerIngredients = () => {
                         })
                     }
                 </IngredientsGrid>
+                </div>
 
-                <IngredientsTitle>Соусы</IngredientsTitle>
+                <div ref={two}>
+                    <IngredientsTitle>Соусы</IngredientsTitle>
 
                 <IngredientsGrid className={styles.ingredients__grid}>
                     {
@@ -104,9 +146,10 @@ const BurgerIngredients = () => {
                         })
                     }
                 </IngredientsGrid>
+                </div>
 
-
-                <IngredientsTitle>Начинки</IngredientsTitle>
+                <div ref={three}>
+                    <IngredientsTitle>Начинки</IngredientsTitle>
 
                 <IngredientsGrid className={styles.ingredients__grid}>
                     {
@@ -126,9 +169,11 @@ const BurgerIngredients = () => {
                         })
                     }
                 </IngredientsGrid>
+                </div>
 
                 </div>
-            </OverflowSection>  
+            </OverflowSection>
+            </div>
 
             <Modal 
             active={modalState.active} 

@@ -1,32 +1,44 @@
 import React, {useEffect, useState} from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import styles from './ingredient-card.module.css';
 import {ConstructorElement, CurrencyIcon, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import {useDrag} from "react-dnd";
 import {useDispatch, useSelector} from "react-redux";
 import {REMOVE_INGREDIENT} from "../../services/actions/main";
 
-const IngredientCard = ({id, text, thumbnail, type, isLocked, price, board, onClick, index}) => {
+const IngredientCard = ({id, ingredientType,  text, thumbnail, type, isLocked, price, board, onClick, index}) => {
+
+    const [count, setCount] = useState(0)
 
     const dispatch = useDispatch();
 
-    const count = 0;
-
     const currentBoard = board;
 
-    const {constructorIngredients} = useSelector(state => state.main)
+    const {constructorIngredients, currentBun} = useSelector(state => state.main)
+
 
     const [{ isDragging}, dragRef] = useDrag({
         type: 'ingredient',
         item: { id },
         collect: monitor => ({
-            isDragging: monitor.isDragging()
-        })
+            isDragging: monitor.isDragging(),
+        }),
     });
 
-    const dede = () => {
+    const deleteIngredient = () => {
        dispatch({type : REMOVE_INGREDIENT, payload : index})
     }
+
+    useEffect(() => {
+
+        if (ingredientType === 'bun') {
+            (currentBun !== null && currentBun._id === id)
+            ? setCount(2)
+            : setCount(0)
+        } else {
+            setCount(constructorIngredients.filter(x => x._id === id).length)
+        }
+    }, [constructorIngredients, currentBun])
 
     const inIngredientsView = (
         <section style={{opacity : isDragging ? '0.5' : '1'}} className={`${styles.ingredient_card} mt-6`} onClick={onClick} ref={dragRef}>
@@ -48,12 +60,11 @@ const IngredientCard = ({id, text, thumbnail, type, isLocked, price, board, onCl
     )
 
     const inConstructorView = (
-        <div className={`${styles.constructor_elem_wrap} pl-8 mb-4 mr-4`} ref={dragRef}>
+        <div className={`${styles.constructor_elem_wrap} pl-8 mb-4 mr-4`}>
             {
                 isLocked === false
                 && <div className={styles.drag_icon}> <DragIcon /> </div>
             }
-            {index}
             <ConstructorElement
                 key={id}
                 text={text}
@@ -61,7 +72,7 @@ const IngredientCard = ({id, text, thumbnail, type, isLocked, price, board, onCl
                 thumbnail={thumbnail}
                 isLocked={isLocked}
                 price={price}
-                handleClose={dede}
+                handleClose={deleteIngredient}
             />
         </div>
     )
@@ -73,11 +84,11 @@ const IngredientCard = ({id, text, thumbnail, type, isLocked, price, board, onCl
 
 
 IngredientCard.propTypes = {
-    // image: PropTypes.string.isRequired,
-    // price: PropTypes.number.isRequired,
-    // name: PropTypes.string.isRequired,
-    // onClick : PropTypes.func.isRequired,
-    // count : PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
+    ingredientType : PropTypes.string.isRequired,
+    text : PropTypes.string.isRequired,
+    thumbnail : PropTypes.string.isRequired,
+    price : PropTypes.number.isRequired,
 }
 
 export default IngredientCard
