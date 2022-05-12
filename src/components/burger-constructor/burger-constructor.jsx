@@ -13,6 +13,9 @@ import {
     ADD_INGREDIENT_TO_CONSTRUCTOR,
     REFRESH_TOTAL
 } from "../../services/actions/main";
+import {store} from "../../services/store";
+import {addBunToConstructor} from "../../services/actions/add-bun-to-constructor";
+import {addIngredientToConstructor} from "../../services/actions/add-ingredient-to-constructor";
 
 
 
@@ -36,8 +39,8 @@ const BurgerConstructor = ({children, onDropHandler}) => {
         drop: (item) => {
             const itemToAdd = allIngredients.find(x => x._id === item.id)
             itemToAdd.type === 'bun'
-            ? dispatch({type : ADD_BUN_TO_CONSTRUCTOR, payload : itemToAdd})
-            : dispatch({type : ADD_INGREDIENT_TO_CONSTRUCTOR, payload : itemToAdd})
+            ? store.dispatch(addBunToConstructor(itemToAdd))
+            : store.dispatch(addIngredientToConstructor(itemToAdd))
         },
     });
 
@@ -76,7 +79,7 @@ const BurgerConstructor = ({children, onDropHandler}) => {
                 {
                     currentBun !== null
                     && <IngredientCard
-                        key={currentBun._id + Math.random()}
+                        key={currentBun.uuid}
                         id={currentBun._id}
                         type="top"
                         isLocked={true}
@@ -92,7 +95,7 @@ const BurgerConstructor = ({children, onDropHandler}) => {
                     constructorIngredients
                         .map((elem, index) => {
                             return (<IngredientCard
-                                    key={elem._id + Math.random()}
+                                    key={elem.uuid}
                                     isLocked={false}
                                     text={elem.name}
                                     thumbnail={elem.image}
@@ -110,7 +113,7 @@ const BurgerConstructor = ({children, onDropHandler}) => {
                 {
                     currentBun !== null
                     && <IngredientCard
-                        key={currentBun._id + Math.random()}
+                        key={currentBun.uuid}
                         id={currentBun._id}
                         type="bottom"
                         isLocked={true}

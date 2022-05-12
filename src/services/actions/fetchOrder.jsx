@@ -1,6 +1,6 @@
 import {apiUrl} from "../../utils/apiUrl";
 import checkResponse from "../../utils/checkResponse";
-import {GET_ORDER_FAILED, GET_ORDER_REQUEST, GET_ORDER_SUCCESS} from "../actions/main";
+import {GET_ORDER_FAILED, GET_ORDER_REQUEST, GET_ORDER_SUCCESS} from "./main";
 import PropTypes from "prop-types";
 
 export  const fetchOrder = (ingredientsArr) => {
