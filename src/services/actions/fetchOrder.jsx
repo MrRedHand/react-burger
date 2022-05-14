@@ -2,13 +2,16 @@ import {apiUrl} from "../../utils/apiUrl";
 import checkResponse from "../../utils/checkResponse";
 import {GET_ORDER_FAILED, GET_ORDER_REQUEST, GET_ORDER_SUCCESS} from "./main";
 import PropTypes from "prop-types";
+import {store} from "../store";
+import {getOrderFailed, getOrderRequest, getOrderSuccess} from "./get-order";
+import {clearConstructor} from "./clear-constructor";
 
 export  const fetchOrder = (ingredientsArr) => {
     return function (dispatch) {
 
         console.log(ingredientsArr)
 
-        dispatch({type : GET_ORDER_REQUEST})
+        store.dispatch(getOrderRequest)
 
         fetch(apiUrl + 'orders/', {
             headers: {
@@ -18,11 +21,11 @@ export  const fetchOrder = (ingredientsArr) => {
             })
             .then(checkResponse)
             .then((data) => {
-                dispatch({type : GET_ORDER_SUCCESS, payload : data})
-                console.log('got order', data)
+                store.dispatch(getOrderSuccess(data))
+                store.dispatch(clearConstructor())
             })
             .catch((error) => {
-                dispatch({type : GET_ORDER_FAILED})
+                store.dispatch(getOrderFailed)
                 console.log(error)
             });
     }

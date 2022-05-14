@@ -15,7 +15,7 @@ const OrderDetails = () => {
 
     useEffect(() => {
 
-        if (currentBun !== null && constructorIngredients.length > 0) {
+        if (currentBun !== null && constructorIngredients.length > 0 && !orderDetailsRecieved) {
 
             let ingredientsArr = []
 
@@ -29,37 +29,33 @@ const OrderDetails = () => {
             dispatch(fetchOrder(ingredientsArr))
         }
 
-    }, [currentBun, constructorIngredients])
+    }, [currentBun, constructorIngredients, orderDetailsRecieved])
 
     return (
         <section className='text-center'>
             {
-                (currentBun !== null && constructorIngredients.length > 0)
+                orderDetailsRecieved
                 ? (
-                        orderDetailsRecieved
-                            ? (
-                                <>
-                                    <p className={`${st.order_number} text text_type_digits-large`}>
-                                        {orderDetails.order.number}
-                                    </p>
-                                    <p className='text text_type_main-medium mb-15'>идентификатор заказа</p>
-                                    <div className={`${st.check_wrap}`}>
-                                        <div className={st.check_svg}>
-                                            <CheckMarkIcon />
-                                        </div>
-                                        <img src={checkBg} className={st.check_bg}/>
-                                    </div>
-                                    <p className='text text_type_main-default mb-2 mt-15'>
-                                        {`Ваш заказ "${orderDetails.name}" начали готовить`}
-                                    </p>
-                                    <p className='text text_type_main-default text_color_inactive mb-10'>
-                                        Дождитесь готовности на орбитальной станции
-                                    </p>
-                                </>
-                            )
-                            : 'ЗАГРУЗКА'
-                    )
-                : 'похоже вы еще не собрали бургер'
+                    <>
+                        <p className={`${st.order_number} text text_type_digits-large`}>
+                            {orderDetails.order.number}
+                        </p>
+                        <p className='text text_type_main-medium mb-15'>идентификатор заказа</p>
+                        <div className={`${st.check_wrap}`}>
+                            <div className={st.check_svg}>
+                                <CheckMarkIcon />
+                            </div>
+                            <img src={checkBg} className={st.check_bg}/>
+                        </div>
+                        <p className='text text_type_main-default mb-2 mt-15'>
+                            {`Ваш заказ "${orderDetails.name}" начали готовить`}
+                        </p>
+                        <p className='text text_type_main-default text_color_inactive mb-10'>
+                            Дождитесь готовности на орбитальной станции
+                        </p>
+                    </>
+                )
+                : 'ФОРМИРУЕМ ЗАКАЗ'
 
 
             }

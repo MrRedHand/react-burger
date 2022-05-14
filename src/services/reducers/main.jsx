@@ -1,11 +1,11 @@
 import {
     ADD_BUN_TO_CONSTRUCTOR,
-    ADD_INGREDIENT_TO_CONSTRUCTOR,
+    ADD_INGREDIENT_TO_CONSTRUCTOR, CLEAR_CONSTRUCTOR,
     CLEAR_INGREDIENT_INFO,
     GET_FULLDATA_FAILED,
     GET_FULLDATA_REQUEST,
-    GET_FULLDATA_SUCCESS, GET_ORDER_REQUEST, GET_ORDER_SUCCESS, REFRESH_TOTAL,
-    REMOVE_INGREDIENT,
+    GET_FULLDATA_SUCCESS, GET_ORDER_FAILED, GET_ORDER_REQUEST, GET_ORDER_SUCCESS, REFRESH_TOTAL,
+    REMOVE_INGREDIENT, RESORT_INGREDIENTS_IN_CONSTRUCTOR,
     SET_INGREDIENT_INFO
 } from "../actions/main";
 
@@ -25,6 +25,17 @@ const initialState = {
 
 export const mainReducer = (state = initialState, action) => {
     switch (action.type) {
+        case CLEAR_CONSTRUCTOR :
+            return {
+                ...state,
+                constructorIngredients: [],
+                currentBun: null,
+            }
+        case RESORT_INGREDIENTS_IN_CONSTRUCTOR :
+            return {
+                ...state,
+                constructorIngredients : action.payload
+            }
         case GET_FULLDATA_REQUEST:
             return {
                 ...state,
@@ -58,15 +69,15 @@ export const mainReducer = (state = initialState, action) => {
                 ...state,
                 constructorIngredients: [...state.constructorIngredients, action.payload]
             }
-        case REMOVE_INGREDIENT :
-            return {
-                ...state,
-                constructorIngredients: [...state.constructorIngredients.filter((value, index) => {return index !== action.payload})]
-            }    
         case ADD_BUN_TO_CONSTRUCTOR :
             return {
                 ...state,
                 currentBun: action.payload
+            }
+        case REMOVE_INGREDIENT :
+            return {
+                ...state,
+                constructorIngredients: [...state.constructorIngredients.filter((value, index) => {return index !== action.payload})]
             }
         case REFRESH_TOTAL:
             return {
@@ -74,6 +85,8 @@ export const mainReducer = (state = initialState, action) => {
                 totalPrice: action.payload
             }
         case GET_ORDER_REQUEST :
+            return state;
+        case GET_ORDER_FAILED :
             return state;
         case GET_ORDER_SUCCESS :
             return {

@@ -1,45 +1,79 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useRef} from "react";
 import PropTypes from "prop-types";
 import styles from './ingredient-card.module.css';
 import {ConstructorElement, CurrencyIcon, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
-import {useDrag} from "react-dnd";
-import {useDispatch, useSelector} from "react-redux";
-import { v4 as uuidv4 } from 'uuid';
-import {REMOVE_INGREDIENT} from "../../services/actions/main";
+import {useDrag, useDrop} from "react-dnd";
+import {useSelector} from "react-redux";
+import {store} from "../../services/store";
+import {removeIngredient} from "../../services/actions/remove-ingredient";
 
-const IngredientCard = ({id, ingredientType,  text, thumbnail, type, isLocked, price, board, onClick, index}) => {
+const IngredientCard = ({id, ingredientType,  text, thumbnail, type, isLocked, price, board, onClick, moveCard, index}) => {
 
     const [count, setCount] = useState(0)
-
-    const dispatch = useDispatch();
 
     const currentBoard = board;
 
     const {constructorIngredients, currentBun} = useSelector(state => state.main)
 
+    const ref = useRef(null)
 
-    const [{ isDragging}, dragRef] = useDrag({
+    const [{ ingrDragging}, dragIngr] = useDrag({
         type: 'ingredient',
         item: { id },
         collect: monitor => ({
-            isDragging: monitor.isDragging(),
+            ingrDragging: monitor.isDragging(),
         }),
     });
 
-    const [{dragInConstructor}, dragConstr] = useDrag({
+
+
+
+
+    const [, drop] = useDrop({
+        accept : 'ingredient-in-constructor',
+        hover(item, monitor) {
+            if (!ref.current) {
+                return
+            }
+            const dragIndex = item.index
+            const hoverIndex = index
+            if (dragIndex === hoverIndex) {
+                return
+            }
+            const hoverBoundingRect = ref.current?.getBoundingClientRect()
+            const hoverMiddleY =
+                (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
+            const clientOffset = monitor.getClientOffset()
+            const hoverClientY = clientOffset.y - hoverBoundingRect.top
+            if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+                return
+            }
+            if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+                return
+            }
+            moveCard(dragIndex, hoverIndex)
+            item.index = hoverIndex
+        },
+    })
+
+    const [{ isDragging }, drag] = useDrag({
         type: 'ingredient-in-constructor',
-        item: { id },
-        collect: monitor => ({
-            dragInConstructor: monitor.isDragging(),
+        item: () => {
+            return { id, index }
+        },
+        collect: (monitor) => ({
+            isDragging: monitor.isDragging(),
         }),
     })
 
+    drag(drop(ref))
+
+
     const deleteIngredient = () => {
-       dispatch({type : REMOVE_INGREDIENT, payload : index})
+       store.dispatch(removeIngredient(index))
     }
 
     useEffect(() => {
-
         if (ingredientType === 'bun') {
             (currentBun !== null && currentBun._id === id)
             ? setCount(2)
@@ -50,7 +84,7 @@ const IngredientCard = ({id, ingredientType,  text, thumbnail, type, isLocked, p
     }, [constructorIngredients, currentBun])
 
     const inIngredientsView = (
-        <section style={{opacity : isDragging ? '0.5' : '1'}} className={`${styles.ingredient_card} mt-6`} onClick={onClick} ref={dragRef}>
+        <section style={{opacity : ingrDragging ? '0.5' : '1'}} className={`${styles.ingredient_card} mt-6`} onClick={onClick} ref={dragIngr}>
             {
                 count > 0
                 && (
@@ -68,16 +102,15 @@ const IngredientCard = ({id, ingredientType,  text, thumbnail, type, isLocked, p
         </section>
     )
 
-    const opacity = dragInConstructor ? 0 : 1;
+    const opacity = isDragging ? 0 : 1
 
     const inConstructorView = (
-        <div className={`${styles.constructor_elem_wrap} pl-8 mb-4 mr-4`} ref={dragConstr} style={{opacity : opacity}}>
+        <div className={`${styles.constructor_elem_wrap} pl-8 mb-4 mr-4`} style={{opacity : opacity}} ref={ref}>
             {
                 isLocked === false
                 && <div className={styles.drag_icon}> <DragIcon /> </div>
             }
             <ConstructorElement
-                key={id}
                 text={text}
                 type={type}
                 thumbnail={thumbnail}
@@ -104,6 +137,7 @@ IngredientCard.propTypes = {
     price : PropTypes.number.isRequired,
     board : PropTypes.string,
     onClick: PropTypes.func,
+    moveCard : PropTypes.func,
     index : PropTypes.number
 }
 
