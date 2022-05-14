@@ -8,7 +8,6 @@ import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import {useDispatch, useSelector} from "react-redux";
 import {useDrop} from "react-dnd";
-import {store} from "../../services/store";
 import {addBunToConstructor} from "../../services/actions/add-bun-to-constructor";
 import {addIngredientToConstructor} from "../../services/actions/add-ingredient-to-constructor";
 import {resortIngredients} from "../../services/actions/resort-ingredients";
@@ -16,6 +15,8 @@ import {v4 as uuidv4} from "uuid";
 import {refreshTotal} from "../../services/actions/refresh-total";
 
 const BurgerConstructor = () => {
+
+    const dispatch = useDispatch();
 
     const {constructorIngredients, currentBun, allIngredients, totalPrice} = useSelector(state => state.main)
 
@@ -35,8 +36,8 @@ const BurgerConstructor = () => {
             const clone = {...itemToAdd};
             clone.uuid = uuidv4()
             clone.type === 'bun'
-            ? store.dispatch(addBunToConstructor(clone))
-            : store.dispatch(addIngredientToConstructor(clone))
+            ? dispatch(addBunToConstructor(clone))
+            : dispatch(addIngredientToConstructor(clone))
         },
     });
 
@@ -55,7 +56,7 @@ const BurgerConstructor = () => {
             ingredientsPrice += elem.price
         })
 
-        store.dispatch(refreshTotal(bunPrice + ingredientsPrice))
+        dispatch(refreshTotal(bunPrice + ingredientsPrice))
 
     }, [currentBun, constructorIngredients])
 
@@ -66,7 +67,7 @@ const BurgerConstructor = () => {
         newCards.splice(dragIndex, 1)
         newCards.splice(hoverIndex, 0 , dragCard)
 
-        store.dispatch(resortIngredients(newCards))
+        dispatch(resortIngredients(newCards))
     }
 
 

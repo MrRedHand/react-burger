@@ -1,8 +1,6 @@
 import {apiUrl} from "../../utils/apiUrl";
 import checkResponse from "../../utils/checkResponse";
-import {GET_ORDER_FAILED, GET_ORDER_REQUEST, GET_ORDER_SUCCESS} from "./main";
 import PropTypes from "prop-types";
-import {store} from "../store";
 import {getOrderFailed, getOrderRequest, getOrderSuccess} from "./get-order";
 import {clearConstructor} from "./clear-constructor";
 
@@ -11,7 +9,7 @@ export  const fetchOrder = (ingredientsArr) => {
 
         console.log(ingredientsArr)
 
-        store.dispatch(getOrderRequest)
+        dispatch(getOrderRequest())
 
         fetch(apiUrl + 'orders/', {
             headers: {
@@ -21,11 +19,11 @@ export  const fetchOrder = (ingredientsArr) => {
             })
             .then(checkResponse)
             .then((data) => {
-                store.dispatch(getOrderSuccess(data))
-                store.dispatch(clearConstructor())
+                dispatch(getOrderSuccess(data))
+                dispatch(clearConstructor())
             })
             .catch((error) => {
-                store.dispatch(getOrderFailed)
+                dispatch(getOrderFailed())
                 console.log(error)
             });
     }

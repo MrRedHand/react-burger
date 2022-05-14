@@ -3,11 +3,12 @@ import PropTypes from "prop-types";
 import styles from './ingredient-card.module.css';
 import {ConstructorElement, CurrencyIcon, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import {useDrag, useDrop} from "react-dnd";
-import {useSelector} from "react-redux";
-import {store} from "../../services/store";
+import {useDispatch, useSelector} from "react-redux";
 import {removeIngredient} from "../../services/actions/remove-ingredient";
 
 const IngredientCard = ({id, ingredientType,  text, thumbnail, type, isLocked, price, board, onClick, moveCard, index}) => {
+
+    const dispatch = useDispatch()
 
     const [count, setCount] = useState(0)
 
@@ -70,7 +71,7 @@ const IngredientCard = ({id, ingredientType,  text, thumbnail, type, isLocked, p
 
 
     const deleteIngredient = () => {
-       store.dispatch(removeIngredient(index))
+       dispatch(removeIngredient(index))
     }
 
     useEffect(() => {

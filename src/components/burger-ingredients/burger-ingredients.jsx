@@ -7,12 +7,13 @@ import IngredientsTitle from "../ingredients-title/ingredients-title";
 import IngredientsGrid from "../ingredients-grid/ingredients-grid";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
-import {useSelector} from "react-redux";
-import {store} from "../../services/store";
+import {useDispatch, useSelector} from "react-redux";
 import {setIngredientInfo} from "../../services/actions/set-ingredient-info";
 
 
 const BurgerIngredients = () => {
+
+    const dispatch = useDispatch();
 
     const one = useRef();
     const two = useRef();
@@ -27,7 +28,7 @@ const BurgerIngredients = () => {
     })
 
     const showModal = (props) => {
-        store.dispatch(setIngredientInfo(props))
+        dispatch(setIngredientInfo(props))
         setModal({
             active : true,
             content : <IngredientDetails {...props}/>
