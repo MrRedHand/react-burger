@@ -5,6 +5,27 @@
     cursor: pointer;
     border-radius: 8px;
     position: relative;
+    cursor: move;
+    cursor: grab;
+}
+
+.constructor_elem_wrap {
+    position: relative;
+    cursor: move;
+    cursor: grab;
+    transition: opacity ease-in 0.15s;
+    opacity: 1;
+}
+
+.constructor_elem_wrap:hover {
+    opacity: 0.85;
+}
+
+.drag_icon {
+    position: absolute;
+    left: 0;
+    top:50%;
+    transform: translate(0, -50%);
 }
 
 .ingredient_card:hover {
