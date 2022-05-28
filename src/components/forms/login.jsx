@@ -7,8 +7,8 @@ const LoginForm = ({register, forgot}) => {
     return (
         <section className={st.form_wrap}>
             <p className="text text_type_main-medium">Вход</p>
-            <Input type="email" placeholder="E-mail" autocomplete="email"/>
-            <PasswordInput/>
+            <Input type="email" placeholder="E-mail" value="" onChange={() => {}}/>
+            <Input type="password" placeholder="Пароль" value="" onChange={() => {}}/>
             <Button>Войти</Button>
             <div className={`${st.form__footer} mt-20`}>
                 <div className="d-flex mb-4">

@@ -7,7 +7,7 @@ const ForgotForm = ({login}) => {
     return (
         <section className={st.form_wrap}>
             <p className="text text_type_main-medium">Восстановление пароля</p>
-            <Input type="email" placeholder="Укажите e-mail" autocomplete="email"/>
+            <Input type="email" placeholder="Укажите e-mail" value="" onChange={() => {}}/>
             <Button>Восстановить</Button>
             <div className={`${st.form__footer} mt-20`}>
                 <div className="d-flex mb-4">

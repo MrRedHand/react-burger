@@ -7,9 +7,9 @@ const UserProfile = () => {
 
     return (
         <section className="form_grid">
-            <Input type="text" placeholder="Имя" value="Марк" icon="EditIcon"/>
-            <Input type="text" placeholder="Логин" value="momo@gmail.com" icon="EditIcon"/>
-            <Input type="text" placeholder="Пароль" value="*****" icon="EditIcon"/>
+            <Input type="text" placeholder="Имя" value="Марк" icon="EditIcon" onChange={() => {}}/>
+            <Input type="text" placeholder="Логин" value="momo@gmail.com" icon="EditIcon" onChange={() => {}}/>
+            <Input type="text" placeholder="Пароль" value="*****" icon="EditIcon" onChange={() => {}}/>
         </section>
     )
 }

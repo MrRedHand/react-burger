@@ -9,6 +9,7 @@ import RegisterPage from "../../pages/register";
 import ForgotPage from "../../pages/forgot";
 import ResetPage from "../../pages/reset";
 import ProfilePage from "../../pages/profile";
+import IngredientPage from "../../pages/ingredient";
 
 
 function App() {
@@ -48,6 +49,9 @@ function App() {
           </Route>
           <Route path="/profile">
             <ProfilePage/>
+          </Route>
+          <Route path="/ingredients/:id">
+            <IngredientPage/>
           </Route>
         </Router>
 

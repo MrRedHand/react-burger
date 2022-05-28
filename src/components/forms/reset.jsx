@@ -7,8 +7,8 @@ const ResetForm = ({login}) => {
     return (
         <section className={st.form_wrap}>
             <p className="text text_type_main-medium">Восстановление пароля</p>
-            <Input type="text" placeholder="Введите новый пароль"/>
-            <Input type="text" placeholder="Введите код из письма"/>
+            <Input type="text" placeholder="Введите новый пароль"  value="" onChange={() => {}}/>
+            <Input type="text" placeholder="Введите код из письма"  value="" onChange={() => {}}/>
             <Button>Сохранить</Button>
             <div className={`${st.form__footer} mt-20`}>
                 <div className="d-flex mb-4">
