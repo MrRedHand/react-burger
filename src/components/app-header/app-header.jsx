@@ -1,9 +1,13 @@
-import React from 'react'
+import React, {useCallback} from 'react'
 import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 import { BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './app-header.module.css';
+import { useHistory } from 'react-router-dom';
+
 
 export default function AppHeader() {
+
+    const history = useHistory();
 
     const btnConstrClss = `${styles.btn} ${styles.nav__btn} p-5`
     const constrClss = 'text text_type_main-small text_color_active ml-2'
@@ -12,14 +16,29 @@ export default function AppHeader() {
     const btnLkClss = `${styles.btn} ${styles.nav__btn} p-5`
     const lkClss = 'text text_type_main-small text_color_inactive ml-2'
 
+    const login = useCallback(
+        () => {
+            history.replace({ pathname: '/login' });
+        },
+        [history]
+    );
+
+    const mainPage = useCallback(
+        () => {
+            history.replace({ pathname: '/' });
+        },
+        [history]
+    );
+
+
     return (
         <header className='m-4 mb-0'>
-            <nav className={`${styles.navigation} wrap pt-4 pb-4`}>
+            <nav className={`${styles.navigation} wrap pt-4 pb-4 mx-auto`}>
                 <div className='align-left flex-block'>
-                    <button className={btnConstrClss}>
-                        <BurgerIcon type="primary" />
-                        <span className={constrClss}>Конструктор</span>
-                    </button>
+                        <button className={btnConstrClss} onClick={() => mainPage()}>
+                            <BurgerIcon type="primary" />
+                            <span className={constrClss}>Конструктор</span>
+                        </button>
 
                     <button className={btnOrderClss}>
                         <ListIcon type='secondary' />
@@ -32,7 +51,7 @@ export default function AppHeader() {
                 </div>
 
                 <div className='align-right flex-block'>
-                    <button className={btnLkClss}>
+                    <button className={btnLkClss} onClick={() => login()}>
                         <ProfileIcon type='secondary' />
                         <span className={lkClss}>Личный кабинет</span>
                     </button>

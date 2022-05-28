@@ -11,6 +11,24 @@ body.modal-active #react-modals {
   height: 100vh;
 }
 
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.my-auto {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.m-auto {
+  margin: auto;
+}
+
+.d-flex {
+  display: flex;
+}
+
 .text-center {
   text-align: center;
 }
@@ -21,7 +39,6 @@ body.modal-active #react-modals {
 
 .wrap {
   max-width: 1240px;
-  margin: 0 auto;
 }
 
 .flex-block {
@@ -80,4 +97,25 @@ body.modal-active #react-modals {
 .hide {
   visibility: hidden;
   opacity: 0;
+}
+
+.input__container,
+.input__container .input {
+  width: 100% !important;
+}
+
+.form_grid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.profile_grid {
+  display: grid;
+  grid-template-columns: 30% 30% 30%;
+  gap: 5%;
+}
+
+.text_color_active {
+  color: #F2F2F3;
 }
