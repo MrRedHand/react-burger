@@ -1,4 +1,4 @@
-import React, {useCallback} from "react";
+import React, {useCallback, useState} from "react";
 import {useHistory} from "react-router-dom";
 import RegisterForm from "../components/forms/register";
 
@@ -16,7 +16,7 @@ const RegisterPage = () => {
 
     return (
         <>
-            <RegisterForm login={login}/>
+            <RegisterForm login={login} />
         </>
     )
 }
