@@ -11,7 +11,7 @@ export function ProtectedRoute({ children, ...rest }) {
 
     useEffect(() => {
         userIsLoaded = user
-    }, []);
+    }, [user]);
 
     return (
         <Route
