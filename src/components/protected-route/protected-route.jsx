@@ -1,15 +1,24 @@
-import { useAuth } from '../services/auth';
+import React from "react";
 import { Route, Redirect } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import {useSelector} from "react-redux";
 
-const ProtectedRoute = ({ children, ...rest }) => {
+export function ProtectedRoute({ children, ...rest }) {
 
+    const {user} = useSelector(state => state.user.user)
+
+    let userIsLoaded = false
+
+    useEffect(() => {
+        userIsLoaded = user
+    }, []);
 
     return (
         <Route
             {...rest}
             render={() =>
-                auth.user ? (
+                // Если пользователь есть, используем компонент, который передан в ProtectedRoute
+                userIsLoaded ? (
                     children
                 ) : (
                     // Если пользователя нет в хранилище, происходит переадресация на роут /login
@@ -21,5 +30,3 @@ const ProtectedRoute = ({ children, ...rest }) => {
         />
     );
 }
-
-export default ProtectedRoute

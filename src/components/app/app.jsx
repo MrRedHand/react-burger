@@ -10,6 +10,7 @@ import ForgotPage from "../../pages/forgot";
 import ResetPage from "../../pages/reset";
 import ProfilePage from "../../pages/profile";
 import IngredientPage from "../../pages/ingredient";
+import {ProtectedRoute} from "../protected-route/protected-route";
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
     <>
         <Router>
           <AppHeader />
+          <ProtectedRoute>
             <Route path="/" exact={true}>
               {
                 fullDataRecieved
@@ -35,6 +37,7 @@ function App() {
                     : 'ЗАГРУЗКА'
               }
             </Route>
+          </ProtectedRoute>
             <Route path="/login" exact={true}>
                 <LoginPage />
             </Route>

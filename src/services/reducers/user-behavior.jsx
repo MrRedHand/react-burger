@@ -13,8 +13,7 @@ const initialState = {
     registered : false,
     accessToken: '',
     refreshToken: '',
-    userName : '',
-    userEmail : ''
+    user : {},
 }
 
 export const userReducer = (state = initialState, action) => {
@@ -24,8 +23,10 @@ export const userReducer = (state = initialState, action) => {
                 ...state,
                 accessToken: action.payload.accessToken,
                 refreshToken: action.payload.refreshToken,
-                userName : action.payload.user.name,
-                userEmail: action.payload.user.email,
+                user : {
+                    name : action.payload.user.name,
+                    email : action.payload.user.email
+                },
                 registered : true,
             }
         case REGISTER_FAILED :
