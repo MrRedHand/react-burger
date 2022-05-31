@@ -13,6 +13,9 @@ import {useDispatch} from "react-redux";
 import {getDataFailed, getDataSuccess} from "./actions/get-data";
 import {registerFailed, registerRequest, registerSuccess} from "./actions/user-register";
 import {loginFailed, loginRequest, loginSuccess} from "./actions/user-login";
+import {setCookie} from "./set-cookie";
+
+
 
 export const loginUser = form => {
     return function (dispatch) {
@@ -26,7 +29,24 @@ export const loginUser = form => {
             },
             body: JSON.stringify(form)
         })
-            .then(checkResponse)
+            .then(res => {
+                if (res.ok) {
+                    let authToken;
+                    // Ищем интересующий нас заголовок
+                    res.headers.forEach(header => {
+                        if (header.indexOf('Bearer') === 0) {
+                            // Отделяем схему авторизации от "полезной нагрузки токена",
+                            // Стараемся экономить память в куках (доступно 4кб)
+                            authToken = header.split('Bearer ')[1];
+                        }
+                    });
+                    if (authToken) {
+                        // Сохраняем токен в куку token
+                        setCookie('token', authToken);
+                    }
+                    return res.json();
+                }
+            })
             .then((data) => {
                 console.log(data)
                 dispatch(loginSuccess(data))
@@ -60,4 +80,19 @@ export const registerUser = form => {
             });
     }
 }
+
+// export const getChatsRequest = async () =>
+//     await fetch('https://cosmic.nomoreparties.space/api/chat', {
+//         method: 'GET',
+//         mode: 'cors',
+//         cache: 'no-cache',
+//         credentials: 'same-origin',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             // Отправляем токен и схему авторизации в заголовке при запросе данных
+//             Authorization: 'Bearer ' + getCookie('token')
+//         },
+//         redirect: 'follow',
+//         referrerPolicy: 'no-referrer'
+//     });
 

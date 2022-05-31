@@ -9,13 +9,12 @@ import {
 
 
 const initialState = {
-    loggedIn : false,
+    isAuthenticated : false,
     registered : false,
     accessToken: '',
     refreshToken: '',
     userName : '',
     userEmail : ''
-
 }
 
 export const userReducer = (state = initialState, action) => {
@@ -43,12 +42,12 @@ export const userReducer = (state = initialState, action) => {
                 refreshToken: action.payload.refreshToken,
                 userName : action.payload.user.name,
                 userEmail: action.payload.user.email,
-                loggedIn : true
+                isAuthenticated : true
             }
         case LOGIN_FAILED :
             return {
                 ...state,
-                loggedIn: false
+                isAuthenticated: false
             }
         case LOGIN_REQUEST :
             return  state
