@@ -14,6 +14,7 @@ import {checkUserToken} from "../../services/to-server-requests";
 import WrongPage from "../../pages/404";
 import {Route, Switch, useHistory, useLocation} from "react-router-dom";
 import IngredientDetails from "../ingredient-details/ingredient-details";
+import Modal from "../modal/modal";
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
     checkUserToken()
 
   }, [])
+
     
   return (
     <>
@@ -62,18 +64,27 @@ function App() {
           <Route path="/profile" exact={true}>
             <ProfilePage/>
           </Route>
-          <Route path="/ingredients/:id">
-            <IngredientPage/>
-          </Route>
+              {
+                  !background && (
+                      <Route path="/ingredients/:id" exact={true}>
+                          <IngredientDetails/>
+                      </Route>
+                  )
+              }
           <Route path="*">
             <WrongPage/>
           </Route>
           </Switch>
-      {background && (
-          <Route path="/ingredients/:id" children={
-            <IngredientDetails/>
-          }/>
-      )}
+            {background && (
+              <Route path="/ingredients/:id" children={
+                  <Modal
+                      activity={true}
+                      heading={'Детали ингредиента'}
+                      children={<IngredientDetails/>}
+                  />
+
+              }/>
+          )}
 
     </>
   );

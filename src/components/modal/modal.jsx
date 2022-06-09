@@ -1,22 +1,20 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import st from './modal.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalHeader from '../modal-header/modal-header';
 
-const Modal = ({active, setActive, children, heading}) => {
+const Modal = ({activity, children, heading}) => {
 
     const modalRoot = document.getElementById("react-modals");
 
     const body = document.querySelector('body')
 
+    const [active, setActive] = useState(activity)
+
     const closeModal = () => {
-        setActive(prevState => ({
-            ...prevState,
-            active : false
-        }))
+        setActive(false)
     }
 
     React.useEffect(() => {
@@ -53,10 +51,5 @@ const Modal = ({active, setActive, children, heading}) => {
     );
 }
 
-Modal.propTypes = {
-    active : PropTypes.bool.isRequired,
-    setActive : PropTypes.func.isRequired,
-    heading : PropTypes.string,
-}
 
 export default Modal
