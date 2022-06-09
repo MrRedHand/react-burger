@@ -21,21 +21,21 @@ export default function AppHeader() {
 
     const login = useCallback(
         () => {
-            history.replace({ pathname: '/login' });
+            history.push('/login');
         },
         [history]
     );
 
     const profile = useCallback(
         () => {
-            history.replace({ pathname: '/profile' });
+            history.push('/profile');
         },
         [history]
     );
 
     const mainPage = useCallback(
         () => {
-            history.replace({ pathname: '/' });
+            history.push('/');
         },
         [history]
     );

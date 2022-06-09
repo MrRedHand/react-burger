@@ -9,10 +9,12 @@ import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import {useDispatch, useSelector} from "react-redux";
 import {setIngredientInfo} from "../../services/actions/set-ingredient-info";
-import {useHistory} from "react-router-dom";
+import {useHistory, useLocation} from "react-router-dom";
 
 
 const BurgerIngredients = () => {
+
+    const location = useLocation()
 
     const history = useHistory()
 
@@ -27,7 +29,7 @@ const BurgerIngredients = () => {
 
     const showModal = (props) => {
         dispatch(setIngredientInfo(props))
-        history.push(`/ingredients/${props._id}`)
+        history.push(`/ingredients/${props._id}`, {background : location})
     }
 
     let [current, setCurrent] = useState('one')

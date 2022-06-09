@@ -64,13 +64,9 @@ function App() {
           <Route path="/profile" exact={true}>
             <ProfilePage/>
           </Route>
-              {
-                  !background && (
-                      <Route path="/ingredients/:id" exact={true}>
-                          <IngredientDetails/>
-                      </Route>
-                  )
-              }
+          <Route path="/ingredients/:id" exact={true}>
+              <IngredientDetails/>
+          </Route>
           <Route path="*">
             <WrongPage/>
           </Route>

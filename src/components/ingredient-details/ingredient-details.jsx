@@ -1,16 +1,24 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import st from './ingredient-details.module.css';
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router-dom";
+import {getFullData} from "../../services/actions/getFullData";
 
 const IngredientDetails = () => {
 
+    const dispatch = useDispatch();
 
     const params = useParams()
 
-    const {allIngredients} = useSelector(state => state.main)
+    const {allIngredients, fullDataRecieved} = useSelector(state => state.main)
 
     const viewIngredient = allIngredients.filter(ingredient => ingredient._id === params.id)
+
+    console.log('viewIngredient', viewIngredient)
+
+    useEffect(() => {
+        !fullDataRecieved && dispatch(getFullData())
+    }, [])
 
     const headClass = `${st.text_center} text text_type_main-default text_color_inactive`
     const dataClass = `${st.text_center} text text_type_digits-default text_color_inactive`
@@ -18,6 +26,7 @@ const IngredientDetails = () => {
         <>
             {
                 viewIngredient !== null
+                && fullDataRecieved
                 && (
                         <section className={st.ingredient_wrap}>
                             <img src={viewIngredient[0].image_large} className={st.img}/>

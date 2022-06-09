@@ -4,8 +4,11 @@ import ModalOverlay from '../modal-overlay/modal-overlay';
 import st from './modal.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalHeader from '../modal-header/modal-header';
+import {useHistory} from "react-router-dom";
 
 const Modal = ({activity, children, heading}) => {
+
+    const history = useHistory()
 
     const modalRoot = document.getElementById("react-modals");
 
@@ -15,6 +18,7 @@ const Modal = ({activity, children, heading}) => {
 
     const closeModal = () => {
         setActive(false)
+        setTimeout(() => {history.push('/', {})}, 50)
     }
 
     React.useEffect(() => {
