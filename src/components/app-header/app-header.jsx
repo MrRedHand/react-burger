@@ -3,9 +3,12 @@ import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 import { BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './app-header.module.css';
 import { useHistory } from 'react-router-dom';
+import {useSelector} from "react-redux";
 
 
 export default function AppHeader() {
+
+    const {isAuthenticated, userName} = useSelector(state => state.user)
 
     const history = useHistory();
 
@@ -19,6 +22,13 @@ export default function AppHeader() {
     const login = useCallback(
         () => {
             history.replace({ pathname: '/login' });
+        },
+        [history]
+    );
+
+    const profile = useCallback(
+        () => {
+            history.replace({ pathname: '/profile' });
         },
         [history]
     );
@@ -51,9 +61,18 @@ export default function AppHeader() {
                 </div>
 
                 <div className='align-right flex-block'>
-                    <button className={btnLkClss} onClick={() => login()}>
+                    <button className={btnLkClss} onClick={() => {
+                        isAuthenticated
+                        ? profile()
+                            : login()
+                    }
+                    }>
                         <ProfileIcon type='secondary' />
-                        <span className={lkClss}>Личный кабинет</span>
+                        {
+                            isAuthenticated
+                            ? (<span className={lkClss}>{userName}</span>)
+                                : (<span className={lkClss}>Личный кабинет</span>)
+                        }
                     </button>
                 </div>
             </nav>

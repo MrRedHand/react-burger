@@ -1,9 +1,12 @@
-import React, {useCallback} from "react";
+import React, {useCallback, useEffect} from "react";
 import {useHistory} from "react-router-dom";
 import ResetForm from "../components/forms/reset";
+import {useSelector} from "react-redux";
 
 
 const ResetPage = () => {
+
+    const {requestedForgotPassword} = useSelector(state => state.user)
 
     const history = useHistory();
 
@@ -13,6 +16,17 @@ const ResetPage = () => {
         },
         [history]
     );
+
+    const redirectToLogin = useCallback(
+        () => {
+            history.replace({ pathname: '/login' });
+        },
+        [history]
+    );
+
+    useEffect(() => {
+        !requestedForgotPassword && redirectToLogin()
+    }, [requestedForgotPassword])
 
     return (
         <>

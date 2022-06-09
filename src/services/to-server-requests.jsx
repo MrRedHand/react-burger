@@ -14,6 +14,7 @@ import {getDataFailed, getDataSuccess} from "./actions/get-data";
 import {registerFailed, registerRequest, registerSuccess} from "./actions/user-register";
 import {loginFailed, loginRequest, loginSuccess} from "./actions/user-login";
 import {setCookie} from "./set-cookie";
+import {getCookie} from "./get-cookie";
 
 
 
@@ -22,8 +23,11 @@ export const loginUser = form => {
 
         dispatch(loginRequest())
 
-        fetch(apiUrl + 'auth/register', {
+        fetch(apiUrl + 'auth/login', {
             method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            credentials: 'same-origin',
             headers: {
                 'Content-Type' : 'application/json'
             },
@@ -31,6 +35,7 @@ export const loginUser = form => {
         })
             .then(res => {
                 if (res.ok) {
+                    console.log('res', res)
                     let authToken;
                     // Ищем интересующий нас заголовок
                     res.headers.forEach(header => {
@@ -38,17 +43,19 @@ export const loginUser = form => {
                             // Отделяем схему авторизации от "полезной нагрузки токена",
                             // Стараемся экономить память в куках (доступно 4кб)
                             authToken = header.split('Bearer ')[1];
+                            console.log('authToken', authToken)
                         }
                     });
                     if (authToken) {
                         // Сохраняем токен в куку token
                         setCookie('token', authToken);
                     }
+                    console.log('getCookie(\'token\')', getCookie('token'))
                     return res.json();
                 }
             })
             .then((data) => {
-                console.log(data)
+                console.log('login-data', data)
                 dispatch(loginSuccess(data))
             })
             .catch((error) => {
@@ -81,18 +88,16 @@ export const registerUser = form => {
     }
 }
 
-// export const getChatsRequest = async () =>
-//     await fetch('https://cosmic.nomoreparties.space/api/chat', {
-//         method: 'GET',
-//         mode: 'cors',
-//         cache: 'no-cache',
-//         credentials: 'same-origin',
-//         headers: {
-//             'Content-Type': 'application/json',
-//             // Отправляем токен и схему авторизации в заголовке при запросе данных
-//             Authorization: 'Bearer ' + getCookie('token')
-//         },
-//         redirect: 'follow',
-//         referrerPolicy: 'no-referrer'
-//     });
+export const checkUserToken = async () =>
+    await fetch(apiUrl + 'auth/token', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            // Отправляем токен и схему авторизации в заголовке при запросе данных
+            Authorization: 'Bearer ' + getCookie('token')
+        }
+    })
+    .then(res => console.log('токен ответ', res))
+        .then(data => console.log('data', data))
+
 

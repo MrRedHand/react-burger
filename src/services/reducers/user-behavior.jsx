@@ -14,6 +14,7 @@ const initialState = {
     accessToken: '',
     refreshToken: '',
     user : {},
+    requestedForgotPassword : false,
 }
 
 export const userReducer = (state = initialState, action) => {

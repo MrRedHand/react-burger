@@ -1,9 +1,12 @@
-import React, {useCallback} from "react";
+import React, {useCallback, useEffect} from "react";
 import LoginForm from "../components/forms/login";
 import {useHistory} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 
 const LoginPage = () => {
+
+    const {isAuthenticated} = useSelector(state => state.user)
 
     const history = useHistory();
 
@@ -20,6 +23,10 @@ const LoginPage = () => {
         },
         [history]
     );
+
+    useEffect(() => {
+        isAuthenticated && history.replace({ pathname: '/' });
+    }, [isAuthenticated])
 
     return (
         <>

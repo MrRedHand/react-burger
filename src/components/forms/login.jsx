@@ -1,16 +1,17 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import st from './login.module.css'
 import {useDispatch, useSelector} from "react-redux";
-import {Redirect} from "react-router-dom";
+import {Redirect, useHistory} from "react-router-dom";
 import {loginUser} from "../../services/to-server-requests";
 
 const LoginForm = ({register, forgot}) => {
+    const history = useHistory();
 
     const dispatch = useDispatch()
 
-    const { loggedIn } = useSelector(state => state.user)
+    const { isAuthenticated } = useSelector(state => state.user)
 
     const [userData, setUserData] = useState({
         email : "",
@@ -31,8 +32,14 @@ const LoginForm = ({register, forgot}) => {
         }))
     }
 
+    useEffect(() => {
+
+        isAuthenticated && history.replace({ pathname: '/' });
+
+    }, [isAuthenticated])
+
     return (
-        loggedIn
+        isAuthenticated
         ? <Redirect to='/' />
         : (
             <section className={st.form_wrap}>

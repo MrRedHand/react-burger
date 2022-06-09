@@ -1,9 +1,12 @@
-import React, {useCallback, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
 import RegisterForm from "../components/forms/register";
+import {useSelector} from "react-redux";
 
 
 const RegisterPage = () => {
+
+    const {isAuthenticated} = useSelector(state => state.user)
 
     const history = useHistory();
 
@@ -13,6 +16,10 @@ const RegisterPage = () => {
         },
         [history]
     );
+
+    useEffect(() => {
+        isAuthenticated && history.replace({ pathname: '/' });
+    }, [isAuthenticated])
 
     return (
         <>

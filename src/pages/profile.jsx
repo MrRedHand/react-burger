@@ -1,9 +1,12 @@
-import React, {useCallback} from "react";
+import React, {useCallback, useEffect} from "react";
 import UserProfile from "../components/forms/user-profile";
 import ProfileNav from "../components/profile-nav/profile-nav";
 import {useHistory} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 const ProfilePage = () => {
+
+    const {isAuthenticated} = useSelector(state => state.user)
 
     const history = useHistory();
 
@@ -27,6 +30,19 @@ const ProfilePage = () => {
         },
         [history]
     );
+
+    const redirectToLogin = useCallback(
+        () => {
+            history.replace({ pathname: '/login' });
+        },
+        [history]
+    );
+
+    useEffect(() => {
+        !isAuthenticated && redirectToLogin()
+    }, [])
+
+
     return (
         <section className="wrap mt-20 mx-auto">
             <div className="profile_grid">
