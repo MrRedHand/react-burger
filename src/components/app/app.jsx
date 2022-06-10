@@ -15,6 +15,7 @@ import WrongPage from "../../pages/404";
 import {Route, Switch, useHistory, useLocation} from "react-router-dom";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
+import OrderDetails from "../order-details/order-details";
 
 
 function App() {
@@ -42,35 +43,41 @@ function App() {
     <>
           <AppHeader />
           <Switch location={background || location}>
-            <Route path="/" exact={true}>
+          <ProtectedRoute path="/" exact>
               {
-                fullDataRecieved
-                    ? <Main/>
-                    : 'ЗАГРУЗКА'
+                  fullDataRecieved
+                      ? <Main/>
+                      : 'ЗАГРУЗКА'
               }
-            </Route>
-            <Route path="/login" exact={true}>
+          </ProtectedRoute>
+            <ProtectedRoute path="/login" exact>
                 <LoginPage />
-            </Route>
-          <Route path="/register" exact={true}>
+            </ProtectedRoute>
+          <ProtectedRoute path="/register" exact={true}>
             <RegisterPage/>
-          </Route>
-          <Route path="/forgot-password" exact={true}>
+          </ProtectedRoute>
+          <ProtectedRoute onlyUnAuth={true} path="/forgot-password" exact={true}>
             <ForgotPage/>
-          </Route>
-          <Route path="/reset-password" exact={true}>
+          </ProtectedRoute>
+          <ProtectedRoute onlyUnAuth={true} path="/reset-password" exact={true}>
             <ResetPage/>
-          </Route>
-          <Route path="/profile" exact={true}>
+          </ProtectedRoute>
+          <ProtectedRoute onlyUnAuth={true} path="/profile" exact={true}>
             <ProfilePage/>
-          </Route>
-          <Route path="/ingredients/:id" exact={true}>
+          </ProtectedRoute>
+          <ProtectedRoute path="/ingredients/:id" exact={true}>
               <IngredientDetails/>
-          </Route>
-          <Route path="*">
+          </ProtectedRoute>
+          <ProtectedRoute path="*">
             <WrongPage/>
-          </Route>
+          </ProtectedRoute>
           </Switch>
+            <Route path="/order-details" children={
+                <Modal
+                    activity={true}
+                    children={<OrderDetails/>}
+                />
+            }/>
             {background && (
               <Route path="/ingredients/:id" children={
                   <Modal

@@ -6,8 +6,6 @@ import {useSelector} from "react-redux";
 
 const ProfilePage = () => {
 
-    const {isAuthenticated} = useSelector(state => state.user)
-
     const history = useHistory();
 
     const profile = useCallback(
@@ -31,16 +29,6 @@ const ProfilePage = () => {
         [history]
     );
 
-    const redirectToLogin = useCallback(
-        () => {
-            history.replace({ pathname: '/login' });
-        },
-        [history]
-    );
-
-    useEffect(() => {
-        !isAuthenticated && redirectToLogin()
-    }, [])
 
 
     return (

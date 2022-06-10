@@ -13,9 +13,11 @@ import {addIngredientToConstructor} from "../../services/actions/add-ingredient-
 import {resortIngredients} from "../../services/actions/resort-ingredients";
 import {v4 as uuidv4} from "uuid";
 import {refreshTotal} from "../../services/actions/refresh-total";
-import {Redirect, useHistory} from "react-router-dom";
+import {Redirect, useHistory, useLocation} from "react-router-dom";
 
 const BurgerConstructor = () => {
+
+    const location = useLocation()
 
     const dispatch = useDispatch();
 
@@ -87,6 +89,8 @@ const BurgerConstructor = () => {
             active : true,
             content : <OrderDetails />
         })
+
+        history.push('/order-details', {background: location})
     }
 
     return (
@@ -162,11 +166,6 @@ const BurgerConstructor = () => {
             }}>Оформить заказ</Button>
         </section>
 
-        <Modal
-            active={modalState.active}
-            setActive={setModal}
-            children={modalState.content}
-            />
         </>
     )
 }

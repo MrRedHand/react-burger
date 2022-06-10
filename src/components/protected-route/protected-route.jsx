@@ -1,32 +1,23 @@
 import React from "react";
-import { Route, Redirect } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import {Route, Redirect, useLocation} from 'react-router-dom';
 import {useSelector} from "react-redux";
 
-export function ProtectedRoute({ children, ...rest }) {
+export function ProtectedRoute({ onlyUnAuth = false, ...rest }) {
 
-    const {user} = useSelector(state => state.user.user)
+    const location = useLocation()
 
-    let userIsLoaded = false
+    const {isAuthenticated} = useSelector(state => state.user)
 
-    useEffect(() => {
-        userIsLoaded = user
-    }, [user]);
+    if (onlyUnAuth && isAuthenticated) {
+        const from = location.state || {from : {pathname : '/'}}
+        return <Redirect to={from}/>
+    }
+
+    if (onlyUnAuth && !isAuthenticated) {
+        return (<Redirect to={{pathname: '/login', state : {from : location}}}/>)
+    }
 
     return (
-        <Route
-            {...rest}
-            render={() =>
-                // Если пользователь есть, используем компонент, который передан в ProtectedRoute
-                userIsLoaded ? (
-                    children
-                ) : (
-                    // Если пользователя нет в хранилище, происходит переадресация на роут /login
-                    <Redirect
-                        to='/login'
-                    />
-                )
-            }
-        />
+        <Route {...rest}/>
     );
 }
