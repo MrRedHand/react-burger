@@ -61,12 +61,7 @@ export default function AppHeader() {
                 </div>
 
                 <div className='align-right flex-block'>
-                    <button className={btnLkClss} onClick={() => {
-                        isAuthenticated
-                        ? profile()
-                            : login()
-                    }
-                    }>
+                    <button className={btnLkClss} onClick={() => profile()}>
                         <ProfileIcon type='secondary' />
                         {
                             isAuthenticated

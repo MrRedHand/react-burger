@@ -39,16 +39,6 @@ const BurgerIngredients = () => {
             current = where,
         )
     }
-    //
-    // useEffect(() => {
-    //
-    //     if (scroller && scroller.current) {
-    //         scroller.current.addEventListener("scroll",e => updateScrollPosition(e));
-    //         return function cleanup() {
-    //             scroller.current.removeEventListener("scroll", e => updateScrollPosition(e));
-    //         };
-    //     }
-    // }, [])
 
 
     function updateScrollPosition() {

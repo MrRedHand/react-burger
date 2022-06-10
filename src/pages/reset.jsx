@@ -17,15 +17,9 @@ const ResetPage = () => {
         [history]
     );
 
-    const redirectToLogin = useCallback(
-        () => {
-            history.replace({ pathname: '/login' });
-        },
-        [history]
-    );
 
     useEffect(() => {
-        !requestedForgotPassword && redirectToLogin()
+        !requestedForgotPassword && history.push('/login');
     }, [requestedForgotPassword])
 
     return (

@@ -44,7 +44,7 @@ export const mainReducer = (state = initialState, action) => {
         case GET_FULLDATA_SUCCESS :
             return  {
                 ...state,
-                allIngredients: [...state.allIngredients, ...action.payload],
+                allIngredients: action.payload,
                 fullDataRecieved: true,
                 fullDataError : false,
             }

@@ -2,20 +2,19 @@ import React, { useEffect} from 'react';
 import AppHeader from '../app-header/app-header';
 import Main from '../main/main';
 import {useDispatch, useSelector} from "react-redux";
-import {getFullData} from "../../services/actions/getFullData";
+import {checkResponse, getFullData, getUser, updateUser} from "../../services/to-server-requests";
 import LoginPage from "../../pages/login";
 import RegisterPage from "../../pages/register";
 import ForgotPage from "../../pages/forgot";
 import ResetPage from "../../pages/reset";
 import ProfilePage from "../../pages/profile";
-import IngredientPage from "../../pages/ingredient";
 import {ProtectedRoute} from "../protected-route/protected-route";
-import {checkUserToken} from "../../services/to-server-requests";
 import WrongPage from "../../pages/404";
 import {Route, Switch, useHistory, useLocation} from "react-router-dom";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
+import {loginFailed, loginSuccess, reloginUser} from "../../services/actions/user-login";
 
 
 function App() {
@@ -34,7 +33,22 @@ function App() {
 
     dispatch(getFullData())
 
-    checkUserToken()
+      if (localStorage.getItem('accessToken')) {
+          getUser()
+              .then(res => {
+                  if (res.success) {
+                      console.log(res)
+                      const objPayload = {
+                          email : res.user.email,
+                          name : res.user.name,
+                      }
+                      dispatch(reloginUser(objPayload))
+                  }
+              })
+              .catch((error) => {
+                  console.log('userReloginError ', error)
+              });
+      }
 
   }, [])
 
@@ -56,13 +70,13 @@ function App() {
           <ProtectedRoute path="/register" exact={true}>
             <RegisterPage/>
           </ProtectedRoute>
-          <ProtectedRoute onlyUnAuth={true} path="/forgot-password" exact={true}>
+          <ProtectedRoute path="/forgot-password" exact>
             <ForgotPage/>
           </ProtectedRoute>
-          <ProtectedRoute onlyUnAuth={true} path="/reset-password" exact={true}>
+          <ProtectedRoute path="/reset-password" exact>
             <ResetPage/>
           </ProtectedRoute>
-          <ProtectedRoute onlyUnAuth={true} path="/profile" exact={true}>
+          <ProtectedRoute onlyAuth={true} path="/profile" exact>
             <ProfilePage/>
           </ProtectedRoute>
           <ProtectedRoute path="/ingredients/:id" exact={true}>

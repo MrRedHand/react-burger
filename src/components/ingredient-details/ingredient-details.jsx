@@ -2,7 +2,7 @@ import React, {useEffect} from 'react'
 import st from './ingredient-details.module.css';
 import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router-dom";
-import {getFullData} from "../../services/actions/getFullData";
+import {getFullData} from "../../services/to-server-requests";
 
 const IngredientDetails = () => {
 
@@ -13,8 +13,6 @@ const IngredientDetails = () => {
     const {allIngredients, fullDataRecieved} = useSelector(state => state.main)
 
     const viewIngredient = allIngredients.filter(ingredient => ingredient._id === params.id)
-
-    console.log('viewIngredient', viewIngredient)
 
     useEffect(() => {
         !fullDataRecieved && dispatch(getFullData())
