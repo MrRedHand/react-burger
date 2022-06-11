@@ -15,6 +15,7 @@ export function ProtectedRoute({ onlyAuth = false, ...rest }) {
 
     if (onlyAuth && !isAuthenticated) {
         console.log('редирект на логин (юзер не залогинен)')
+        console.log('была попытка посетить страницу ', location)
         return (<Redirect to={{pathname: '/login', state : {from : location}}}/>)
     }
 

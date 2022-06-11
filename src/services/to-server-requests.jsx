@@ -66,7 +66,6 @@ export const fetchToRefreshToken = async (url, options) => {
 }
 
 export const getUser = () => {
-    console.log('get user (accessToken)', localStorage.getItem('accessToken'))
     return fetchToRefreshToken(apiUrl + 'auth/user', {
         headers : {
             'Content-Type' : 'application/json',
@@ -88,8 +87,6 @@ export const updateUser = (user) => {
 
 export const loginUser = form => {
     return function (dispatch) {
-
-        console.log('Попытка логина')
 
         dispatch(loginRequest())
 

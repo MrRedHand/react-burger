@@ -30,13 +30,13 @@ function App() {
 
   const {fullDataRecieved} = useSelector(store => store.main);
 
-  const {userReloginStarted} = useSelector(store => store.user);
+  const {needToCheckUser, isAuthenticated} = useSelector(store => store.user);
 
   useEffect(() => {
 
-    dispatch(getFullData())
+    !fullDataRecieved && dispatch(getFullData())
 
-    reloginCheck()
+    !isAuthenticated && reloginCheck()
 
   }, [])
 
@@ -48,7 +48,7 @@ function App() {
     <>
         <AppHeader />
         {
-                userReloginStarted
+          needToCheckUser
                 ? 'Проверка логина'
                 : (
                     <>
@@ -63,7 +63,7 @@ function App() {
                             <ProtectedRoute path="/login" exact>
                                 <LoginPage />
                             </ProtectedRoute>
-                            <ProtectedRoute path="/register" exact={true}>
+                            <ProtectedRoute path="/register" exact>
                                 <RegisterPage/>
                             </ProtectedRoute>
                             <ProtectedRoute path="/forgot-password" exact>

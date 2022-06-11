@@ -9,7 +9,7 @@ import {
 
 
 const initialState = {
-    userReloginStarted : true,
+    needToCheckUser : true,
     isAuthenticated : false,
     registered : false,
     accessToken: '',
@@ -50,7 +50,7 @@ export const userReducer = (state = initialState, action) => {
         case USER_RELOGIN_REQUEST :
             return {
                 ...state,
-                userReloginStarted : true
+                needToCheckUser : true
             }
         case USER_RELOGIN_SUCCESS :
             return {
@@ -58,12 +58,12 @@ export const userReducer = (state = initialState, action) => {
                 userName : action.payload.name,
                 userEmail: action.payload.email,
                 isAuthenticated : true,
-                userReloginStarted : false
+                needToCheckUser : false
             }
         case USER_RELOGIN_FAILED :
             return {
                 ...state,
-                userReloginStarted : false
+                needToCheckUser: false
             }
         case LOGIN_FAILED :
             return {

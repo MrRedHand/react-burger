@@ -5,10 +5,6 @@ import {store} from "./store";
 
 export const reloginCheck = () => {
 
-    console.log('проверка релогина')
-
-    let success = false
-
     if (localStorage.getItem('accessToken')) {
 
         store.dispatch(reloginUserStarted())
@@ -16,20 +12,19 @@ export const reloginCheck = () => {
         getUser()
             .then(res => {
                 if (res.success) {
-                    console.log(res)
                     const objPayload = {
                         email : res.user.email,
                         name : res.user.name,
                     }
-                    success = true
                     store.dispatch(reloginUserSuccess(objPayload))
+                } else {
+                    store.dispatch(reloginUserFail())
                 }
             })
             .catch((error) => {
                 store.dispatch(reloginUserFail())
-                console.log('userReloginError ', error)
             });
+    } else {
+        store.dispatch(reloginUserFail())
     }
-
-    return success
 }
