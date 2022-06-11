@@ -14,9 +14,7 @@ const WrongPage = () => {
     );
 
     return (
-        <>
-            <p>ой-ёй, похоже тут ничего нет. Но можно вернуться на <span style={{textDecoration: "underline"}} onClick={() => goToMain()}>главную</span></p>
-        </>
+        <p>ой-ёй, похоже тут ничего нет. Но можно вернуться на <span style={{textDecoration: "underline"}} onClick={() => goToMain()}>главную</span></p>
     )
 }
 

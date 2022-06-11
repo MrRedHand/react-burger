@@ -19,9 +19,7 @@ const ForgotPage = () => {
 
 
     return (
-        <>
-            <ForgotForm login={login}/>
-        </>
+        <ForgotForm login={login}/>
     )
 }
 

@@ -25,7 +25,9 @@ const ForgotForm = ({login}) => {
         }))
     }
 
-    const requestReset = () => {
+
+    const handleSubmit = e => {
+        e.preventDefault()
         dispatch(forgotPassword(userData))
         history.push('/reset-password')
     }
@@ -33,9 +35,10 @@ const ForgotForm = ({login}) => {
     return (
         <section className={st.form_wrap}>
             <p className="text text_type_main-medium">Восстановление пароля</p>
-            <Input type="email" placeholder="Укажите e-mail" value={userData.email} onChange={(e) => setEmail(e.target.value)}/>
-            <Button onClick={() => requestReset()}>Восстановить</Button>
-
+            <form onSubmit={(e) => handleSubmit(e)}>
+                <Input type="email" placeholder="Укажите e-mail" value={userData.email} onChange={(e) => setEmail(e.target.value)}/>
+                <Button>Восстановить</Button>
+            </form>
             <div className={`${st.form__footer} mt-20`}>
                 <div className="d-flex mb-4">
                     <p className="text text_type_main-default text_color_inactive">Вспомнили пароль?</p>

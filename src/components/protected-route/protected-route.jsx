@@ -9,10 +9,12 @@ export function ProtectedRoute({ onlyAuth = false, ...rest }) {
     const {isAuthenticated} = useSelector(state => state.user)
 
     if (onlyAuth && isAuthenticated) {
+        console.log('редирект на запрошенный маршрут')
         return <Route {...rest}/>
     }
 
     if (onlyAuth && !isAuthenticated) {
+        console.log('редирект на логин (юзер не залогинен)')
         return (<Redirect to={{pathname: '/login', state : {from : location}}}/>)
     }
 

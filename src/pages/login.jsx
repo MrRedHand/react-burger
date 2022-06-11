@@ -29,9 +29,7 @@ const LoginPage = () => {
     }, [isAuthenticated])
 
     return (
-        <>
-            <LoginForm register={register} forgot={forgotPassword}/>
-        </>
+        <LoginForm register={register} forgot={forgotPassword}/>
     )
 }
 

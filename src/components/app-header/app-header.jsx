@@ -2,7 +2,7 @@ import React, {useCallback} from 'react'
 import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 import { BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './app-header.module.css';
-import { useHistory } from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import {useSelector} from "react-redux";
 
 
@@ -57,7 +57,9 @@ export default function AppHeader() {
                 </div>
 
                 <div className='align-middle align-center flex-block'>
-                    <Logo />
+                    <Link to={'/'}>
+                        <Logo />
+                    </Link>
                 </div>
 
                 <div className='align-right flex-block'>

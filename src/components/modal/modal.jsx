@@ -6,7 +6,7 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalHeader from '../modal-header/modal-header';
 import {useHistory} from "react-router-dom";
 
-const Modal = ({activity, children, heading}) => {
+const Modal = ({activity, children, heading, onCloseEvent}) => {
 
     const history = useHistory()
 
@@ -18,7 +18,7 @@ const Modal = ({activity, children, heading}) => {
 
     const closeModal = () => {
         setActive(false)
-        setTimeout(() => {history.push('/', {})}, 50)
+        onCloseEvent && onCloseEvent()
     }
 
     React.useEffect(() => {

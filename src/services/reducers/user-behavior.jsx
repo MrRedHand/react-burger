@@ -4,11 +4,12 @@ import {
     LOGIN_SUCCESS, PASSWORD_RESET_REQUEST, PASSWORD_RESET_SUCCESS,
     REGISTER_FAILED,
     REGISTER_REQUEST,
-    REGISTER_SUCCESS, USER_RELOGIN_SUCCESS
+    REGISTER_SUCCESS, USER_RELOGIN_FAILED, USER_RELOGIN_REQUEST, USER_RELOGIN_SUCCESS
 } from "../actions/user";
 
 
 const initialState = {
+    userReloginStarted : true,
     isAuthenticated : false,
     registered : false,
     accessToken: '',
@@ -46,12 +47,23 @@ export const userReducer = (state = initialState, action) => {
                 userEmail: action.payload.user.email,
                 isAuthenticated : true
             }
+        case USER_RELOGIN_REQUEST :
+            return {
+                ...state,
+                userReloginStarted : true
+            }
         case USER_RELOGIN_SUCCESS :
             return {
                 ...state,
                 userName : action.payload.name,
                 userEmail: action.payload.email,
-                isAuthenticated : true
+                isAuthenticated : true,
+                userReloginStarted : false
+            }
+        case USER_RELOGIN_FAILED :
+            return {
+                ...state,
+                userReloginStarted : false
             }
         case LOGIN_FAILED :
             return {

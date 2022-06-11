@@ -22,9 +22,7 @@ const RegisterPage = () => {
     }, [isAuthenticated])
 
     return (
-        <>
-            <RegisterForm login={login} />
-        </>
+        <RegisterForm login={login} />
     )
 }
 

@@ -23,9 +23,7 @@ const ResetPage = () => {
     }, [requestedForgotPassword])
 
     return (
-        <>
-            <ResetForm login={login}/>
-        </>
+        <ResetForm login={login}/>
     )
 }
 

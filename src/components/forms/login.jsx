@@ -3,15 +3,19 @@ import PropTypes from "prop-types";
 import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import st from './login.module.css'
 import {useDispatch, useSelector} from "react-redux";
-import {Redirect, useHistory} from "react-router-dom";
+import {Redirect, useHistory, useLocation} from "react-router-dom";
 import {loginUser} from "../../services/to-server-requests";
 
 const LoginForm = ({register, forgot}) => {
+    const location = useLocation()
+
     const history = useHistory();
 
     const dispatch = useDispatch()
 
     const { isAuthenticated } = useSelector(state => state.user)
+
+    //const from = location.state.from.pathname
 
     const [userData, setUserData] = useState({
         email : "",
@@ -38,15 +42,27 @@ const LoginForm = ({register, forgot}) => {
 
     }, [isAuthenticated])
 
+    //console.log('from ', from)
+
+    const handleSubmit = e => {
+        e.preventDefault()
+        dispatch(loginUser(userData))
+    }
+
     return (
         isAuthenticated
-        ? <Redirect to='/' />
+        ? <Redirect to={'/'} />
         : (
             <section className={st.form_wrap}>
                 <p className="text text_type_main-medium">Вход</p>
-                <Input type="email" placeholder="E-mail"  value={userData.email} onChange={(e) => setEmail(e.target.value)}/>
-                <Input type="password" placeholder="Пароль" value={userData.password} onChange={(e) => setPassword(e.target.value)}/>
-                <Button onClick={() => dispatch(loginUser(userData))}>Войти</Button>
+                <form onSubmit={(e) => handleSubmit(e)}>
+                    <Input type="email" placeholder="E-mail"  value={userData.email} onChange={(e) => setEmail(e.target.value)}/>
+                    <Input type="password" placeholder="Пароль" value={userData.password} onChange={(e) => setPassword(e.target.value)}/>
+                    <Button>Войти</Button>
+                </form>
+                {/*<Input type="email" placeholder="E-mail"  value={userData.email} onChange={(e) => setEmail(e.target.value)}/>*/}
+                {/*<Input type="password" placeholder="Пароль" value={userData.password} onChange={(e) => setPassword(e.target.value)}/>*/}
+                {/*<Button onClick={() => dispatch(loginUser(userData))}>Войти</Button>*/}
                 <div className={`${st.form__footer} mt-20`}>
                     <div className="d-flex mb-4">
                         <p className="text text_type_main-default text_color_inactive">Вы — новый пользователь?</p>

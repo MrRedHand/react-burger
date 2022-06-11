@@ -1,4 +1,4 @@
-import React, { useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import AppHeader from '../app-header/app-header';
 import Main from '../main/main';
 import {useDispatch, useSelector} from "react-redux";
@@ -15,6 +15,7 @@ import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import {loginFailed, loginSuccess, reloginUser} from "../../services/actions/user-login";
+import {reloginCheck} from "../../services/relogin-check";
 
 
 function App() {
@@ -29,79 +30,80 @@ function App() {
 
   const {fullDataRecieved} = useSelector(store => store.main);
 
+  const {userReloginStarted} = useSelector(store => store.user);
+
   useEffect(() => {
 
     dispatch(getFullData())
 
-      if (localStorage.getItem('accessToken')) {
-          getUser()
-              .then(res => {
-                  if (res.success) {
-                      console.log(res)
-                      const objPayload = {
-                          email : res.user.email,
-                          name : res.user.name,
-                      }
-                      dispatch(reloginUser(objPayload))
-                  }
-              })
-              .catch((error) => {
-                  console.log('userReloginError ', error)
-              });
-      }
+    reloginCheck()
 
   }, [])
 
-    
+
+    const returnToMain = () => {
+      setTimeout(() => {history.replace('/')}, 50)
+    }
   return (
     <>
-          <AppHeader />
-          <Switch location={background || location}>
-          <ProtectedRoute path="/" exact>
-              {
-                  fullDataRecieved
-                      ? <Main/>
-                      : 'ЗАГРУЗКА'
-              }
-          </ProtectedRoute>
-            <ProtectedRoute path="/login" exact>
-                <LoginPage />
-            </ProtectedRoute>
-          <ProtectedRoute path="/register" exact={true}>
-            <RegisterPage/>
-          </ProtectedRoute>
-          <ProtectedRoute path="/forgot-password" exact>
-            <ForgotPage/>
-          </ProtectedRoute>
-          <ProtectedRoute path="/reset-password" exact>
-            <ResetPage/>
-          </ProtectedRoute>
-          <ProtectedRoute onlyAuth={true} path="/profile" exact>
-            <ProfilePage/>
-          </ProtectedRoute>
-          <ProtectedRoute path="/ingredients/:id" exact={true}>
-              <IngredientDetails/>
-          </ProtectedRoute>
-          <ProtectedRoute path="*">
-            <WrongPage/>
-          </ProtectedRoute>
-          </Switch>
-            <Route path="/order-details" children={
-                <Modal
-                    activity={true}
-                    children={<OrderDetails/>}
-                />
-            }/>
-            {background && (
-              <Route path="/ingredients/:id" children={
-                  <Modal
-                      activity={true}
-                      heading={'Детали ингредиента'}
-                      children={<IngredientDetails/>}
-                  />
+        <AppHeader />
+        {
+                userReloginStarted
+                ? 'Проверка логина'
+                : (
+                    <>
+                        <Switch location={background || location}>
+                            <ProtectedRoute path="/" exact>
+                                {
+                                    fullDataRecieved
+                                        ? <Main/>
+                                        : 'ЗАГРУЗКА'
+                                }
+                            </ProtectedRoute>
+                            <ProtectedRoute path="/login" exact>
+                                <LoginPage />
+                            </ProtectedRoute>
+                            <ProtectedRoute path="/register" exact={true}>
+                                <RegisterPage/>
+                            </ProtectedRoute>
+                            <ProtectedRoute path="/forgot-password" exact>
+                                <ForgotPage/>
+                            </ProtectedRoute>
+                            <ProtectedRoute path="/reset-password" exact>
+                                <ResetPage/>
+                            </ProtectedRoute>
+                            <ProtectedRoute onlyAuth={true} path="/profile" exact>
+                                <ProfilePage/>
+                            </ProtectedRoute>
+                            <ProtectedRoute path="/ingredients/:id" exact={true}>
+                                <IngredientDetails/>
+                            </ProtectedRoute>
+                            <ProtectedRoute path="*">
+                                <WrongPage/>
+                            </ProtectedRoute>
+                        </Switch>
+                        <Route path="/order-details" children={
+                            <Modal
+                                activity={true}
+                                children={<OrderDetails/>}
 
-              }/>
-          )}
+                            />
+                        }/>
+                        {background && (
+                            <Route path="/ingredients/:id" children={
+                                <Modal
+                                    activity={true}
+                                    heading={'Детали ингредиента'}
+                                    children={<IngredientDetails/>}
+                                    onCloseEvent={returnToMain}
+                                />
+
+                            }/>
+                        )}
+                    </>
+                )
+        }
+
 
     </>
   );

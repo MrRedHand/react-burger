@@ -89,6 +89,8 @@ export const updateUser = (user) => {
 export const loginUser = form => {
     return function (dispatch) {
 
+        console.log('Попытка логина')
+
         dispatch(loginRequest())
 
         fetch(apiUrl + 'auth/login', {

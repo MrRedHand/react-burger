@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import st from './login.module.css'
-import {registerUser} from "../../services/to-server-requests";
+import {registerUser, resetPassword} from "../../services/to-server-requests";
 import {useDispatch, useSelector} from "react-redux";
 import {  Redirect } from 'react-router-dom';
 
@@ -39,7 +39,10 @@ const RegisterForm = ({login}) => {
         }))
     }
 
-    console.log('registred', registered)
+    const handleSubmit = e => {
+        e.preventDefault()
+        dispatch(registerUser(userData))
+    }
 
     return (
         registered
@@ -47,10 +50,12 @@ const RegisterForm = ({login}) => {
         : (
             <section className={st.form_wrap}>
                 <p className="text text_type_main-medium">Регистрация</p>
-                <Input type="text" placeholder="Ваше имя"  value={userData.name} onChange={(e) => setName(e.target.value)}/>
-                <Input type="email" placeholder="E-mail"  value={userData.email} onChange={(e) => setEmail(e.target.value)}/>
-                <Input type="password" placeholder="Пароль"  value={userData.password} onChange={(e) => setPassword(e.target.value)}/>
-                <Button onClick={() => dispatch(registerUser(userData))}>Зарегистрироваться</Button>
+                <form onSubmit={e => handleSubmit(e)}>
+                    <Input type="text" placeholder="Ваше имя"  value={userData.name} onChange={(e) => setName(e.target.value)}/>
+                    <Input type="email" placeholder="E-mail"  value={userData.email} onChange={(e) => setEmail(e.target.value)}/>
+                    <Input type="password" placeholder="Пароль"  value={userData.password} onChange={(e) => setPassword(e.target.value)}/>
+                    <Button>Зарегистрироваться</Button>
+                </form>
                 <div className={`${st.form__footer} mt-20`}>
                     <div className="d-flex mb-4">
                         <p className="text text_type_main-default text_color_inactive">Уже зарегистрированы?</p>
