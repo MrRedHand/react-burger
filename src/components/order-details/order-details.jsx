@@ -2,7 +2,7 @@ import React, {useEffect} from 'react'
 import st from './order-details.module.css';
 import checkBg from '../../images/order-details-check-bg.svg';
 import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import {fetchOrder} from "../../services/actions/fetchOrder";
+import {fetchOrder} from "../../services/to-server-requests";
 import {useDispatch, useSelector} from "react-redux";
 
 

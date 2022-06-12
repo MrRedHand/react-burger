@@ -12,3 +12,8 @@
     margin: auto;
     display: block;
 }
+
+.ingredient_wrap {
+    max-width: 600px;
+    margin: 0 auto;
+}

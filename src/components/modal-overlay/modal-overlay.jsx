@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from "prop-types";
 import st from './modal-overlay.module.css'
 
 const ModalOverlay = ({onClick,activity}) => {
@@ -8,9 +7,5 @@ const ModalOverlay = ({onClick,activity}) => {
     )
 }
 
-ModalOverlay.propTypes = {
-    onClick: PropTypes.func.isRequired,
-    activity : PropTypes.bool.isRequired
-}
 
 export default ModalOverlay

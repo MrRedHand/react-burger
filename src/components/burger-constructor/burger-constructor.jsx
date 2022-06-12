@@ -13,12 +13,18 @@ import {addIngredientToConstructor} from "../../services/actions/add-ingredient-
 import {resortIngredients} from "../../services/actions/resort-ingredients";
 import {v4 as uuidv4} from "uuid";
 import {refreshTotal} from "../../services/actions/refresh-total";
+import {Redirect, useHistory, useLocation} from "react-router-dom";
 
 const BurgerConstructor = () => {
 
+    const location = useLocation()
+
     const dispatch = useDispatch();
 
+    const history = useHistory();
+
     const {constructorIngredients, currentBun, allIngredients, totalPrice} = useSelector(state => state.main)
+    const { isAuthenticated } = useSelector(state => state.user)
 
     const [modalState, setModal] = React.useState({
         active : false,
@@ -71,6 +77,21 @@ const BurgerConstructor = () => {
     }
 
 
+    const redirectToLogin = useCallback(
+        () => {
+            history.replace({ pathname: '/login' });
+        },
+        [history]
+    );
+
+    const showModal = () => {
+        setModal({
+            active : true,
+            content : <OrderDetails />
+        })
+
+        history.push('/order-details', {background: location})
+    }
 
     return (
         <>
@@ -139,18 +160,12 @@ const BurgerConstructor = () => {
                 <CurrencyIcon />
             </div>
             <Button type="primary" size="large" onClick={() => {
-                setModal({
-                    active : true,
-                    content : <OrderDetails />
-                })
+                    isAuthenticated
+                    ? showModal()
+                    : redirectToLogin()
             }}>Оформить заказ</Button>
         </section>
 
-        <Modal
-            active={modalState.active}
-            setActive={setModal}
-            children={modalState.content}
-            />
         </>
     )
 }

@@ -9,9 +9,14 @@ import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import {useDispatch, useSelector} from "react-redux";
 import {setIngredientInfo} from "../../services/actions/set-ingredient-info";
+import {useHistory, useLocation} from "react-router-dom";
 
 
 const BurgerIngredients = () => {
+
+    const location = useLocation()
+
+    const history = useHistory()
 
     const dispatch = useDispatch();
 
@@ -22,17 +27,9 @@ const BurgerIngredients = () => {
 
     const {allIngredients,viewIngredient} = useSelector(state => state.main)
 
-    const [modalState, setModal] = React.useState({
-        active : false,
-        content: '',
-    })
-
     const showModal = (props) => {
         dispatch(setIngredientInfo(props))
-        setModal({
-            active : true,
-            content : <IngredientDetails {...props}/>
-        })
+        history.push(`/ingredients/${props._id}`, {background : location})
     }
 
     let [current, setCurrent] = useState('one')
@@ -42,16 +39,6 @@ const BurgerIngredients = () => {
             current = where,
         )
     }
-    //
-    // useEffect(() => {
-    //
-    //     if (scroller && scroller.current) {
-    //         scroller.current.addEventListener("scroll",e => updateScrollPosition(e));
-    //         return function cleanup() {
-    //             scroller.current.removeEventListener("scroll", e => updateScrollPosition(e));
-    //         };
-    //     }
-    // }, [])
 
 
     function updateScrollPosition() {
@@ -175,12 +162,6 @@ const BurgerIngredients = () => {
             </OverflowSection>
             </div>
 
-            <Modal 
-            active={modalState.active} 
-            setActive={setModal} 
-            heading={'Детали ингредиента'} 
-            children={modalState.content}
-            />  
         </section>
 
         
