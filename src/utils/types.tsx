@@ -1,11 +1,19 @@
 import {ReactNode} from "react";
-import IngredientCard from "../components/ingredient-card/ingredient-card";
 
 export type TModal = {
-    activity? : boolean;
+    activity : boolean;
     children? : ReactNode;
     heading? : string;
     onCloseEvent? : () => void;
+}
+
+export type TModalHeader = {
+    children? : ReactNode;
+}
+
+export type TModalOverlay = {
+    onClick : () => void;
+    activity : boolean;
 }
 
 export type TModalState = {

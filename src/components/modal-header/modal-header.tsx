@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {FC} from 'react';
 import st from './modal-header.module.css';
+import { TModalHeader } from "../../utils/types";
 
-const ModalHeader = ({children}) => {
+const ModalHeader : FC<TModalHeader>= ({children}) => {
     return (
         <div className={st.header}>
             {children}

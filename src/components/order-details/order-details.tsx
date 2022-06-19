@@ -4,23 +4,25 @@ import checkBg from '../../images/order-details-check-bg.svg';
 import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import {fetchOrder} from "../../services/to-server-requests";
 import {useDispatch, useSelector} from "react-redux";
+import { TIngredient } from "../../utils/types";
 
 
 const OrderDetails = () => {
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<any>();
 
-    const {orderDetails, currentBun, constructorIngredients, orderDetailsRecieved} = useSelector(state => state.main)
+    const {orderDetails, currentBun, constructorIngredients, orderDetailsRecieved} = useSelector<any>(state => state.main) as any
 
 
     useEffect(() => {
 
         if (currentBun !== null && constructorIngredients.length > 0 && !orderDetailsRecieved) {
 
-            let ingredientsArr = []
+            let ingredientsArr : Array<string> = []
 
-            constructorIngredients.map(elem => {
-                ingredientsArr = [...ingredientsArr, elem._id]
+            constructorIngredients.map((ingredient : TIngredient) => {
+                ingredientsArr = [...ingredientsArr, ingredient._id]
+                return ingredientsArr
             })
 
             ingredientsArr.unshift(currentBun._id)
@@ -43,7 +45,7 @@ const OrderDetails = () => {
                         <p className='text text_type_main-medium mb-15'>идентификатор заказа</p>
                         <div className={`${st.check_wrap}`}>
                             <div className={st.check_svg}>
-                                <CheckMarkIcon />
+                                <CheckMarkIcon type="primary"/>
                             </div>
                             <img src={checkBg} className={st.check_bg}/>
                         </div>

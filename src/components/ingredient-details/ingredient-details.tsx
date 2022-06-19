@@ -3,16 +3,17 @@ import st from './ingredient-details.module.css';
 import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router-dom";
 import {getFullData} from "../../services/to-server-requests";
+import { TIngredient } from "../../utils/types";
 
 const IngredientDetails = () => {
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<any>();
 
-    const params = useParams()
+    const params = useParams<{id : string}>()
 
-    const {allIngredients, fullDataRecieved} = useSelector(state => state.main)
+    const {allIngredients, fullDataRecieved} = useSelector<any>(state => state.main) as any
 
-    const viewIngredient = allIngredients.filter(ingredient => ingredient._id === params.id)
+    const viewIngredient = allIngredients.filter((ingredient : TIngredient) => ingredient._id === params.id)
 
     useEffect(() => {
         !fullDataRecieved && dispatch(getFullData())
