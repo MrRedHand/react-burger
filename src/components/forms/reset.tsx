@@ -1,32 +1,33 @@
-import React, {useState} from "react";
+import React, {useState, FC, FormEvent} from "react";
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import st from './login.module.css'
 import {useDispatch} from "react-redux";
 import {forgotPassword, resetPassword} from "../../services/to-server-requests";
+import { TResetFrom , TResetFormState } from "../../utils/types";
 
-const ResetForm = ({login}) => {
-    const dispatch = useDispatch()
+const ResetForm : FC<TResetFrom>= ({login}) => {
+    const dispatch = useDispatch<any>()
 
-    const [formValues, setFormValues] = useState({
+    const [formValues, setFormValues] = useState<TResetFormState>({
         password : '',
         token : ''
     })
 
-    const setNewPassword = (value) => {
+    const setNewPassword = (value : string) => {
         setFormValues(prevState => ({
             ...prevState,
             password :  value
         }))
     }
 
-    const setToken = (value) => {
+    const setToken = (value : string) => {
         setFormValues(prevState => ({
             ...prevState,
             token :  value
         }))
     }
 
-    const handleSubmit = e => {
+    const handleSubmit = (e : FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         dispatch(resetPassword(formValues))
     }

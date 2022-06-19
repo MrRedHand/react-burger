@@ -1,24 +1,22 @@
-import React, {useState} from "react";
-import PropTypes from "prop-types";
+import React, {useState, FC, FormEvent} from "react";
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import st from './login.module.css'
 import {forgotPassword, loginUser} from "../../services/to-server-requests";
 import {useDispatch} from "react-redux";
 import {useHistory, useLocation} from "react-router-dom";
+import { TForgotForm } from "../../utils/types";
 
-const ForgotForm = ({login}) => {
+const ForgotForm : FC<TForgotForm> = ({login}) => {
 
     const history = useHistory()
 
-    const location = useLocation()
+    const dispatch = useDispatch<any>()
 
-    const dispatch = useDispatch()
-
-    const [userData, setUserData] = useState({
+    const [userData, setUserData] = useState<{email : string}>({
         email : "",
     })
 
-    const setEmail = (value) => {
+    const setEmail = (value : string) => {
         setUserData(prevState => ({
             ...prevState,
             email :  value
@@ -26,7 +24,7 @@ const ForgotForm = ({login}) => {
     }
 
 
-    const handleSubmit = e => {
+    const handleSubmit = (e : FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         dispatch(forgotPassword(userData))
         history.push('/reset-password')
@@ -48,12 +46,6 @@ const ForgotForm = ({login}) => {
         </section>
     )
 }
-
-
-// RegisterForm.propTypes = {
-//     register: PropTypes.func.isRequired,
-//     forgot: PropTypes.func.isRequired,
-// }
 
 
 export default ForgotForm

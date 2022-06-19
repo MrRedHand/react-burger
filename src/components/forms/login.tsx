@@ -1,20 +1,21 @@
-import React, {useEffect, useState} from "react";
-import PropTypes from "prop-types";
+import React, {useEffect, useState, FC, FormEvent} from "react";
 import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import st from './login.module.css'
 import {useDispatch, useSelector} from "react-redux";
 import {Redirect, useHistory, useLocation} from "react-router-dom";
 import {loginUser} from "../../services/to-server-requests";
+import * as H from 'history';
+import { TLoginForm } from "../../utils/types";
 
-const LoginForm = ({register, forgot}) => {
+const LoginForm : FC<TLoginForm> = ({register, forgot}) => {
 
     const history = useHistory()
 
-    const location = useLocation()
+    const location = useLocation<{from: H.Location<unknown>}>();
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<any>()
 
-    const { isAuthenticated } = useSelector(state => state.user)
+    const { isAuthenticated } = useSelector<any>(state => state.user) as  any
 
 
     const [userData, setUserData] = useState({
@@ -22,14 +23,14 @@ const LoginForm = ({register, forgot}) => {
         password : "",
     })
 
-    const setEmail = (value) => {
+    const setEmail = (value : string) => {
         setUserData(prevState => ({
             ...prevState,
             email :  value
         }))
     }
 
-    const setPassword = (value) => {
+    const setPassword = (value : string) => {
         setUserData(prevState => ({
             ...prevState,
             password :  value
@@ -37,7 +38,7 @@ const LoginForm = ({register, forgot}) => {
     }
 
 
-    const handleSubmit = e => {
+    const handleSubmit = (e : FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         dispatch(loginUser(userData))
     }
@@ -56,9 +57,6 @@ const LoginForm = ({register, forgot}) => {
                 <Input type="password" placeholder="Пароль" value={userData.password} onChange={(e) => setPassword(e.target.value)}/>
                 <Button>Войти</Button>
             </form>
-            {/*<Input type="email" placeholder="E-mail"  value={userData.email} onChange={(e) => setEmail(e.target.value)}/>*/}
-            {/*<Input type="password" placeholder="Пароль" value={userData.password} onChange={(e) => setPassword(e.target.value)}/>*/}
-            {/*<Button onClick={() => dispatch(loginUser(userData))}>Войти</Button>*/}
             <div className={`${st.form__footer} mt-20`}>
                 <div className="d-flex mb-4">
                     <p className="text text_type_main-default text_color_inactive">Вы — новый пользователь?</p>
@@ -73,12 +71,5 @@ const LoginForm = ({register, forgot}) => {
 
     )
 }
-
-
-LoginForm.propTypes = {
-    register: PropTypes.func.isRequired,
-    forgot: PropTypes.func.isRequired,
-}
-
 
 export default LoginForm

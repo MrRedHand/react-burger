@@ -1,12 +1,10 @@
 import React from "react";
-import PropTypes from "prop-types";
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
-import st from './login.module.css'
 import {useSelector} from "react-redux";
 
 const UserProfile = () => {
 
-    const {userName, userEmail} = useSelector(state => state.user)
+    const {userName, userEmail} = useSelector<any>(state => state.user) as any
 
     return (
         <section className="form_grid">
@@ -16,12 +14,5 @@ const UserProfile = () => {
         </section>
     )
 }
-
-
-// RegisterForm.propTypes = {
-//     register: PropTypes.func.isRequired,
-//     forgot: PropTypes.func.isRequired,
-// }
-
 
 export default UserProfile

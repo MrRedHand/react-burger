@@ -52,3 +52,36 @@ export type TIngredientsGrid = {
 export type TIngredientsTitle = {
     children? : ReactNode;
 }
+
+export type TLinkToLoginForm = {
+    login : () => void
+}
+
+export type TForgotForm = {
+
+} & TLinkToLoginForm
+
+export type TRegisterFrom = {
+
+} & TLinkToLoginForm
+
+export type TLoginForm = {
+    register : () => void;
+    forgot : () => void;
+}
+
+
+export type TResetFrom = {
+
+}  & TLinkToLoginForm
+
+export type TRegisterFormState = {
+    email : string;
+    password : string;
+    name : string;
+}
+
+export type TResetFormState = {
+    password : string;
+    token : string;
+}

@@ -1,45 +1,46 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, FC, FormEvent} from "react";
 import PropTypes from "prop-types";
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import st from './login.module.css'
 import {registerUser, resetPassword} from "../../services/to-server-requests";
 import {useDispatch, useSelector} from "react-redux";
 import {  Redirect } from 'react-router-dom';
+import { TRegisterFrom, TRegisterFormState } from "../../utils/types";
 
-const RegisterForm = ({login}) => {
+const RegisterForm : FC<TRegisterFrom> = ({login}) => {
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<any>()
 
-    const {registered} = useSelector(state => state.user)
+    const {registered} = useSelector<any>(state => state.user) as  any
 
-    const [userData, setUserData] = useState({
+    const [userData, setUserData] = useState<TRegisterFormState>({
         email : "",
         password : "",
         name : ""
     })
 
-    const setName = (value) => {
+    const setName = (value : string) => {
         setUserData(prevState => ({
             ...prevState,
             name :  value
         }))
     }
 
-    const setPassword = (value) => {
+    const setPassword = (value : string) => {
         setUserData(prevState => ({
             ...prevState,
             password :  value
         }))
     }
 
-    const setEmail = (value) => {
+    const setEmail = (value : string) => {
         setUserData(prevState => ({
             ...prevState,
             email :  value
         }))
     }
 
-    const handleSubmit = e => {
+    const handleSubmit = (e : FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         dispatch(registerUser(userData))
     }
