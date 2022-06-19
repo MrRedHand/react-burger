@@ -4,7 +4,6 @@ import styles from './burger-constructor.module.css';
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientCard from "../ingredient-card/ingredient-card";
-import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import {useDispatch, useSelector} from "react-redux";
 import {useDrop} from "react-dnd";
@@ -14,6 +13,7 @@ import {resortIngredients} from "../../services/actions/resort-ingredients";
 import {v4 as uuidv4} from "uuid";
 import {refreshTotal} from "../../services/actions/refresh-total";
 import {Redirect, useHistory, useLocation} from "react-router-dom";
+import {TIngredient, TModalState} from "../../utils/types";
 
 const BurgerConstructor = () => {
 
@@ -23,10 +23,10 @@ const BurgerConstructor = () => {
 
     const history = useHistory();
 
-    const {constructorIngredients, currentBun, allIngredients, totalPrice} = useSelector(state => state.main)
-    const { isAuthenticated } = useSelector(state => state.user)
+    const {constructorIngredients, currentBun, allIngredients, totalPrice} = useSelector<any>(state => state.main) as any
+    const { isAuthenticated } = useSelector<any>(state => state.user) as any
 
-    const [modalState, setModal] = React.useState({
+    const [modalState, setModal] = React.useState<TModalState>({
         active : false,
         content: '',
     })
@@ -37,8 +37,8 @@ const BurgerConstructor = () => {
         collect: monitor => ({
             isHover: monitor.isOver(),
         }),
-        drop: (item) => {
-            const itemToAdd = allIngredients.find(x => x._id === item.id)
+        drop: (item : {id : string}) => {
+            const itemToAdd = allIngredients.find((ingredient : TIngredient) => ingredient._id === item.id)
             const clone = {...itemToAdd};
             clone.uuid = uuidv4()
             clone.type === 'bun'
@@ -58,8 +58,8 @@ const BurgerConstructor = () => {
         let ingredientsPrice = 0;
 
         constructorIngredients.length > 0
-        && constructorIngredients.map(elem => {
-            ingredientsPrice += elem.price
+        && constructorIngredients.map((elem : TIngredient) => {
+            elem.price && (ingredientsPrice += elem.price)
         })
 
         dispatch(refreshTotal(bunPrice + ingredientsPrice))
@@ -67,7 +67,7 @@ const BurgerConstructor = () => {
     }, [currentBun, constructorIngredients])
 
 
-    const moveCard = (dragIndex, hoverIndex) => {
+    const moveCard = (dragIndex : number, hoverIndex : number) => {
         const dragCard = constructorIngredients[dragIndex]
         const newCards = [...constructorIngredients]
         newCards.splice(dragIndex, 1)
@@ -117,7 +117,7 @@ const BurgerConstructor = () => {
             <OverflowSection height={420}>
                 {
                     constructorIngredients
-                        .map((elem, index) => {
+                        .map((elem : TIngredient, index : number) => {
                             return (<IngredientCard
                                     key={elem.uuid}
                                     isLocked={false}
@@ -157,7 +157,7 @@ const BurgerConstructor = () => {
                 <p className="text text_type_digits-medium">
                     {totalPrice}
                 </p>
-                <CurrencyIcon />
+                <CurrencyIcon type="primary"/>
             </div>
             <Button type="primary" size="large" onClick={() => {
                     isAuthenticated
@@ -170,8 +170,6 @@ const BurgerConstructor = () => {
     )
 }
 
-BurgerConstructor.propTypes = {
-}
 
 export default BurgerConstructor
 

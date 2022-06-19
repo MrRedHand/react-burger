@@ -1,18 +1,20 @@
-import React, {useState} from 'react';
+import React, {FC, useState} from 'react';
 import ReactDOM from 'react-dom';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import st from './modal.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalHeader from '../modal-header/modal-header';
 import {useHistory} from "react-router-dom";
+import {TModal} from "../../utils/types";
 
-const Modal = ({activity, children, heading, onCloseEvent}) => {
+
+const Modal : FC<TModal> = ({activity, children, heading, onCloseEvent}) => {
 
     const history = useHistory()
 
-    const modalRoot = document.getElementById("react-modals");
+    const modalRoot = document.getElementById("react-modals")!;
 
-    const body = document.querySelector('body')
+    const body : null | HTMLBodyElement = document.querySelector('body')
 
     const [active, setActive] = useState(activity)
 
@@ -22,10 +24,10 @@ const Modal = ({activity, children, heading, onCloseEvent}) => {
     }
 
     React.useEffect(() => {
-        active ? body.classList.add('modal-active') : body.classList.remove('modal-active')
+        active ? body?.classList.add('modal-active') : body?.classList.remove('modal-active')
 
-        const closeOnEsc = (e) => {
-            if( e.key === "Escape") {
+        const closeOnEsc = (e: KeyboardEvent) => {
+            if( e.key  === "Escape") {
                 closeModal()
             }
         }
@@ -42,7 +44,7 @@ const Modal = ({activity, children, heading, onCloseEvent}) => {
             <ModalHeader>
                 {heading ? <p className='text text_type_main-large'>{heading}</p> : ''}
                 <button className={st.close} onClick={() => closeModal()}>
-                    <CloseIcon />
+                    <CloseIcon type="primary"/>
                 </button>
             </ModalHeader>
             <div className={st.modal_inner}>

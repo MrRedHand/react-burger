@@ -10,27 +10,27 @@ import ResetPage from "../../pages/reset";
 import ProfilePage from "../../pages/profile";
 import {ProtectedRoute} from "../protected-route/protected-route";
 import WrongPage from "../../pages/404";
-import {Route, Switch, useHistory, useLocation} from "react-router-dom";
+import {Route, Switch, SwitchProps, useHistory, useLocation} from "react-router-dom";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-import {loginFailed, loginSuccess, reloginUser} from "../../services/actions/user-login";
 import {reloginCheck} from "../../services/relogin-check";
+import * as H from 'history';
 
 
 function App() {
 
+  const location = useLocation<{background: H.Location<unknown>}>();
+
   const history = useHistory()
 
-  const location = useLocation()
-
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
 
   const background = location.state && location.state.background
 
-  const {fullDataRecieved} = useSelector(store => store.main);
+  const {fullDataRecieved} = useSelector<any>(store => store.main) as any;
 
-  const {needToCheckUser, isAuthenticated} = useSelector(store => store.user);
+  const {needToCheckUser, isAuthenticated} = useSelector<any>(store => store.user) as any;
 
   useEffect(() => {
 

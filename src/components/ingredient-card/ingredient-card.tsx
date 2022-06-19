@@ -1,22 +1,22 @@
-import React, {useEffect, useState, useRef} from "react";
-import PropTypes from "prop-types";
+import React, {useEffect, useState, useRef, FC} from "react";
 import styles from './ingredient-card.module.css';
 import {ConstructorElement, CurrencyIcon, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import {useDrag, useDrop} from "react-dnd";
 import {useDispatch, useSelector} from "react-redux";
 import {removeIngredient} from "../../services/actions/remove-ingredient";
+import {TIngredientCard} from "../../utils/types";
 
-const IngredientCard = ({id, ingredientType,  text, thumbnail, type, isLocked, price, board, onClick, moveCard, index}) => {
+const IngredientCard : FC<TIngredientCard> = ({id, ingredientType,  text, thumbnail, type, isLocked, price, board, onClick, moveCard, index}) => {
 
     const dispatch = useDispatch()
 
-    const [count, setCount] = useState(0)
+    const [count, setCount] = useState<number>(0)
 
     const currentBoard = board;
 
-    const {constructorIngredients, currentBun} = useSelector(state => state.main)
+    const {constructorIngredients, currentBun} = useSelector<any>(state => state.main) as any
 
-    const ref = useRef(null)
+    const ref = useRef<HTMLBodyElement>(null)
 
     const [{ ingrDragging}, dragIngr] = useDrag({
         type: 'ingredient',
@@ -32,19 +32,19 @@ const IngredientCard = ({id, ingredientType,  text, thumbnail, type, isLocked, p
 
     const [, drop] = useDrop({
         accept : 'ingredient-in-constructor',
-        hover(item, monitor) {
+        hover(item : any, monitor) {
             if (!ref.current) {
                 return
             }
-            const dragIndex = item.index
-            const hoverIndex = index
+            const dragIndex : number | undefined = item.index
+            const hoverIndex : number | undefined = index
             if (dragIndex === hoverIndex) {
                 return
             }
-            const hoverBoundingRect = ref.current?.getBoundingClientRect()
+            const hoverBoundingRect : {bottom : number, top : number} = ref.current?.getBoundingClientRect()
             const hoverMiddleY =
                 (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
-            const clientOffset = monitor.getClientOffset()
+            const clientOffset : { x : number, y : number} = monitor.getClientOffset()
             const hoverClientY = clientOffset.y - hoverBoundingRect.top
             if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
                 return
@@ -109,7 +109,7 @@ const IngredientCard = ({id, ingredientType,  text, thumbnail, type, isLocked, p
         <div className={`${styles.constructor_elem_wrap} pl-8 mb-4 mr-4`} style={{opacity : opacity}} ref={ref}>
             {
                 isLocked === false
-                && <div className={styles.drag_icon}> <DragIcon /> </div>
+                && <div className={styles.drag_icon}> <DragIcon type="primary" /> </div>
             }
             <ConstructorElement
                 text={text}
@@ -128,18 +128,5 @@ const IngredientCard = ({id, ingredientType,  text, thumbnail, type, isLocked, p
 }
 
 
-IngredientCard.propTypes = {
-    id: PropTypes.string,
-    ingredientType: PropTypes.string,
-    text: PropTypes.string.isRequired,
-    thumbnail: PropTypes.string.isRequired,
-    type: PropTypes.string,
-    isLocked: PropTypes.bool,
-    price : PropTypes.number.isRequired,
-    board : PropTypes.string,
-    onClick: PropTypes.func,
-    moveCard : PropTypes.func,
-    index : PropTypes.number
-}
 
 export default IngredientCard

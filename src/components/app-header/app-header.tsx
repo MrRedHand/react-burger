@@ -8,7 +8,7 @@ import {useSelector} from "react-redux";
 
 export default function AppHeader() {
 
-    const {isAuthenticated, userName} = useSelector(state => state.user)
+    const {isAuthenticated, userName} = useSelector<any>(state => state.user) as any
 
     const history = useHistory();
 
