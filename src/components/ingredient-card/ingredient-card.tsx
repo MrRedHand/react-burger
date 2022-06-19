@@ -4,7 +4,7 @@ import {ConstructorElement, CurrencyIcon, DragIcon} from '@ya.praktikum/react-de
 import {useDrag, useDrop} from "react-dnd";
 import {useDispatch, useSelector} from "react-redux";
 import {removeIngredient} from "../../services/actions/remove-ingredient";
-import {TIngredientCard} from "../../utils/types";
+import {TIngredient , TIngredientCard} from "../../utils/types";
 
 const IngredientCard : FC<TIngredientCard> = ({id, ingredientType,  text, thumbnail, type, isLocked, price, board, onClick, moveCard, index}) => {
 
@@ -16,7 +16,7 @@ const IngredientCard : FC<TIngredientCard> = ({id, ingredientType,  text, thumbn
 
     const {constructorIngredients, currentBun} = useSelector<any>(state => state.main) as any
 
-    const ref = useRef<HTMLBodyElement>(null)
+    const ref = useRef<HTMLDivElement>(null)
 
     const [{ ingrDragging}, dragIngr] = useDrag({
         type: 'ingredient',
@@ -44,15 +44,21 @@ const IngredientCard : FC<TIngredientCard> = ({id, ingredientType,  text, thumbn
             const hoverBoundingRect : {bottom : number, top : number} = ref.current?.getBoundingClientRect()
             const hoverMiddleY =
                 (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
-            const clientOffset : { x : number, y : number} = monitor.getClientOffset()
-            const hoverClientY = clientOffset.y - hoverBoundingRect.top
-            if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-                return
+            const clientOffset : { x : number, y : number} | null = monitor.getClientOffset()
+            const hoverClientY = clientOffset !== null && clientOffset.y - hoverBoundingRect.top
+
+            if (dragIndex !== undefined && hoverIndex !== undefined) {
+                if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+                    return
+                }
+
+                if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+                    return
+                }
+
+                moveCard && moveCard(dragIndex, hoverIndex)
             }
-            if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-                return
-            }
-            moveCard(dragIndex, hoverIndex)
+
             item.index = hoverIndex
         },
     })
@@ -80,7 +86,7 @@ const IngredientCard : FC<TIngredientCard> = ({id, ingredientType,  text, thumbn
             ? setCount(2)
             : setCount(0)
         } else {
-            setCount(constructorIngredients.filter(x => x._id === id).length)
+            setCount(constructorIngredients.filter((ingredient  : TIngredient)=> ingredient._id === id).length)
         }
     }, [constructorIngredients, currentBun])
 
@@ -97,7 +103,7 @@ const IngredientCard : FC<TIngredientCard> = ({id, ingredientType,  text, thumbn
             <img src={thumbnail} className="card__avatar ml-4 mr-4" />
             <div className={`${styles.card__price}  mt-1 mb-1`}>
                 <span className="price text text_type_digits-default mr-1">{price}</span>
-                <CurrencyIcon />
+                <CurrencyIcon type="primary"/>
             </div>
             <div className={`${styles.card__title} text text_type_main-small text-center`}>{text}</div>
         </section>
@@ -112,11 +118,11 @@ const IngredientCard : FC<TIngredientCard> = ({id, ingredientType,  text, thumbn
                 && <div className={styles.drag_icon}> <DragIcon type="primary" /> </div>
             }
             <ConstructorElement
-                text={text}
+                text={text ? text : ''}
                 type={type}
-                thumbnail={thumbnail}
+                thumbnail={thumbnail ? thumbnail : ''}
                 isLocked={isLocked}
-                price={price}
+                price={price ? price : 0}
                 handleClose={deleteIngredient}
             />
         </div>

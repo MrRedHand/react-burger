@@ -26,6 +26,8 @@ const BurgerConstructor = () => {
     const {constructorIngredients, currentBun, allIngredients, totalPrice} = useSelector<any>(state => state.main) as any
     const { isAuthenticated } = useSelector<any>(state => state.user) as any
 
+    const asdad = false
+
     const [modalState, setModal] = React.useState<TModalState>({
         active : false,
         content: '',
@@ -159,7 +161,9 @@ const BurgerConstructor = () => {
                 </p>
                 <CurrencyIcon type="primary"/>
             </div>
-            <Button type="primary" size="large" onClick={() => {
+            <Button type="primary" size="large"
+                    onClick={
+                () => {
                     isAuthenticated
                     ? showModal()
                     : redirectToLogin()

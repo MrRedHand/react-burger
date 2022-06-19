@@ -10,6 +10,7 @@ import IngredientDetails from "../ingredient-details/ingredient-details";
 import {useDispatch, useSelector} from "react-redux";
 import {setIngredientInfo} from "../../services/actions/set-ingredient-info";
 import {useHistory, useLocation} from "react-router-dom";
+import { TIngredient } from "../../utils/types";
 
 
 const BurgerIngredients = () => {
@@ -20,21 +21,21 @@ const BurgerIngredients = () => {
 
     const dispatch = useDispatch();
 
-    const one = useRef();
-    const two = useRef();
-    const three = useRef();
-    const scrollPane = useRef();
+    const one = useRef<HTMLDivElement>(null);
+    const two = useRef<HTMLDivElement>(null);
+    const three = useRef<HTMLDivElement>(null);
+    const scrollPane = useRef<HTMLDivElement>(null);
 
-    const {allIngredients,viewIngredient} = useSelector(state => state.main)
+    const {allIngredients,viewIngredient} = useSelector<any>(state => state.main) as any
 
-    const showModal = (props) => {
-        dispatch(setIngredientInfo(props))
-        history.push(`/ingredients/${props._id}`, {background : location})
+    const showModal = (element  : TIngredient) => {
+        dispatch(setIngredientInfo(element))
+        history.push(`/ingredients/${element._id}`, {background : location})
     }
 
     let [current, setCurrent] = useState('one')
 
-    function scrollTo(where) {
+    function scrollTo(where : string) {
         setCurrent(
             current = where,
         )
@@ -42,7 +43,7 @@ const BurgerIngredients = () => {
 
 
     function updateScrollPosition() {
-        if (scrollPane && scrollPane.current) {
+        if (scrollPane && scrollPane.current && one.current && two.current && three.current) {
             let scrollPaneOffset = scrollPane.current.getBoundingClientRect();
             let oneOffset = one.current.getBoundingClientRect();
             let twoOffset = two.current.getBoundingClientRect();
@@ -84,7 +85,7 @@ const BurgerIngredients = () => {
 
         <section className={`${styles.ingredients}`}>
             <div >
-            <OverflowSection height={450} onScroll={e => updateScrollPosition()}>
+            <OverflowSection height={450} onScroll={() => updateScrollPosition()}>
 
                 <div className="pr-2" ref={scrollPane}>
 
@@ -93,7 +94,7 @@ const BurgerIngredients = () => {
 
                 <IngredientsGrid className={styles.ingredients__grid}>
                     {
-                        allIngredients.map(elem => {
+                        allIngredients.map((elem : TIngredient) => {
                             if (elem.type === 'bun') {
                                 return ( <IngredientCard
                                             board={'default'}
@@ -102,7 +103,6 @@ const BurgerIngredients = () => {
                                             key={elem._id}
                                             id={elem._id}
                                             ingredientType={elem.type}
-                                            {...elem}
                                             onClick={() => showModal(elem)}
                                             />
                                 )  
@@ -117,7 +117,7 @@ const BurgerIngredients = () => {
 
                 <IngredientsGrid className={styles.ingredients__grid}>
                     {
-                        allIngredients.map(elem => {
+                        allIngredients.map((elem : TIngredient) => {
                             if (elem.type === 'sauce') {
                                 return ( <IngredientCard
                                         board={'default'}
@@ -125,7 +125,6 @@ const BurgerIngredients = () => {
                                         text={elem.name}
                                         key={elem._id}
                                         id={elem._id}
-                                        {...elem}
                                         onClick={() => showModal(elem)}
                                     />
                                 )   
@@ -140,7 +139,7 @@ const BurgerIngredients = () => {
 
                 <IngredientsGrid className={styles.ingredients__grid}>
                     {
-                        allIngredients.map(elem => {
+                        allIngredients.map((elem : TIngredient) => {
                             if (elem.type === 'main') {
                                 return ( <IngredientCard
                                         board={'default'}
@@ -148,7 +147,6 @@ const BurgerIngredients = () => {
                                         text={elem.name}
                                         key={elem._id}
                                         id={elem._id}
-                                        {...elem}
                                         onClick={() => showModal(elem)}
                                     />
                                 )  

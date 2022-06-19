@@ -34,6 +34,7 @@ export type TIngredientCard = {
     onClick? : () => void;
     moveCard? : (dragIndex : number, hoverIndex : number) => void;
     index? : number;
+    [x:string]: any;
 }
 
 export type TOverflowSection = {
@@ -41,4 +42,13 @@ export type TOverflowSection = {
     children? : ReactNode;
     className? :  string;
     onScroll? : () => void;
+}
+
+export type TIngredientsGrid = {
+    className? : string;
+    children? : ReactNode;
+}
+
+export type TIngredientsTitle = {
+    children? : ReactNode;
 }
