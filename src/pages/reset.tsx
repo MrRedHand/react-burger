@@ -6,7 +6,7 @@ import {useSelector} from "react-redux";
 
 const ResetPage = () => {
 
-    const {requestedForgotPassword} = useSelector(state => state.user)
+    const {requestedForgotPassword} = useSelector<any>(state => state.user) as any
 
     const history = useHistory();
 

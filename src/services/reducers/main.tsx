@@ -23,7 +23,7 @@ const initialState = {
     fullDataRequest: false,
 }
 
-export const mainReducer = (state = initialState, action) => {
+export const mainReducer = (state = initialState, action : any) => {
     switch (action.type) {
         case CLEAR_CONSTRUCTOR :
             return {

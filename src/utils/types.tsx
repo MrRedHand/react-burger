@@ -89,7 +89,42 @@ export type TRegisterFormState = {
     name : string;
 }
 
+export type TRegisterFormFields = {} & TRegisterFormState
+
+export type TForgotFormFields = {
+    email : string;
+}
+
+export type TResetFormFields = {
+    token : string;
+}
+
+export type TLoginFormFields = Omit<TRegisterFormState, "name">
+
 export type TResetFormState = {
     password : string;
     token : string;
 }
+
+export type TProfileNav = {
+    profile : () => void;
+    ordersHistory : () => void;
+    userExit : () => void;
+}
+
+export type TServerResponse = {
+    [x : string] : any;
+}
+
+export type TServerRequestOptions = {
+    headers : {
+        'Content-Type' : 'application/json';
+         authorization : string;
+    }
+}
+
+export type TServerData = {
+    accessToken? : string;
+    refreshToken? : string;
+}
+

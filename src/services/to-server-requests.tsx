@@ -14,10 +14,12 @@ import {
     userResetPasswordRequest,
     userResetPasswordSuccess
 } from "./actions/user-reset-password";
+import {TLoginFormFields, TRegisterFormFields, TForgotFormFields, TResetFormFields, TServerResponse, TServerData, TServerRequestOptions} from "../utils/types"
+import {Dispatch} from "redux";
 
 export const apiUrl = 'https://norma.nomoreparties.space/api/'
 
-export const checkResponse = response => {
+export const checkResponse = (response : TServerResponse) => {
     if (response.ok) {
         return response.json();
     } else {
@@ -37,11 +39,11 @@ export const refreshToken = () => {
     }).then(checkResponse)
 }
 
-export const fetchToRefreshToken = async (url, options) => {
+export const fetchToRefreshToken = async (url : string, options : TServerRequestOptions) => {
     try {
         const res = await fetch(url, options)
         return await checkResponse(res)
-    } catch (error) {
+    } catch (error : any) {
         console.log('fetchToRefreshToken error', error);
         if (error.message === "jwt expired") {
             const refreshedData = await refreshToken()
@@ -73,20 +75,20 @@ export const getUser = () => {
         },
     })
 }
+//
+// export const updateUser = (user) => {
+//     return fetchToRefreshToken(apiUrl + 'auth/user', {
+//         method : "PATCH",
+//         headers : {
+//             'Content-Type' : 'application/json',
+//             authorization : localStorage.getItem('accessToken')
+//         },
+//         body: JSON.stringify(user)
+//     })
+// }
 
-export const updateUser = (user) => {
-    return fetchToRefreshToken(apiUrl + 'auth/user', {
-        method : "PATCH",
-        headers : {
-            'Content-Type' : 'application/json',
-            authorization : localStorage.getItem('accessToken')
-        },
-        body: JSON.stringify(user)
-    })
-}
-
-export const loginUser = form => {
-    return function (dispatch) {
+export const loginUser = ( form : TLoginFormFields ) => {
+    return function (dispatch : Dispatch) {
 
         dispatch(loginRequest())
 
@@ -101,7 +103,7 @@ export const loginUser = form => {
             body: JSON.stringify(form)
         })
             .then(checkResponse)
-            .then((data) => {
+            .then((data: TServerData) => {
                 let accessToken;
                 let refreshToken;
                 if (data.accessToken) {
@@ -132,8 +134,8 @@ export const loginUser = form => {
     }
 }
 
-export const registerUser = form => {
-    return function (dispatch) {
+export const registerUser = (form : TRegisterFormFields) => {
+    return function (dispatch : Dispatch) {
 
         dispatch(registerRequest())
 
@@ -156,8 +158,8 @@ export const registerUser = form => {
 }
 
 
-export  const forgotPassword = data => {
-    return function (dispatch) {
+export  const forgotPassword = (data : TForgotFormFields) => {
+    return function (dispatch : Dispatch) {
         dispatch(userResetPasswordRequest())
 
         fetch(apiUrl + 'password-reset', {
@@ -178,8 +180,8 @@ export  const forgotPassword = data => {
 }
 
 
-export  const resetPassword = data => {
-    return function (dispatch) {
+export  const resetPassword = (data : TResetFormFields) => {
+    return function (dispatch : Dispatch) {
         fetch(apiUrl + 'password-reset/reset', {
             method: 'POST',
             headers: {
@@ -201,7 +203,7 @@ export  const resetPassword = data => {
 
 
 export  const  getFullData = () => {
-    return function (dispatch) {
+    return function (dispatch : Dispatch) {
         dispatch(getDataFailed())
 
         fetch(apiUrl + 'ingredients/')
@@ -216,8 +218,8 @@ export  const  getFullData = () => {
     }
 }
 
-export  const fetchOrder = (ingredientsArr) => {
-    return function (dispatch) {
+export  const fetchOrder = (ingredientsArr : Array<string>) => {
+    return function (dispatch : Dispatch) {
 
         console.log(ingredientsArr)
 

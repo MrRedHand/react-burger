@@ -6,7 +6,7 @@ export function ProtectedRoute({ onlyAuth = false, ...rest }) {
 
     const location = useLocation()
 
-    const {isAuthenticated} = useSelector(state => state.user)
+    const {isAuthenticated} = useSelector<any>(state => state.user) as any
 
     if (onlyAuth && isAuthenticated) {
         console.log('редирект на запрошенный маршрут')

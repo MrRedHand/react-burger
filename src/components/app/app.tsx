@@ -2,7 +2,7 @@ import React, {useCallback, useEffect} from 'react';
 import AppHeader from '../app-header/app-header';
 import Main from '../main/main';
 import {useDispatch, useSelector} from "react-redux";
-import {checkResponse, getFullData, getUser, updateUser} from "../../services/to-server-requests";
+import {getFullData} from "../../services/to-server-requests";
 import LoginPage from "../../pages/login";
 import RegisterPage from "../../pages/register";
 import ForgotPage from "../../pages/forgot";

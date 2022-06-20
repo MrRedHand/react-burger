@@ -1,12 +1,13 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, FC} from "react";
 import st from "./profile-nav.module.css"
 import {useLocation} from "react-router-dom";
+import { TProfileNav} from "../../utils/types";
 
-const ProfileNav = ({profile, ordersHistory, userExit}) => {
+const ProfileNav : FC<TProfileNav> = ({profile, ordersHistory, userExit}) => {
 
     const location = useLocation()
 
-    const [activeLink, setActiveLink] = useState('/profile')
+    const [activeLink, setActiveLink] = useState<string>('/profile')
 
     useEffect(() => {
 

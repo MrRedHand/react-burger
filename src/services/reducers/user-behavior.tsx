@@ -18,7 +18,7 @@ const initialState = {
     requestedForgotPassword : false,
 }
 
-export const userReducer = (state = initialState, action) => {
+export const userReducer = (state = initialState, action : any) => {
     switch (action.type) {
         case REGISTER_SUCCESS :
             return {

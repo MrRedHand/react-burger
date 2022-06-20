@@ -6,7 +6,7 @@ import {useSelector} from "react-redux";
 
 const LoginPage = () => {
 
-    const {isAuthenticated} = useSelector(state => state.user)
+    const {isAuthenticated} = useSelector<any>(state => state.user) as  any
 
     const history = useHistory();
 
