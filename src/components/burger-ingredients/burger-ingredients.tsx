@@ -97,6 +97,7 @@ const BurgerIngredients = () => {
                         allIngredients.map((elem : TIngredient) => {
                             if (elem.type === 'bun') {
                                 return ( <IngredientCard
+                                            price={elem.price}
                                             board={'default'}
                                             thumbnail={elem.image}
                                             text={elem.name}
