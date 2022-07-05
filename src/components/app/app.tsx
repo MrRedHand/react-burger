@@ -7,7 +7,7 @@ import LoginPage from "../../pages/login";
 import RegisterPage from "../../pages/register";
 import ForgotPage from "../../pages/forgot";
 import ResetPage from "../../pages/reset";
-import ProfilePage from "../../pages/profile";
+import ProfilePage from "../../pages/profile/profile";
 import {ProtectedRoute} from "../protected-route/protected-route";
 import WrongPage from "../../pages/404";
 import {Route, Switch, SwitchProps, useHistory, useLocation} from "react-router-dom";
@@ -16,6 +16,10 @@ import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import {reloginCheck} from "../../services/relogin-check";
 import * as H from 'history';
+import {OrderFeedPage} from "../../pages/feed/feed";
+import {MainLayout} from "../main-layout/main-layout";
+import {FeedDetails} from "../../pages/feed-details/feed-details";
+import ProfileOrdersPage from "../../pages/profile/orders/orders";
 
 
 function App() {
@@ -47,6 +51,7 @@ function App() {
   return (
     <>
         <AppHeader />
+        <MainLayout>
         {
           needToCheckUser
                 ? 'Проверка логина'
@@ -75,9 +80,18 @@ function App() {
                             <ProtectedRoute onlyAuth={true} path="/profile" exact>
                                 <ProfilePage/>
                             </ProtectedRoute>
+                          <ProtectedRoute onlyAuth={true} path="/profile/orders" exact>
+                            <ProfileOrdersPage/>
+                          </ProtectedRoute>
                             <ProtectedRoute path="/ingredients/:id" exact={true}>
                                 <IngredientDetails/>
                             </ProtectedRoute>
+                            <ProtectedRoute path="/feed" exact={true}>
+                              <OrderFeedPage/>
+                            </ProtectedRoute>
+                          <ProtectedRoute path="/feed/:id" exact={true}>
+                            <FeedDetails/>
+                          </ProtectedRoute>
                             <ProtectedRoute path="*">
                                 <WrongPage/>
                             </ProtectedRoute>
@@ -103,7 +117,7 @@ function App() {
                     </>
                 )
         }
-
+        </MainLayout>
 
     </>
   );

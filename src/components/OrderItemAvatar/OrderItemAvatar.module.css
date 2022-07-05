@@ -1,0 +1,7 @@
+.avatarWrap {
+    width: 64px;
+    height: 64px;
+    border-radius: 100px;
+    border: 2px solid #801AB2;
+    background: #000;
+}

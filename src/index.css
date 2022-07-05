@@ -112,8 +112,8 @@ body.modal-active #react-modals {
 
 .profile_grid {
   display: grid;
-  grid-template-columns: 30% 30% 30%;
-  gap: 5%;
+  grid-template-columns: 300px 1fr;
+  gap: 30px;
 }
 
 .text_color_active {

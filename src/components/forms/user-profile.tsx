@@ -7,7 +7,7 @@ const UserProfile = () => {
     const {userName, userEmail} = useSelector<any>(state => state.user) as any
 
     return (
-        <section className="form_grid">
+        <section className="form_grid" style={{maxWidth : "400px"}}>
             <Input type="text" placeholder="Имя" value={userName} icon="EditIcon" onChange={() => {}}/>
             <Input type="text" placeholder="Логин" value={userEmail} icon="EditIcon" onChange={() => {}}/>
             <Input type="text" placeholder="Пароль" value="*****" icon="EditIcon" onChange={() => {}}/>
