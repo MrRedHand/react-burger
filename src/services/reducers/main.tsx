@@ -8,9 +8,23 @@ import {
     REMOVE_INGREDIENT, RESORT_INGREDIENTS_IN_CONSTRUCTOR,
     SET_INGREDIENT_INFO
 } from "../actions/main";
+import {TMainActions} from "../actions/types";
+import {TIngredientCard} from "../../utils/types";
 
+type TStoreState = {
+    allIngredients : Array<TIngredientCard>,
+    currentBun : {} | null,
+    constructorIngredients: Array<TIngredientCard>,
+    viewIngredient: TIngredientCard | null,
+    orderDetails: [],
+    orderDetailsRecieved: boolean,
+    totalPrice: number,
+    fullDataRecieved : boolean,
+    fullDataError : boolean,
+    fullDataRequest: boolean,
+}
 
-const initialState = {
+const initialState : TStoreState = {
     allIngredients : [],
     currentBun : null,
     constructorIngredients: [],
@@ -23,7 +37,7 @@ const initialState = {
     fullDataRequest: false,
 }
 
-export const mainReducer = (state = initialState, action : any) => {
+export const mainReducer = (state = initialState, action : TMainActions) : TStoreState => {
     switch (action.type) {
         case CLEAR_CONSTRUCTOR :
             return {
@@ -34,7 +48,7 @@ export const mainReducer = (state = initialState, action : any) => {
         case RESORT_INGREDIENTS_IN_CONSTRUCTOR :
             return {
                 ...state,
-                constructorIngredients : action.payload
+                constructorIngredients : action.list
             }
         case GET_FULLDATA_REQUEST:
             return {
@@ -44,7 +58,7 @@ export const mainReducer = (state = initialState, action : any) => {
         case GET_FULLDATA_SUCCESS :
             return  {
                 ...state,
-                allIngredients: action.payload,
+                allIngredients: action.list,
                 fullDataRecieved: true,
                 fullDataError : false,
             }
@@ -57,7 +71,7 @@ export const mainReducer = (state = initialState, action : any) => {
         case SET_INGREDIENT_INFO :
             return {
                 ...state,
-                viewIngredient : action.payload
+                viewIngredient : action.data
             }
         case CLEAR_INGREDIENT_INFO :
             return {
@@ -67,22 +81,22 @@ export const mainReducer = (state = initialState, action : any) => {
         case ADD_INGREDIENT_TO_CONSTRUCTOR:
             return {
                 ...state,
-                constructorIngredients: [...state.constructorIngredients, action.payload]
+                constructorIngredients: [...state.constructorIngredients, action.data]
             }
         case ADD_BUN_TO_CONSTRUCTOR :
             return {
                 ...state,
-                currentBun: action.payload
+                currentBun: action.data
             }
         case REMOVE_INGREDIENT :
             return {
                 ...state,
-                constructorIngredients: [...state.constructorIngredients.filter((value, index) => {return index !== action.payload})]
+                constructorIngredients: [...state.constructorIngredients.filter((value, index) => {return index !== action.id})]
             }
         case REFRESH_TOTAL:
             return {
                 ...state,
-                totalPrice: action.payload
+                totalPrice: action.data
             }
         case GET_ORDER_REQUEST :
             return state;
@@ -91,7 +105,7 @@ export const mainReducer = (state = initialState, action : any) => {
         case GET_ORDER_SUCCESS :
             return {
                 ...state,
-                orderDetails : action.payload,
+                orderDetails : action.data,
                 orderDetailsRecieved : true,
             }
         default: {
