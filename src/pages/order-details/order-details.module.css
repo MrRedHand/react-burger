@@ -26,14 +26,20 @@
     display: flex;
     align-items: center;
     margin-bottom: 16px;
+    margin-right: 20px;
 }
 
 .price {
     margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .total {
     display: flex;
     justify-content: space-between;
     margin-top: 40px;
+    margin-right: 30px;
+    align-items: center;
 }

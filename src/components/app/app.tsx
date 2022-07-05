@@ -18,8 +18,8 @@ import {reloginCheck} from "../../services/relogin-check";
 import * as H from 'history';
 import {OrderFeedPage} from "../../pages/feed/feed";
 import {MainLayout} from "../main-layout/main-layout";
-import {FeedDetails} from "../../pages/feed-details/feed-details";
 import ProfileOrdersPage from "../../pages/profile/orders/orders";
+import {OrderDetailsPage} from "../../pages/order-details/order-details";
 
 
 function App() {
@@ -83,14 +83,17 @@ function App() {
                           <ProtectedRoute onlyAuth={true} path="/profile/orders" exact>
                             <ProfileOrdersPage/>
                           </ProtectedRoute>
+                          <ProtectedRoute onlyAuth={true} path="/profile/orders/:id" exact={true}>
+                            <OrderDetailsPage/>
+                          </ProtectedRoute>
                             <ProtectedRoute path="/ingredients/:id" exact={true}>
                                 <IngredientDetails/>
                             </ProtectedRoute>
-                            <ProtectedRoute path="/feed" exact={true}>
+                            <ProtectedRoute onlyAuth={true} path="/feed" exact={true}>
                               <OrderFeedPage/>
                             </ProtectedRoute>
-                          <ProtectedRoute path="/feed/:id" exact={true}>
-                            <FeedDetails/>
+                          <ProtectedRoute onlyAuth={true} path="/feed/:id" exact={true}>
+                            <OrderDetailsPage/>
                           </ProtectedRoute>
                             <ProtectedRoute path="*">
                                 <WrongPage/>

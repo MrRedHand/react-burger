@@ -40,6 +40,13 @@ export default function AppHeader() {
         [history]
     );
 
+    const feedPage = useCallback(
+        () => {
+            history.push('/feed');
+        },
+        [history]
+    );
+
 
     return (
         <header className='m-4 mb-0'>
@@ -50,7 +57,7 @@ export default function AppHeader() {
                             <span className={constrClss}>Конструктор</span>
                         </button>
 
-                    <button className={btnOrderClss}>
+                    <button className={btnOrderClss} onClick={() => feedPage()}>
                         <ListIcon type='secondary' />
                         <span className={ordersClss}>Лента заказов</span>
                     </button>
