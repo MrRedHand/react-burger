@@ -14,7 +14,10 @@ type TStoreState = {
     registered : boolean,
     accessToken: string,
     refreshToken: string,
-    user : {},
+    user : {
+        name : string,
+        email: string
+    } | {},
     requestedForgotPassword : boolean,
 }
 
@@ -28,33 +31,35 @@ const initialState = {
     requestedForgotPassword : false,
 }
 
-export const userReducer = (state = initialState, action : TUserActions) : TStoreState => {
+export const userReducer = (state : TStoreState = initialState, action : TUserActions) => {
     switch (action.type) {
         case REGISTER_SUCCESS :
             return {
                 ...state,
-                accessToken: action.payload.accessToken,
-                refreshToken: action.payload.refreshToken,
+                accessToken: action.data.accessToken,
+                refreshToken: action.data.refreshToken,
                 user : {
-                    name : action.payload.user.name,
-                    email : action.payload.user.email
+                    name : action.data.user.name,
+                    email : action.data.user.email
                 },
                 registered : true,
             }
         case REGISTER_FAILED :
             return {
                 ...state,
-                registered: false
+                registered: false,
             }
         case REGISTER_REQUEST :
             return state
         case LOGIN_SUCCESS :
             return {
                 ...state,
-                accessToken: action.payload.accessToken,
-                refreshToken: action.payload.refreshToken,
-                userName : action.payload.user.name,
-                userEmail: action.payload.user.email,
+                accessToken: action.data.accessToken,
+                refreshToken: action.data.refreshToken,
+                user : {
+                    name : action.data.user.name,
+                    email : action.data.user.email
+                },
                 isAuthenticated : true
             }
         case USER_RELOGIN_REQUEST :
@@ -65,8 +70,10 @@ export const userReducer = (state = initialState, action : TUserActions) : TStor
         case USER_RELOGIN_SUCCESS :
             return {
                 ...state,
-                userName : action.payload.name,
-                userEmail: action.payload.email,
+                user : {
+                    name : action.data.user.name,
+                    email : action.data.user.email
+                },
                 isAuthenticated : true,
                 needToCheckUser : false
             }
