@@ -107,11 +107,13 @@ export interface IRegisterRequest {
 
 export interface IRegisterSuccess {
     readonly type: typeof REGISTER_SUCCESS;
-    accessToken : string,
-    refreshToken : string,
-    user : {
-        name : string,
-        email : string,
+    data : {
+        accessToken : string,
+        refreshToken : string,
+        user : {
+            name : string,
+            email : string,
+        }
     }
 }
 
@@ -125,11 +127,13 @@ export interface ILoginRequest {
 
 export interface ILoginSuccess {
     readonly type: typeof LOGIN_SUCCESS;
-    accessToken : string,
-    refreshToken : string,
-    user : {
-        name : string,
-        email : string,
+    data : {
+        accessToken : string,
+        refreshToken : string,
+        user : {
+            name : string,
+            email : string,
+        }
     }
 }
 
@@ -143,14 +147,17 @@ export interface IUserReloginRequest {
 
 export interface IUserReloginSuccess {
     readonly type: typeof USER_RELOGIN_SUCCESS;
-    user : {
-        name : string,
-        email : string,
+    data : {
+        user : {
+            name : string,
+            email : string,
+        }
     }
 }
 
 export interface IUserReloginFailed {
     readonly type: typeof USER_RELOGIN_FAILED;
+    registered : boolean
 }
 
 export interface IPasswordResetRequest {

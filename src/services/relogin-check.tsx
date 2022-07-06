@@ -1,5 +1,5 @@
 import {getUser} from "./to-server-requests";
-import {reloginUserFail, reloginUserStarted, reloginUserSuccess} from "./actions/constructor-actions";
+import {reloginUserFail, reloginUserStarted, reloginUserSuccess} from "./actions/user-login";
 import {store} from "./store";
 
 
@@ -12,11 +12,11 @@ export const reloginCheck = () => {
         getUser()
             .then(res => {
                 if (res.success) {
-                    const user = {
+                    const objPayload = {
                         email : res.user.email,
                         name : res.user.name,
                     }
-                    store.dispatch(reloginUserSuccess(user))
+                    store.dispatch(reloginUserSuccess(objPayload))
                 } else {
                     store.dispatch(reloginUserFail())
                 }

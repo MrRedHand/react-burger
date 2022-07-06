@@ -3,7 +3,7 @@ import styles from './ingredient-card.module.css';
 import {ConstructorElement, CurrencyIcon, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import {useDrag, useDrop} from "react-dnd";
 import {useDispatch, useSelector} from "react-redux";
-import {removeIngredient} from "../../services/actions/constructor-actions";
+import {removeIngredient} from "../../services/actions/remove-ingredient";
 import {TIngredient , TIngredientCard} from "../../utils/types";
 
 const IngredientCard : FC<TIngredientCard> = ({id, ingredientType,  text, thumbnail, type, isLocked, price, board, onClick, moveCard, index}) => {

@@ -37,7 +37,7 @@ const initialState : TStoreState = {
     fullDataRequest: false,
 }
 
-export const mainReducer = (state : TStoreState = initialState, action : TMainActions) => {
+export const mainReducer = (state = initialState, action : TMainActions) : TStoreState => {
     switch (action.type) {
         case CLEAR_CONSTRUCTOR :
             return {

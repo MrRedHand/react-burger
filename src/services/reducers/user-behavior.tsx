@@ -36,11 +36,11 @@ export const userReducer = (state : TStoreState = initialState, action : TUserAc
         case REGISTER_SUCCESS :
             return {
                 ...state,
-                accessToken: action.accessToken,
-                refreshToken: action.refreshToken,
+                accessToken: action.data.accessToken,
+                refreshToken: action.data.refreshToken,
                 user : {
-                    name : action.user.name,
-                    email : action.user.email
+                    name : action.data.user.name,
+                    email : action.data.user.email
                 },
                 registered : true,
             }
@@ -54,11 +54,11 @@ export const userReducer = (state : TStoreState = initialState, action : TUserAc
         case LOGIN_SUCCESS :
             return {
                 ...state,
-                accessToken: action.accessToken,
-                refreshToken: action.refreshToken,
+                accessToken: action.data.accessToken,
+                refreshToken: action.data.refreshToken,
                 user : {
-                    name : action.user.name,
-                    email : action.user.email
+                    name : action.data.user.name,
+                    email : action.data.user.email
                 },
                 isAuthenticated : true
             }
@@ -71,8 +71,8 @@ export const userReducer = (state : TStoreState = initialState, action : TUserAc
             return {
                 ...state,
                 user : {
-                    name : action.user.name,
-                    email : action.user.email
+                    name : action.data.user.name,
+                    email : action.data.user.email
                 },
                 isAuthenticated : true,
                 needToCheckUser : false

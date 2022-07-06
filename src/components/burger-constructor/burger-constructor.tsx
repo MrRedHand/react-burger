@@ -7,8 +7,11 @@ import IngredientCard from "../ingredient-card/ingredient-card";
 import OrderDetails from "../order-details/order-details";
 import {useDispatch, useSelector} from "react-redux";
 import {useDrop} from "react-dnd";
-import {addBunToConstructor, addIngredientToConstructor, resortIngredients, refreshTotal} from "../../services/actions/constructor-actions";
+import {addBunToConstructor} from "../../services/actions/add-bun-to-constructor";
+import {addIngredientToConstructor} from "../../services/actions/add-ingredient-to-constructor";
+import {resortIngredients} from "../../services/actions/resort-ingredients";
 import {v4 as uuidv4} from "uuid";
+import {refreshTotal} from "../../services/actions/refresh-total";
 import {Redirect, useHistory, useLocation} from "react-router-dom";
 import {TIngredient, TModalState} from "../../utils/types";
 

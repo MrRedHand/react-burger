@@ -4,12 +4,16 @@
 // POST https://norma.nomoreparties.space/api/auth/logout - эндпоинт для выхода из системы.
 // POST https://norma.nomoreparties.space/api/auth/token - эндпоинт обновления токена.
 
-import {getOrderFailed, getOrderRequest, getOrderSuccess,
-    clearConstructor, getDataFailed, getDataSuccess,registerFailed,
-    registerRequest, registerSuccess, loginFailed, loginRequest, loginSuccess,
+import {getOrderFailed, getOrderRequest, getOrderSuccess} from "./actions/get-order";
+import {clearConstructor} from "./actions/clear-constructor";
+import {getDataFailed, getDataSuccess} from "./actions/get-data";
+import {registerFailed, registerRequest, registerSuccess} from "./actions/user-register";
+import {loginFailed, loginRequest, loginSuccess} from "./actions/user-login";
+import {
     userResetPasswordFailed,
     userResetPasswordRequest,
-    userResetPasswordSuccess} from "./actions/constructor-actions";
+    userResetPasswordSuccess
+} from "./actions/user-reset-password";
 import {TLoginFormFields, TRegisterFormFields, TForgotFormFields, TResetFormFields, TServerResponse, TServerData, TServerRequestOptions} from "../utils/types"
 import {Dispatch} from "redux";
 
