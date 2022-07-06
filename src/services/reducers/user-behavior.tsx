@@ -6,17 +6,7 @@ import {
     REGISTER_REQUEST,
     REGISTER_SUCCESS, USER_RELOGIN_FAILED, USER_RELOGIN_REQUEST, USER_RELOGIN_SUCCESS
 } from "../actions/user";
-import {TUserActions} from "../actions/types";
 
-type TStoreState = {
-    needToCheckUser : boolean,
-    isAuthenticated : boolean,
-    registered : boolean,
-    accessToken: string,
-    refreshToken: string,
-    user : {},
-    requestedForgotPassword : boolean,
-}
 
 const initialState = {
     needToCheckUser : true,
@@ -28,7 +18,7 @@ const initialState = {
     requestedForgotPassword : false,
 }
 
-export const userReducer = (state = initialState, action : TUserActions) : TStoreState => {
+export const userReducer = (state = initialState, action : any) => {
     switch (action.type) {
         case REGISTER_SUCCESS :
             return {
