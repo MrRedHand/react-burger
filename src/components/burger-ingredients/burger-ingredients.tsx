@@ -8,7 +8,7 @@ import IngredientsGrid from "../ingredients-grid/ingredients-grid";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import {useDispatch, useSelector} from "react-redux";
-import {setIngredientInfo} from "../../services/actions/set-ingredient-info";
+import {setIngredientInfo} from "../../services/actions/constructor-actions";
 import {useHistory, useLocation} from "react-router-dom";
 import { TIngredient } from "../../utils/types";
 
