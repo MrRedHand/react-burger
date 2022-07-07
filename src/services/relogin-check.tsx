@@ -1,5 +1,5 @@
 import {getUser} from "./to-server-requests";
-import {reloginUserFail, reloginUserStarted, reloginUserSuccess} from "./actions/user-login";
+import {reloginUserFail, reloginUserStarted, reloginUserSuccess} from "./actions/actions-creators";
 import {store} from "./store";
 
 
