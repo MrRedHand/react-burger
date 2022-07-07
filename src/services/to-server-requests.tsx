@@ -210,6 +210,7 @@ export  const  getFullData = () => {
             .then(checkResponse)
             .then((data) => {
                 dispatch(getDataSuccess(data.data))
+                console.log("full data", data.data)
             })
             .catch((error) => {
                 dispatch(getDataFailed())

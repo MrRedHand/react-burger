@@ -6,6 +6,7 @@ import {
     REGISTER_REQUEST,
     REGISTER_SUCCESS, USER_RELOGIN_FAILED, USER_RELOGIN_REQUEST, USER_RELOGIN_SUCCESS
 } from "../actions/user";
+import {TUserActions} from "../actions/action-types";
 
 
 const initialState = {
@@ -18,7 +19,7 @@ const initialState = {
     requestedForgotPassword : false,
 }
 
-export const userReducer = (state = initialState, action : any) => {
+export const userReducer = (state = initialState, action : TUserActions) => {
     switch (action.type) {
         case REGISTER_SUCCESS :
             return {

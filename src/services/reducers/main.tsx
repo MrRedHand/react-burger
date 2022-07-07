@@ -8,13 +8,27 @@ import {
     REMOVE_INGREDIENT, RESORT_INGREDIENTS_IN_CONSTRUCTOR,
     SET_INGREDIENT_INFO
 } from "../actions/main";
+import {TIngredient, TIngredientCard} from "../../utils/types";
+import {TMainActions} from "../actions/action-types";
 
+type TStoreState = {
+    allIngredients : Array<TIngredient>,
+    currentBun : {} | null,
+    constructorIngredients: Array<TIngredientCard>,
+    viewIngredient: TIngredient | null,
+    orderDetails: [],
+    orderDetailsRecieved: boolean,
+    totalPrice: number,
+    fullDataRecieved : boolean,
+    fullDataError : boolean,
+    fullDataRequest: boolean,
+}
 
-const initialState = {
+const initialState : TStoreState = {
     allIngredients : [],
     currentBun : null,
     constructorIngredients: [],
-    viewIngredient: {},
+    viewIngredient: null,
     orderDetails: [],
     orderDetailsRecieved: false,
     totalPrice: 0,
@@ -23,7 +37,7 @@ const initialState = {
     fullDataRequest: false,
 }
 
-export const mainReducer = (state = initialState, action : any) => {
+export const mainReducer = (state: TStoreState = initialState, action : TMainActions) => {
     switch (action.type) {
         case CLEAR_CONSTRUCTOR :
             return {

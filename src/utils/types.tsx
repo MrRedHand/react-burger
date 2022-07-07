@@ -28,6 +28,13 @@ export type TIngredient = {
     type? : string;
     price? : number;
     image? : string;
+    image_large?: string;
+    image_mobile?: string;
+    calories?: number;
+    carbohydrates?: number;
+    fat?: number;
+    proteins?: number;
+    __v?: number;
 }
 
 export type TIngredientCard = {
