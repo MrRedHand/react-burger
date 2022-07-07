@@ -26,37 +26,40 @@ import {
     USER_RELOGIN_REQUEST,
     USER_RELOGIN_SUCCESS
 } from "./user";
+import {TIngredient, TIngredientCard, TServerData, TUserData} from "../../utils/types";
 
-export const addBunToConstructor = (payload : any) => ({type : ADD_BUN_TO_CONSTRUCTOR, payload})
-export const addIngredientToConstructor = (payload : any)  => ({ type: ADD_INGREDIENT_TO_CONSTRUCTOR, payload })
+export const addBunToConstructor = (payload : {}) => ({type : ADD_BUN_TO_CONSTRUCTOR, payload})
+
+export const addIngredientToConstructor = (payload : TIngredient)  => ({ type: ADD_INGREDIENT_TO_CONSTRUCTOR, payload })
+
 export const clearConstructor = () => ({type : CLEAR_CONSTRUCTOR})
 
 export const getDataRequest = () => ({type : GET_FULLDATA_REQUEST})
 
-export const getDataSuccess = (payload : any) => ({type : GET_FULLDATA_SUCCESS, payload})
+export const getDataSuccess = (payload : Array<TIngredient>) => ({type : GET_FULLDATA_SUCCESS, payload})
 
 export const getDataFailed = () => ({type : GET_FULLDATA_FAILED})
 
 
 export const getOrderRequest = () => ({type : GET_ORDER_REQUEST})
 
-export const getOrderSuccess = (payload : any) => ({type : GET_ORDER_SUCCESS, payload})
+export const getOrderSuccess = (payload : []) => ({type : GET_ORDER_SUCCESS, payload})
 
 export const getOrderFailed = () => ({type : GET_ORDER_FAILED})
 
 
-export const refreshTotal = (payload : any) => ({type : REFRESH_TOTAL, payload})
+export const refreshTotal = (payload : number) => ({type : REFRESH_TOTAL, payload})
 
 
-export const removeIngredient = (payload : any) => ({type : REMOVE_INGREDIENT, payload})
+export const removeIngredient = (payload : number) => ({type : REMOVE_INGREDIENT, payload})
 
-export  const  resortIngredients = (payload : any) => ({type : RESORT_INGREDIENTS_IN_CONSTRUCTOR, payload})
-
-
-export const setIngredientInfo = (payload : any) => ({type : SET_INGREDIENT_INFO, payload})
+export  const  resortIngredients = (payload : Array<TIngredientCard>) => ({type : RESORT_INGREDIENTS_IN_CONSTRUCTOR, payload})
 
 
-export const loginSuccess = (payload : any) => ({type : LOGIN_SUCCESS, payload})
+export const setIngredientInfo = (payload : TIngredient) => ({type : SET_INGREDIENT_INFO, payload})
+
+
+export const loginSuccess = (payload : TServerData | TUserData) => ({type : LOGIN_SUCCESS, payload})
 
 export const loginRequest = (payload? : any) => ({type : LOGIN_REQUEST})
 

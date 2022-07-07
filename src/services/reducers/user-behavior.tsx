@@ -8,18 +8,33 @@ import {
 } from "../actions/user";
 import {TUserActions} from "../actions/action-types";
 
+export type TUserStoreState = {
+    needToCheckUser : boolean,
+    isAuthenticated : boolean,
+    registered : boolean,
+    accessToken: string,
+    refreshToken: string,
+    user : {
+        name : string,
+        email : string
+    },
+    requestedForgotPassword : boolean,
+}
 
-const initialState = {
+const initialState : TUserStoreState= {
     needToCheckUser : true,
     isAuthenticated : false,
     registered : false,
     accessToken: '',
     refreshToken: '',
-    user : {},
+    user : {
+        name: '',
+        email: ''
+    },
     requestedForgotPassword : false,
 }
 
-export const userReducer = (state = initialState, action : TUserActions) => {
+export const userReducer = (state : TUserStoreState = initialState, action : TUserActions) : TUserStoreState => {
     switch (action.type) {
         case REGISTER_SUCCESS :
             return {
@@ -44,8 +59,10 @@ export const userReducer = (state = initialState, action : TUserActions) => {
                 ...state,
                 accessToken: action.payload.accessToken,
                 refreshToken: action.payload.refreshToken,
-                userName : action.payload.user.name,
-                userEmail: action.payload.user.email,
+                user : {
+                    name: action.payload.user.name,
+                    email: action.payload.user.email,
+                },
                 isAuthenticated : true
             }
         case USER_RELOGIN_REQUEST :
@@ -56,8 +73,10 @@ export const userReducer = (state = initialState, action : TUserActions) => {
         case USER_RELOGIN_SUCCESS :
             return {
                 ...state,
-                userName : action.payload.name,
-                userEmail: action.payload.email,
+                user : {
+                    name: action.payload.name,
+                    email: action.payload.email,
+                },
                 isAuthenticated : true,
                 needToCheckUser : false
             }

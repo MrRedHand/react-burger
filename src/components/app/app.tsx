@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect} from 'react';
 import AppHeader from '../app-header/app-header';
 import Main from '../main/main';
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from '../../hooks/redux-hooks';
 import {getFullData} from "../../services/to-server-requests";
 import LoginPage from "../../pages/login";
 import RegisterPage from "../../pages/register";
@@ -28,13 +28,13 @@ function App() {
 
   const history = useHistory()
 
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch();
 
   const background = location.state && location.state.background
 
-  const {fullDataRecieved} = useSelector<any>(store => store.main) as any;
+  const {fullDataRecieved} = useSelector(store => store.main);
 
-  const {needToCheckUser, isAuthenticated} = useSelector<any>(store => store.user) as any;
+  const {needToCheckUser, isAuthenticated} = useSelector(store => store.user);
 
   useEffect(() => {
 

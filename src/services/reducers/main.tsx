@@ -11,9 +11,9 @@ import {
 import {TIngredient, TIngredientCard} from "../../utils/types";
 import {TMainActions} from "../actions/action-types";
 
-type TStoreState = {
-    allIngredients : Array<TIngredient>,
-    currentBun : {} | null,
+export type TMainStoreState = {
+    allIngredients : TIngredient[],
+    currentBun : TIngredient | null,
     constructorIngredients: Array<TIngredientCard>,
     viewIngredient: TIngredient | null,
     orderDetails: [],
@@ -24,7 +24,7 @@ type TStoreState = {
     fullDataRequest: boolean,
 }
 
-const initialState : TStoreState = {
+const initialState : TMainStoreState = {
     allIngredients : [],
     currentBun : null,
     constructorIngredients: [],
@@ -37,7 +37,7 @@ const initialState : TStoreState = {
     fullDataRequest: false,
 }
 
-export const mainReducer = (state: TStoreState = initialState, action : TMainActions) => {
+export const mainReducer = (state: TMainStoreState = initialState, action : TMainActions) : TMainStoreState => {
     switch (action.type) {
         case CLEAR_CONSTRUCTOR :
             return {

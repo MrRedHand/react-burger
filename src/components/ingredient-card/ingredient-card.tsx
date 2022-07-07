@@ -77,7 +77,7 @@ const IngredientCard : FC<TIngredientCard> = ({id, ingredientType,  text, thumbn
 
 
     const deleteIngredient = () => {
-       dispatch(removeIngredient(index))
+        (index !== undefined) && dispatch(removeIngredient(index))
     }
 
     useEffect(() => {

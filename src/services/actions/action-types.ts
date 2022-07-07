@@ -61,7 +61,7 @@ export interface IRemoveIngredient {
 
 export interface IAddBunToConstructor {
     readonly type: typeof ADD_BUN_TO_CONSTRUCTOR;
-    payload : {}
+    payload : TIngredient
 }
 
 export interface IClearConstructor {
@@ -171,3 +171,5 @@ export interface IPasswordResetFailed {
 export type TUserActions = IRegisterRequest | IRegisterSuccess | IRegisterFailed |
     ILoginRequest | ILoginSuccess | ILoginFailed |  IUserReloginRequest | IUserReloginSuccess | IUserReloginFailed |
     IPasswordResetRequest | IPasswordResetSuccess | IPasswordResetFailed
+
+export type TAppActions = TUserActions | TMainActions

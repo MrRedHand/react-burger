@@ -5,12 +5,12 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientCard from "../ingredient-card/ingredient-card";
 import OrderDetails from "../order-details/order-details";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "../../hooks/redux-hooks";
 import {useDrop} from "react-dnd";
 import {addBunToConstructor, addIngredientToConstructor, resortIngredients, refreshTotal} from "../../services/actions/actions-creators";
 import {v4 as uuidv4} from "uuid";
 import {Redirect, useHistory, useLocation} from "react-router-dom";
-import {TIngredient, TModalState} from "../../utils/types";
+import {TIngredient, TIngredientCard, TModalState} from "../../utils/types";
 
 const BurgerConstructor = () => {
 
@@ -20,8 +20,8 @@ const BurgerConstructor = () => {
 
     const history = useHistory();
 
-    const {constructorIngredients, currentBun, allIngredients, totalPrice} = useSelector<any>(state => state.main) as any
-    const { isAuthenticated } = useSelector<any>(state => state.user) as any
+    const {constructorIngredients, currentBun, allIngredients, totalPrice} = useSelector(state => state.main)
+    const { isAuthenticated } = useSelector(state => state.user)
 
     const asdad = false
 
@@ -57,7 +57,7 @@ const BurgerConstructor = () => {
         let ingredientsPrice = 0;
 
         constructorIngredients.length > 0
-        && constructorIngredients.map((elem : TIngredient) => {
+        && constructorIngredients.map((elem : TIngredientCard) => {
             elem.price && (ingredientsPrice += elem.price)
         })
 
@@ -116,7 +116,7 @@ const BurgerConstructor = () => {
             <OverflowSection height={420}>
                 {
                     constructorIngredients
-                        .map((elem : TIngredient, index : number) => {
+                        .map((elem : TIngredientCard, index : number) => {
                             return (<IngredientCard
                                     key={elem.uuid}
                                     isLocked={false}

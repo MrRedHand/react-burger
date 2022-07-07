@@ -1,4 +1,10 @@
 import {ReactNode} from "react";
+import {TUserStoreState} from "../services/reducers/user-behavior";
+import {TMainStoreState} from "../services/reducers/main";
+import {Action, ActionCreator} from "redux";
+import {ThunkAction} from "redux-thunk";
+import {TAppActions} from "../services/actions/action-types";
+import {store} from "../services/store";
 
 export type TModal = {
     activity : boolean;
@@ -26,7 +32,7 @@ export type TIngredient = {
     name : string;
     uuid? : string;
     type? : string;
-    price? : number;
+    price : number;
     image? : string;
     image_large?: string;
     image_mobile?: string;
@@ -135,3 +141,20 @@ export type TServerData = {
     refreshToken? : string;
 }
 
+export type TUserData = {
+    user : {
+        name : string,
+        email : string
+    }
+}
+
+export  type TStoreType = TServerData | TUserData
+
+export type RootState = ReturnType<typeof store.getState>;
+
+
+export type AppThunk<TReturn = void> = ActionCreator<
+    ThunkAction<TReturn, Action, RootState, TAppActions>
+    >;
+
+export type AppDispatch = typeof store.dispatch;
