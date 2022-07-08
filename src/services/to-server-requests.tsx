@@ -237,6 +237,7 @@ export  const fetchOrder = (ingredientsArr : Array<string>) => {
         })
             .then(checkResponse)
             .then((data) => {
+                console.log("order: ", data)
                 dispatch(getOrderSuccess(data))
                 dispatch(clearConstructor())
             })

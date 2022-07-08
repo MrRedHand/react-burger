@@ -1,7 +1,7 @@
 import React, {useEffect, useState, FC, FormEvent} from "react";
 import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import st from './login.module.css'
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "../../hooks/redux-hooks";
 import {Redirect, useHistory, useLocation} from "react-router-dom";
 import {loginUser} from "../../services/to-server-requests";
 import * as H from 'history';
@@ -13,9 +13,9 @@ const LoginForm : FC<TLoginForm> = ({register, forgot}) => {
 
     const location = useLocation<{from: H.Location<unknown>}>();
 
-    const dispatch = useDispatch<any>()
+    const dispatch = useDispatch()
 
-    const { isAuthenticated } = useSelector<any>(state => state.user) as  any
+    const { isAuthenticated } = useSelector(state => state.user)
 
 
     const [userData, setUserData] = useState({

@@ -16,7 +16,10 @@ export type TMainStoreState = {
     currentBun : TIngredient | null,
     constructorIngredients: Array<TIngredient>,
     viewIngredient: TIngredient | null,
-    orderDetails: [],
+    orderDetails: {
+        name : string,
+        number : number
+    } | null,
     orderDetailsRecieved: boolean,
     totalPrice: number,
     fullDataRecieved : boolean,
@@ -29,7 +32,7 @@ const initialState : TMainStoreState = {
     currentBun : null,
     constructorIngredients: [],
     viewIngredient: null,
-    orderDetails: [],
+    orderDetails: null,
     orderDetailsRecieved: false,
     totalPrice: 0,
     fullDataRecieved : false,
@@ -105,7 +108,10 @@ export const mainReducer = (state: TMainStoreState = initialState, action : TMai
         case GET_ORDER_SUCCESS :
             return {
                 ...state,
-                orderDetails : action.payload,
+                orderDetails : {
+                    name : action.payload.name,
+                    number : action.payload.order.number
+                },
                 orderDetailsRecieved : true,
             }
         default: {

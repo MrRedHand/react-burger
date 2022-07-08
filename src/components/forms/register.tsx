@@ -3,15 +3,15 @@ import PropTypes from "prop-types";
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import st from './login.module.css'
 import {registerUser, resetPassword} from "../../services/to-server-requests";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "../../hooks/redux-hooks";
 import {  Redirect } from 'react-router-dom';
 import { TRegisterFrom, TRegisterFormState } from "../../utils/types";
 
 const RegisterForm : FC<TRegisterFrom> = ({login}) => {
 
-    const dispatch = useDispatch<any>()
+    const dispatch = useDispatch()
 
-    const {registered} = useSelector<any>(state => state.user) as  any
+    const {registered} = useSelector(state => state.user)
 
     const [userData, setUserData] = useState<TRegisterFormState>({
         email : "",

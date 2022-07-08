@@ -1,10 +1,10 @@
 import React from "react";
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
-import {useSelector} from "react-redux";
+import {useSelector} from "../../hooks/redux-hooks";
 
 const UserProfile = () => {
 
-    const {user} = useSelector<any>(state => state.user) as any
+    const {user} = useSelector(state => state.user)
 
     return (
         <section className="form_grid" style={{maxWidth : "400px"}}>

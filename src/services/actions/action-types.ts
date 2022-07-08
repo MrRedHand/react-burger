@@ -86,7 +86,12 @@ export interface IGetOrderRequest {
 
 export interface IGetOrderSuccess {
     readonly type: typeof GET_ORDER_SUCCESS;
-    payload : []
+    payload :  {
+        name : string,
+        order: {
+            number : number
+        }
+    }
 }
 
 export interface IGetOrderFailed {

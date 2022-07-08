@@ -2,7 +2,7 @@ import React, {useEffect, useState, useRef, FC} from "react";
 import styles from './ingredient-card.module.css';
 import {ConstructorElement, CurrencyIcon, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import {useDrag, useDrop} from "react-dnd";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "../../hooks/redux-hooks";
 import {removeIngredient} from "../../services/actions/actions-creators";
 import {TIngredient , TIngredientCard} from "../../utils/types";
 
@@ -14,7 +14,7 @@ const IngredientCard : FC<TIngredientCard> = ({id, ingredientType,  text, thumbn
 
     const currentBoard = board;
 
-    const {constructorIngredients, currentBun} = useSelector<any>(state => state.main) as any
+    const {constructorIngredients, currentBun} = useSelector(state => state.main)
 
     const ref = useRef<HTMLDivElement>(null)
 
