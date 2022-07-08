@@ -14,7 +14,7 @@ import {Route, Switch, SwitchProps, useHistory, useLocation} from "react-router-
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-import {reloginCheck} from "../../services/relogin-check";
+import {reloginCheck} from "../../services/to-server-requests";
 import * as H from 'history';
 import {OrderFeedPage} from "../../pages/feed/feed";
 import {MainLayout} from "../main-layout/main-layout";

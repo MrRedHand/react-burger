@@ -148,8 +148,10 @@ export interface IUserReloginRequest {
 export interface IUserReloginSuccess {
     readonly type: typeof USER_RELOGIN_SUCCESS;
     payload : {
-        name : string,
-        email : string
+        user : {
+            name : string,
+            email : string
+        }
     }
 }
 

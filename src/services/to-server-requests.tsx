@@ -4,11 +4,26 @@
 // POST https://norma.nomoreparties.space/api/auth/logout - эндпоинт для выхода из системы.
 // POST https://norma.nomoreparties.space/api/auth/token - эндпоинт обновления токена.
 
-import {getOrderFailed, getOrderRequest, getOrderSuccess, clearConstructor,
-    getDataFailed, getDataSuccess,
-    registerFailed, registerRequest, registerSuccess,
-    loginFailed, loginRequest, loginSuccess,
-    userResetPasswordFailed, userResetPasswordRequest, userResetPasswordSuccess} from "./actions/actions-creators";
+import {
+    getOrderFailed,
+    getOrderRequest,
+    getOrderSuccess,
+    clearConstructor,
+    getDataFailed,
+    getDataSuccess,
+    registerFailed,
+    registerRequest,
+    registerSuccess,
+    loginFailed,
+    loginRequest,
+    loginSuccess,
+    userResetPasswordFailed,
+    userResetPasswordRequest,
+    userResetPasswordSuccess,
+    reloginUserStarted,
+    reloginUserSuccess,
+    reloginUserFail
+} from "./actions/actions-creators";
 
 import {
     TLoginFormFields,
@@ -18,9 +33,10 @@ import {
     TServerResponse,
     TServerData,
     TServerRequestOptions,
-    TAppThunk
+    TAppThunk, TUserData
 } from "../utils/types"
 import {Dispatch} from "redux";
+import {store} from "./store";
 
 export const apiUrl = 'https://norma.nomoreparties.space/api/'
 
@@ -245,6 +261,36 @@ export  const fetchOrder = (ingredientsArr : Array<string>) => {
                 dispatch(getOrderFailed())
                 console.log(error)
             });
+    }
+}
+
+
+
+export const reloginCheck = () => {
+
+    if (localStorage.getItem('accessToken')) {
+
+        store.dispatch(reloginUserStarted())
+
+        getUser()
+            .then(res => {
+                if (res.success) {
+                    const user : TUserData = {
+                        user : {
+                            email : res.user.email,
+                            name : res.user.name
+                        }
+                    }
+                    store.dispatch(reloginUserSuccess(user))
+                } else {
+                    store.dispatch(reloginUserFail())
+                }
+            })
+            .catch((error) => {
+                store.dispatch(reloginUserFail())
+            });
+    } else {
+        store.dispatch(reloginUserFail())
     }
 }
 

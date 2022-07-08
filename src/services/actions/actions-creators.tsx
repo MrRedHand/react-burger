@@ -26,7 +26,7 @@ import {
     USER_RELOGIN_REQUEST,
     USER_RELOGIN_SUCCESS
 } from "./user";
-import {TIngredient, TIngredientCard, TServerData, TUserData} from "../../utils/types";
+import {TIngredient, TServerData, TUserData} from "../../utils/types";
 
 export const addBunToConstructor = (payload : TIngredient) => ({type : ADD_BUN_TO_CONSTRUCTOR, payload})
 

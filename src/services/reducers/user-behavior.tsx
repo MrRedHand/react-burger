@@ -74,8 +74,8 @@ export const userReducer = (state : TUserStoreState = initialState, action : TUs
             return {
                 ...state,
                 user : {
-                    name: action.payload.name,
-                    email: action.payload.email,
+                    name: action.payload.user.name,
+                    email: action.payload.user.email,
                 },
                 isAuthenticated : true,
                 needToCheckUser : false
