@@ -61,27 +61,27 @@ export const setIngredientInfo = (payload : TIngredient) => ({type : SET_INGREDI
 
 export const loginSuccess = (payload : TServerData | TUserData) => ({type : LOGIN_SUCCESS, payload})
 
-export const loginRequest = (payload? : any) => ({type : LOGIN_REQUEST})
+export const loginRequest = () => ({type : LOGIN_REQUEST})
 
-export const loginFailed = (payload? : any) => ({type : LOGIN_FAILED})
-
-
-export const reloginUserStarted = (payload? : any) => ({type : USER_RELOGIN_REQUEST})
-
-export const reloginUserSuccess = (payload : any) => ({type : USER_RELOGIN_SUCCESS, payload})
-
-export const reloginUserFail = (payload? : any) => ({type : USER_RELOGIN_FAILED})
+export const loginFailed = () => ({type : LOGIN_FAILED})
 
 
-export const registerSuccess = (payload : any) => ({type : REGISTER_SUCCESS, payload})
+export const reloginUserStarted = () => ({type : USER_RELOGIN_REQUEST})
 
-export const registerRequest = (payload? : any) => ({type: REGISTER_REQUEST})
+export const reloginUserSuccess = (payload : TUserData) => ({type : USER_RELOGIN_SUCCESS, payload})
 
-export const registerFailed = (payload? : any) => ({type : REGISTER_FAILED})
+export const reloginUserFail = () => ({type : USER_RELOGIN_FAILED})
 
 
-export const userResetPasswordRequest = (payload? : any) => ({type: PASSWORD_RESET_REQUEST})
+export const registerSuccess = (payload : TUserData | TServerData) => ({type : REGISTER_SUCCESS, payload})
 
-export const userResetPasswordSuccess = (payload? : any) => ({type: PASSWORD_RESET_SUCCESS})
+export const registerRequest = () => ({type: REGISTER_REQUEST})
 
-export const userResetPasswordFailed = (payload? : any) => ({type: PASSWORD_RESET_FAILED})
+export const registerFailed = () => ({type : REGISTER_FAILED})
+
+
+export const userResetPasswordRequest = () => ({type: PASSWORD_RESET_REQUEST})
+
+export const userResetPasswordSuccess = () => ({type: PASSWORD_RESET_SUCCESS})
+
+export const userResetPasswordFailed = () => ({type: PASSWORD_RESET_FAILED})
