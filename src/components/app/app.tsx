@@ -20,6 +20,7 @@ import {OrderFeedPage} from "../../pages/feed/feed";
 import {MainLayout} from "../main-layout/main-layout";
 import ProfileOrdersPage from "../../pages/profile/orders/orders";
 import {OrderDetailsPage} from "../../pages/order-details/order-details";
+import {useSocket} from "../../services/websocket/websocket";
 
 
 function App() {
@@ -52,6 +53,8 @@ function App() {
     const onCloseModal = () => {
       history.push('/')
     }
+
+    useSocket();
   return (
     <>
         <AppHeader />
