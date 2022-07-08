@@ -4,8 +4,52 @@ import {
     WS_CONNECTION_CLOSED,
     WS_GET_MESSAGE,
     WS_SEND_MESSAGE,
-    WS_USER_NAME_UPDATE
+    WS_USER_NAME_UPDATE, WS_CONNECTION_START
 } from './ws-actions-types';
+
+
+// export const wsConnectionSuccess = () => {
+//     return {
+//         type: WS_CONNECTION_SUCCESS
+//     };
+// };
+//
+// export const wsConnectionError = () => {
+//     return {
+//         type: WS_CONNECTION_ERROR
+//     };
+// };
+//
+// export const wsConnectionClosed = () => {
+//     return {
+//         type: WS_CONNECTION_CLOSED
+//     };
+// };
+//
+// export const wsGetMessage = (message : string) => {
+//     return {
+//         type: WS_GET_MESSAGE,
+//         payload: message
+//     };
+// };
+//
+// export const wsSendMessage = (message : string) => {
+//     return {
+//         type: WS_SEND_MESSAGE,
+//         payload: message
+//     };
+// };
+//
+// export const wsUserNameUpdate = (userName : string) => {
+//     return {
+//         type: WS_USER_NAME_UPDATE,
+//         payload: userName
+//     };
+// };
+
+export  interface  IwsConnectionStart {
+    readonly type: typeof WS_CONNECTION_START;
+}
 
 export interface IwsConnectionSuccess {
     readonly type: typeof WS_CONNECTION_SUCCESS;
@@ -34,4 +78,5 @@ export interface IwsUserNameUpdate {
     userName : string
 }
 
-export type TwsActions = IwsConnectionClosed | IwsConnectionError | IwsConnectionSuccess | IwsGetMessage | IwsSendMessage | IwsUserNameUpdate
+export type TwsActions = IwsConnectionStart | IwsConnectionClosed | IwsConnectionError | IwsConnectionSuccess | IwsGetMessage | IwsSendMessage | IwsUserNameUpdate
+

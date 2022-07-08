@@ -5,6 +5,7 @@ import {Action, ActionCreator} from "redux";
 import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {TAppActions} from "../services/actions/action-types";
 import {store} from "../services/store";
+import {TwsActions} from "../services/websocket/ws-actions";
 
 export type TModal = {
     activity : boolean;
@@ -154,7 +155,7 @@ export  type TStoreType = TServerData | TUserData
 export type TRootState = ReturnType<typeof store.getState>;
 
 
-export type TAppDispatch = ThunkDispatch<TRootState, never, TAppActions>;
+export type TAppDispatch = ThunkDispatch<TRootState, never, TAppActions | TwsActions>;
 
 export type TAppThunk<ReturnType = void> = ThunkAction<
     ReturnType,
