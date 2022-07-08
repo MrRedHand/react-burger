@@ -48,6 +48,10 @@ function App() {
     const returnToMain = () => {
       setTimeout(() => {history.replace('/')}, 50)
     }
+
+    const onCloseModal = () => {
+      history.push('/')
+    }
   return (
     <>
         <AppHeader />
@@ -103,7 +107,7 @@ function App() {
                             <Modal
                                 activity={true}
                                 children={<OrderDetails/>}
-
+                                onCloseEvent={onCloseModal}
                             />
                         }/>
                         {background && (
