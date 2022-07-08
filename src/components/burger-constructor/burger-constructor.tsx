@@ -38,11 +38,13 @@ const BurgerConstructor = () => {
         }),
         drop: (item : {id : string}) => {
             const itemToAdd = allIngredients.find((ingredient : TIngredient) => ingredient._id === item.id)
-            const clone = {...itemToAdd};
-            clone.uuid = uuidv4()
-            clone.type === 'bun'
-            ? dispatch(addBunToConstructor(clone))
-            : dispatch(addIngredientToConstructor(clone))
+            if (itemToAdd !== undefined) {
+                const clone = {...itemToAdd};
+                clone.uuid = uuidv4()
+                clone.type === 'bun'
+                    ? dispatch(addBunToConstructor(clone))
+                    : dispatch(addIngredientToConstructor(clone))
+            }
         },
     });
 
@@ -57,7 +59,7 @@ const BurgerConstructor = () => {
         let ingredientsPrice = 0;
 
         constructorIngredients.length > 0
-        && constructorIngredients.map((elem : TIngredientCard) => {
+        && constructorIngredients.map((elem : TIngredient) => {
             elem.price && (ingredientsPrice += elem.price)
         })
 
@@ -116,7 +118,7 @@ const BurgerConstructor = () => {
             <OverflowSection height={420}>
                 {
                     constructorIngredients
-                        .map((elem : TIngredientCard, index : number) => {
+                        .map((elem : TIngredient, index : number) => {
                             return (<IngredientCard
                                     key={elem.uuid}
                                     isLocked={false}

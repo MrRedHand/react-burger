@@ -14,7 +14,7 @@ import {TMainActions} from "../actions/action-types";
 export type TMainStoreState = {
     allIngredients : TIngredient[],
     currentBun : TIngredient | null,
-    constructorIngredients: Array<TIngredientCard>,
+    constructorIngredients: Array<TIngredient>,
     viewIngredient: TIngredient | null,
     orderDetails: [],
     orderDetailsRecieved: boolean,

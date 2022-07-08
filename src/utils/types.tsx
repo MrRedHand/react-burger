@@ -2,7 +2,7 @@ import {ReactNode} from "react";
 import {TUserStoreState} from "../services/reducers/user-behavior";
 import {TMainStoreState} from "../services/reducers/main";
 import {Action, ActionCreator} from "redux";
-import {ThunkAction} from "redux-thunk";
+import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {TAppActions} from "../services/actions/action-types";
 import {store} from "../services/store";
 
@@ -31,7 +31,7 @@ export type TIngredient = {
     _id : string;
     name : string;
     uuid? : string;
-    type? : string;
+    type? : "bun" | "main" | "sauce" | undefined;
     price : number;
     image? : string;
     image_large?: string;
@@ -45,7 +45,7 @@ export type TIngredient = {
 
 export type TIngredientCard = {
     id? : string;
-    ingredientType? : string;
+    ingredientType? : "bun" | undefined;
     text? : string;
     thumbnail? : string;
     type? : "top" | "bottom" | undefined;
@@ -55,6 +55,7 @@ export type TIngredientCard = {
     onClick? : () => void;
     moveCard? : (dragIndex : number, hoverIndex : number) => void;
     index? : number;
+    uuid? : string;
     [x:string]: any;
 }
 
@@ -150,11 +151,15 @@ export type TUserData = {
 
 export  type TStoreType = TServerData | TUserData
 
-export type RootState = ReturnType<typeof store.getState>;
+export type TRootState = ReturnType<typeof store.getState>;
 
 
-export type AppThunk<TReturn = void> = ActionCreator<
-    ThunkAction<TReturn, Action, RootState, TAppActions>
+export type TAppDispatch = ThunkDispatch<TRootState, never, TAppActions>;
+
+export type TAppThunk<ReturnType = void> = ThunkAction<
+    ReturnType,
+    TRootState,
+    never,
+    TAppActions
     >;
 
-export type AppDispatch = typeof store.dispatch;

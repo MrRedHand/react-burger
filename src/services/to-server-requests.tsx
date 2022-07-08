@@ -10,7 +10,16 @@ import {getOrderFailed, getOrderRequest, getOrderSuccess, clearConstructor,
     loginFailed, loginRequest, loginSuccess,
     userResetPasswordFailed, userResetPasswordRequest, userResetPasswordSuccess} from "./actions/actions-creators";
 
-import {TLoginFormFields, TRegisterFormFields, TForgotFormFields, TResetFormFields, TServerResponse, TServerData, TServerRequestOptions} from "../utils/types"
+import {
+    TLoginFormFields,
+    TRegisterFormFields,
+    TForgotFormFields,
+    TResetFormFields,
+    TServerResponse,
+    TServerData,
+    TServerRequestOptions,
+    TAppThunk
+} from "../utils/types"
 import {Dispatch} from "redux";
 
 export const apiUrl = 'https://norma.nomoreparties.space/api/'
@@ -83,7 +92,7 @@ export const getUser = () => {
 //     })
 // }
 
-export const loginUser = ( form : TLoginFormFields ) => {
+export const loginUser  = ( form : TLoginFormFields ) => {
     return function (dispatch : Dispatch) {
 
         dispatch(loginRequest())
@@ -176,7 +185,7 @@ export  const forgotPassword = (data : TForgotFormFields) => {
 }
 
 
-export  const resetPassword = (data : TResetFormFields) => {
+export  const resetPassword  = (data : TResetFormFields) => {
     return function (dispatch : Dispatch) {
         fetch(apiUrl + 'password-reset/reset', {
             method: 'POST',
@@ -198,21 +207,19 @@ export  const resetPassword = (data : TResetFormFields) => {
 }
 
 
-export  const  getFullData = () => {
-    return function (dispatch : Dispatch) {
-        dispatch(getDataFailed())
+export  const  getFullData = () => (dispatch : Dispatch) => {
+    dispatch(getDataFailed())
 
-        fetch(apiUrl + 'ingredients/')
-            .then(checkResponse)
-            .then((data) => {
-                dispatch(getDataSuccess(data.data))
-                console.log("full data", data.data)
-            })
-            .catch((error) => {
-                dispatch(getDataFailed())
-                console.log(error)
-            });
-    }
+    fetch(apiUrl + 'ingredients/')
+        .then(checkResponse)
+        .then((data) => {
+            dispatch(getDataSuccess(data.data))
+            console.log("full data", data.data)
+        })
+        .catch((error) => {
+            dispatch(getDataFailed())
+            console.log(error)
+        });
 }
 
 export  const fetchOrder = (ingredientsArr : Array<string>) => {

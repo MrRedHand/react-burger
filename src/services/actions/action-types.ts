@@ -23,6 +23,8 @@ import {
     USER_RELOGIN_REQUEST, USER_RELOGIN_SUCCESS
 } from "./user";
 import {TIngredient, TIngredientCard} from "../../utils/types";
+import {TUserStoreState} from "../reducers/user-behavior";
+import {TMainStoreState} from "../reducers/main";
 
 
 ////////MAIN///////////
@@ -51,7 +53,7 @@ export interface IClearIngredientInfo {
 
 export interface IAddIngredientToConstructor {
     readonly type: typeof ADD_INGREDIENT_TO_CONSTRUCTOR;
-    payload : TIngredientCard
+    payload : TIngredient
 }
 
 export interface IRemoveIngredient {
@@ -75,7 +77,7 @@ export interface IRefreshTotal {
 
 export interface IResortIngredientsInConstructor {
     readonly type: typeof RESORT_INGREDIENTS_IN_CONSTRUCTOR;
-    payload : Array<TIngredientCard>
+    payload : Array<TIngredient>
 }
 
 export interface IGetOrderRequest {
@@ -90,12 +92,6 @@ export interface IGetOrderSuccess {
 export interface IGetOrderFailed {
     readonly type: typeof GET_ORDER_FAILED;
 }
-
-export type TMainActions = IGetFullDataRequest | IGetFullDataFailed | IGetFullDataSuccess
-    | ISetIngredientInfo | IClearIngredientInfo | IAddIngredientToConstructor | IRemoveIngredient |
-    IAddBunToConstructor | IClearConstructor | IRefreshTotal | IResortIngredientsInConstructor |
-    IGetOrderRequest | IGetOrderSuccess | IGetOrderFailed
-
 
 
 ///////USER///////
@@ -168,8 +164,17 @@ export interface IPasswordResetFailed {
     readonly type: typeof PASSWORD_RESET_FAILED;
 }
 
+
+export type TMainActions = IGetFullDataRequest | IGetFullDataFailed | IGetFullDataSuccess
+    | ISetIngredientInfo | IClearIngredientInfo | IAddIngredientToConstructor | IRemoveIngredient |
+    IAddBunToConstructor | IClearConstructor | IRefreshTotal | IResortIngredientsInConstructor |
+    IGetOrderRequest | IGetOrderSuccess | IGetOrderFailed
+
+
 export type TUserActions = IRegisterRequest | IRegisterSuccess | IRegisterFailed |
     ILoginRequest | ILoginSuccess | ILoginFailed |  IUserReloginRequest | IUserReloginSuccess | IUserReloginFailed |
     IPasswordResetRequest | IPasswordResetSuccess | IPasswordResetFailed
 
 export type TAppActions = TUserActions | TMainActions
+
+export type TStoreSates = TUserStoreState | TMainStoreState

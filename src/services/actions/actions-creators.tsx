@@ -28,7 +28,7 @@ import {
 } from "./user";
 import {TIngredient, TIngredientCard, TServerData, TUserData} from "../../utils/types";
 
-export const addBunToConstructor = (payload : {}) => ({type : ADD_BUN_TO_CONSTRUCTOR, payload})
+export const addBunToConstructor = (payload : TIngredient) => ({type : ADD_BUN_TO_CONSTRUCTOR, payload})
 
 export const addIngredientToConstructor = (payload : TIngredient)  => ({ type: ADD_INGREDIENT_TO_CONSTRUCTOR, payload })
 
@@ -53,7 +53,7 @@ export const refreshTotal = (payload : number) => ({type : REFRESH_TOTAL, payloa
 
 export const removeIngredient = (payload : number) => ({type : REMOVE_INGREDIENT, payload})
 
-export  const  resortIngredients = (payload : Array<TIngredientCard>) => ({type : RESORT_INGREDIENTS_IN_CONSTRUCTOR, payload})
+export  const  resortIngredients = (payload : Array<TIngredient>) => ({type : RESORT_INGREDIENTS_IN_CONSTRUCTOR, payload})
 
 
 export const setIngredientInfo = (payload : TIngredient) => ({type : SET_INGREDIENT_INFO, payload})
