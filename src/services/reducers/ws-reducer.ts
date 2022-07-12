@@ -4,8 +4,8 @@ import {
     WS_CONNECTION_ERROR,
     WS_CONNECTION_CLOSED,
     WS_GET_MESSAGE
-} from './ws-actions-types';
-import {TwsActions} from "./ws-actions";
+} from '../actions/ws-actions-types';
+import {TwsActions} from "../actions/ws-actions";
 
 type TWsState = {
     wsConnected : boolean,

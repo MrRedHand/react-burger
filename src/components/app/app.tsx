@@ -1,8 +1,8 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import AppHeader from '../app-header/app-header';
 import Main from '../main/main';
 import {useDispatch, useSelector} from '../../hooks/redux-hooks';
-import {getFullData} from "../../services/to-server-requests";
+import {getFullData, reloginCheck} from "../../services/to-server-requests";
 import LoginPage from "../../pages/login";
 import RegisterPage from "../../pages/register";
 import ForgotPage from "../../pages/forgot";
@@ -10,16 +10,17 @@ import ResetPage from "../../pages/reset";
 import ProfilePage from "../../pages/profile/profile";
 import {ProtectedRoute} from "../protected-route/protected-route";
 import WrongPage from "../../pages/404";
-import {Route, Switch, SwitchProps, useHistory, useLocation} from "react-router-dom";
+import {Route, Switch, useHistory, useLocation} from "react-router-dom";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-import {reloginCheck} from "../../services/to-server-requests";
 import * as H from 'history';
 import {OrderFeedPage} from "../../pages/feed/feed";
 import {MainLayout} from "../main-layout/main-layout";
 import ProfileOrdersPage from "../../pages/profile/orders/orders";
 import {OrderDetailsPage} from "../../pages/order-details/order-details";
+import {wsConnectionStart, wsSendMessage} from "../../services/actions/ws-actions-creators";
+import {socketMiddleware} from "../../services/websocket/websocket";
 
 
 function App() {
@@ -36,13 +37,17 @@ function App() {
 
   const {needToCheckUser, isAuthenticated} = useSelector(store => store.user);
 
+  const { wsConnected } = useSelector(store => store.websocket)
+
   useEffect(() => {
 
     !fullDataRecieved && dispatch(getFullData())
 
     !isAuthenticated && reloginCheck()
 
-  }, [])
+    isAuthenticated && dispatch(wsConnectionStart())
+
+  }, [isAuthenticated])
 
 
     const returnToMain = () => {
@@ -52,9 +57,14 @@ function App() {
     const onCloseModal = () => {
       history.push('/')
     }
+
+    const cl = () => {
+      wsConnected && dispatch(wsSendMessage(JSON.stringify()))
+    }
   return (
     <>
         <AppHeader />
+      <button onClick={cl}>click</button>
         <MainLayout>
         {
           needToCheckUser

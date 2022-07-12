@@ -5,7 +5,7 @@ import {Action, ActionCreator} from "redux";
 import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {TAppActions} from "../services/actions/action-types";
 import {store} from "../services/store";
-import {TwsActions} from "../services/websocket/ws-actions";
+import {TwsActions} from "../services/actions/ws-actions";
 
 export type TModal = {
     activity : boolean;

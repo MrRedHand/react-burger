@@ -70,7 +70,7 @@ export interface IwsGetMessage {
 
 export interface IwsSendMessage {
     readonly type: typeof WS_SEND_MESSAGE;
-    message : string
+    message : {}
 }
 
 export interface IwsUserNameUpdate {
@@ -80,3 +80,18 @@ export interface IwsUserNameUpdate {
 
 export type TwsActions = IwsConnectionStart | IwsConnectionClosed | IwsConnectionError | IwsConnectionSuccess | IwsGetMessage | IwsSendMessage | IwsUserNameUpdate
 
+export type TwsResponse = {
+    success: boolean,
+    orders: Array<TwsResponseOrder>,
+    total: number,
+    totalToday: number
+}
+
+export type TwsResponseOrder = {
+    ingredients : string[],
+    _id: string,
+    status: string,
+    number: number,
+    createdAt: string,
+    updatedAt: string
+}

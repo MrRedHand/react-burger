@@ -1,6 +1,7 @@
 import { compose, createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import {rootReducer} from "./reducers";
+import {socketMiddleware} from "./websocket/websocket";
 
 declare global {
     interface Window {
@@ -10,6 +11,6 @@ declare global {
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const enhancer = composeEnhancers(applyMiddleware(thunk));
+const enhancer = composeEnhancers(applyMiddleware(thunk, socketMiddleware('wss://norma.nomoreparties.space/')))
 
 export const store = createStore(rootReducer, enhancer);
