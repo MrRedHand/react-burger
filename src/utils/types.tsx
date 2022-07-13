@@ -1,11 +1,8 @@
 import {ReactNode} from "react";
-import {TUserStoreState} from "../services/reducers/user-behavior";
-import {TMainStoreState} from "../services/reducers/main";
-import {Action, ActionCreator} from "redux";
 import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {TAppActions} from "../services/actions/action-types";
 import {store} from "../services/store";
-import {TwsActions} from "../services/actions/ws-actions";
+import {TwsOrderActions} from "../services/actions/ws/types";
 
 export type TModal = {
     activity : boolean;
@@ -155,7 +152,7 @@ export  type TStoreType = TServerData | TUserData
 export type TRootState = ReturnType<typeof store.getState>;
 
 
-export type TAppDispatch = ThunkDispatch<TRootState, never, TAppActions | TwsActions>;
+export type TAppDispatch = ThunkDispatch<TRootState, never, TAppActions | TwsOrderActions>;
 
 export type TAppThunk<ReturnType = void> = ThunkAction<
     ReturnType,

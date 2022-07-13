@@ -19,8 +19,6 @@ import {OrderFeedPage} from "../../pages/feed/feed";
 import {MainLayout} from "../main-layout/main-layout";
 import ProfileOrdersPage from "../../pages/profile/orders/orders";
 import {OrderDetailsPage} from "../../pages/order-details/order-details";
-import {wsConnectionStart, wsSendMessage} from "../../services/actions/ws-actions-creators";
-import {socketMiddleware} from "../../services/websocket/websocket";
 
 
 function App() {
@@ -45,8 +43,6 @@ function App() {
 
     !isAuthenticated && reloginCheck()
 
-    isAuthenticated && dispatch(wsConnectionStart())
-
   }, [isAuthenticated])
 
 
@@ -57,14 +53,9 @@ function App() {
     const onCloseModal = () => {
       history.push('/')
     }
-
-    const cl = () => {
-      wsConnected && dispatch(wsSendMessage(JSON.stringify()))
-    }
   return (
     <>
         <AppHeader />
-      <button onClick={cl}>click</button>
         <MainLayout>
         {
           needToCheckUser
