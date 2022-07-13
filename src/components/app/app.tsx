@@ -19,6 +19,8 @@ import {OrderFeedPage} from "../../pages/feed/feed";
 import {MainLayout} from "../main-layout/main-layout";
 import ProfileOrdersPage from "../../pages/profile/orders/orders";
 import {OrderDetailsPage} from "../../pages/order-details/order-details";
+import {socketMiddleware} from "../../services/websocket/websocket";
+import {wsStart} from "../../services/actions/wsOrderActions";
 
 
 function App() {
@@ -35,13 +37,12 @@ function App() {
 
   const {needToCheckUser, isAuthenticated} = useSelector(store => store.user);
 
-  const { wsConnected } = useSelector(store => store.websocket)
-
   useEffect(() => {
 
     !fullDataRecieved && dispatch(getFullData())
 
     !isAuthenticated && reloginCheck()
+
 
   }, [isAuthenticated])
 

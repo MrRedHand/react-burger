@@ -1,27 +1,17 @@
 import type { Middleware, MiddlewareAPI } from 'redux';
 import {TAppDispatch, TRootState} from "../../utils/types";
 import {TwsOrderActions, wsActionTypes} from "../actions/ws/types";
-import {wsActions, wsAllActions} from '../actions/wsOrderActions'
+import {wsConnectionClosed, wsConnectionError, wsConnectionSuccess, wsGetMessage} from "../actions/wsOrderActions";
 
-export const socketMiddleware = (wsAction: wsAllActions):Middleware  => {
+export const socketMiddleware = (wsAction: TwsOrderActions):Middleware  => {
     return ((store: MiddlewareAPI<TAppDispatch, TRootState>) => {
         let socket: WebSocket | null = null;
 
         return (next: any) => (action: any) => {
-            console.log('action', action)
             const { dispatch } = store;
-            const { type, wsUrl, payload } = action;
 
-            const {
-                wsConnectionSuccess,
-                wsConnectionError,
-                wsConnectionClosed,
-                wsGetMessage,
-                wsSendMessage
-            } = wsAction;
-
-            if (type === wsActionTypes.WS_CONNECTION_START) {
-                socket = new WebSocket(wsUrl);
+            if (wsAction.type === wsActionTypes.WS_CONNECTION_START) {
+                socket = new WebSocket(wsAction.wsUrl);
             }
 
             if (socket) {
@@ -31,12 +21,10 @@ export const socketMiddleware = (wsAction: wsAllActions):Middleware  => {
                 };
 
                 socket.onerror = (event: any)  => {
-                    console.log('onerror', event)
                     dispatch(wsConnectionError(event));
                 };
 
                 socket.onmessage = (event: any)  => {
-                    console.log('onmessage', event)
                     const { data } = event;
                     const parsedData = JSON.parse(data);
                     const { success, ...restParsedData } = parsedData;
@@ -48,14 +36,13 @@ export const socketMiddleware = (wsAction: wsAllActions):Middleware  => {
                     dispatch(wsConnectionClosed(event));
                 };
 
-                if (type === wsSendMessage) {
-                    console.log('message', payload)
-                    const message = { ...payload };
+                if (wsAction.type === wsActionTypes.WS_SEND_MESSAGE) {
+                    const message = { ...wsAction.payload };
                     socket.send(JSON.stringify(message));
                 }
             }
 
-            if (type === wsActionTypes.WS_CONNECTION_END && socket) {
+            if (wsAction.type === wsActionTypes.WS_CONNECTION_END && socket) {
                 socket.close();
                 console.log('socket.close by me, lol');
             }
