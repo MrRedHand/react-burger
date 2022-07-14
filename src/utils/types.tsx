@@ -147,6 +147,24 @@ export type TUserData = {
     }
 }
 
+export type TOrder = {
+    _id : string
+    status : 'created' | 'done' | 'pending'
+    ingredients : Array<string>
+    name : string
+    createdAt : Date
+    updatedAt : Date
+    number : number
+}
+
+export type TOrderIngredient = {
+    _id : string
+}
+
+export type TOrderItem = {
+
+}
+
 export  type TStoreType = TServerData | TUserData
 
 export type TRootState = ReturnType<typeof store.getState>;

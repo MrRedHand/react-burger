@@ -12,7 +12,7 @@ import {TIngredient, TIngredientCard} from "../../utils/types";
 import {TMainActions} from "../actions/action-types";
 
 export type TMainStoreState = {
-    allIngredients : TIngredient[],
+    allIngredients : Array<TIngredient>,
     currentBun : TIngredient | null,
     constructorIngredients: Array<TIngredient>,
     viewIngredient: TIngredient | null,

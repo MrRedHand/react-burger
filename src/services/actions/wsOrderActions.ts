@@ -10,14 +10,14 @@ import {
 } from "./ws/types";
 
 
-export const wsStart = (wsUrl: string): IwsConnectionStart => {
+export const wsConnectionStart = (wsUrl: string): IwsConnectionStart => {
     return {
         type: wsActionTypes.WS_CONNECTION_START,
         wsUrl: wsUrl
     };
 };
 
-export const wsClose = (): IwsConnectionClose => {
+export const wsConnectionClose = (): IwsConnectionClose => {
     return {
         type: wsActionTypes.WS_CONNECTION_END
     };
@@ -61,8 +61,8 @@ export const wsSendMessage = (message: any): IwsSendMessage => {
 
 
 export const wsActions = {
-    wsStart,
-    wsClose,
+    wsConnectionStart,
+    wsConnectionClose,
     wsConnectionSuccess,
     wsConnectionError,
     wsConnectionClosed,

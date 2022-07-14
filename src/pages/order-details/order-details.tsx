@@ -15,31 +15,25 @@ export const OrderDetailsPage = () => {
 
             <OverflowSection height={300}>
                 <section className={styles.component}>
-                    <OrderItemAvatar/>
+                    {/*<OrderItemAvatar/>*/}
                     <div className={`${styles.name} text text_type_main-small`}>Флюоресцентная булка R2-D3</div>
                     <div className={`${styles.price} text text_type_digits-default`}>2 x 20 <CurrencyIcon type="primary"/></div>
                 </section>
 
                 <section className={styles.component}>
-                    <OrderItemAvatar/>
+                    {/*<OrderItemAvatar/>*/}
                     <div className={`${styles.name} text text_type_main-small`}>Флюоресцентная булка R2-D3</div>
                     <div className={`${styles.price} text text_type_digits-default`}>2 x 20 <CurrencyIcon type="primary"/></div>
                 </section>
 
                 <section className={styles.component}>
-                    <OrderItemAvatar/>
+                    {/*<OrderItemAvatar/>*/}
                     <div className={`${styles.name} text text_type_main-small`}>Флюоресцентная булка R2-D3</div>
                     <div className={`${styles.price} text text_type_digits-default`}>2 x 20 <CurrencyIcon type="primary"/></div>
                 </section>
 
                 <section className={styles.component}>
-                    <OrderItemAvatar/>
-                    <div className={`${styles.name} text text_type_main-small`}>Флюоресцентная булка R2-D3</div>
-                    <div className={`${styles.price} text text_type_digits-default`}>2 x 20 <CurrencyIcon type="primary"/></div>
-                </section>
-
-                <section className={styles.component}>
-                    <OrderItemAvatar/>
+                    {/*<OrderItemAvatar/>*/}
                     <div className={`${styles.name} text text_type_main-small`}>Флюоресцентная булка R2-D3</div>
                     <div className={`${styles.price} text text_type_digits-default`}>2 x 20 <CurrencyIcon type="primary"/></div>
                 </section>

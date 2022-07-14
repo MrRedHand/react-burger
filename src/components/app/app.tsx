@@ -19,8 +19,7 @@ import {OrderFeedPage} from "../../pages/feed/feed";
 import {MainLayout} from "../main-layout/main-layout";
 import ProfileOrdersPage from "../../pages/profile/orders/orders";
 import {OrderDetailsPage} from "../../pages/order-details/order-details";
-import {socketMiddleware} from "../../services/websocket/websocket";
-import {wsStart} from "../../services/actions/wsOrderActions";
+import {wsConnectionStart, wsConnectionSuccess, wsSendMessage} from "../../services/actions/wsOrderActions";
 
 
 function App() {
@@ -45,6 +44,7 @@ function App() {
 
 
   }, [isAuthenticated])
+
 
 
     const returnToMain = () => {
@@ -95,7 +95,7 @@ function App() {
                             <ProtectedRoute path="/ingredients/:id" exact={true}>
                                 <IngredientDetails/>
                             </ProtectedRoute>
-                            <ProtectedRoute onlyAuth={true} path="/feed" exact={true}>
+                            <ProtectedRoute path="/feed" exact={true}>
                               <OrderFeedPage/>
                             </ProtectedRoute>
                           <ProtectedRoute onlyAuth={true} path="/feed/:id" exact={true}>

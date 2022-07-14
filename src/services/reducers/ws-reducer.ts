@@ -1,15 +1,19 @@
 import {TwsOrderActions, wsActionTypes} from '../actions/ws/types';
+import {TOrder} from "../../utils/types";
 
 type TWsState = {
     wsConnected : boolean,
-    userOrders : Array<{}> | null,
-    ordersFeed : Array<{}> | null
+    orders : Array<TOrder> | null,
+    total : number,
+    totalToday : number
+
 }
 
 const initialState = {
     wsConnected: false,
-    userOrders : null,
-    ordersFeed : null
+    orders : null,
+    total : 0,
+    totalToday : 0
 };
 
 export const wsReducer = (state : TWsState = initialState, action : TwsOrderActions) : TWsState => {
@@ -31,6 +35,14 @@ export const wsReducer = (state : TWsState = initialState, action : TwsOrderActi
                 ...state,
                 wsConnected: false
             };
+
+        case wsActionTypes.WS_GET_MESSAGE:
+            return {
+                ...state,
+                orders : action.payload.orders,
+                total : action.payload.total,
+                totalToday : action.payload.totalToday
+            }
 
         default:
             return state;
