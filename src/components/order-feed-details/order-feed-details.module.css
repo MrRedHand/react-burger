@@ -4,8 +4,16 @@
     margin-right: auto;
 }
 
-.status {
+.done {
     color: #00CCCC;
+}
+
+.created {
+    color: #e65d5d;
+}
+
+.process {
+    color: #d79548;
 }
 
 .orderId {

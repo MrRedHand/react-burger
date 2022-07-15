@@ -19,6 +19,7 @@ import {OrderFeedPage} from "../../pages/feed/feed";
 import {MainLayout} from "../main-layout/main-layout";
 import ProfileOrdersPage from "../../pages/profile/orders/orders";
 import {OrderFeedDetails} from "../order-feed-details/order-feed-details";
+import {clearConstructor} from "../../services/actions/actions-creators";
 
 
 function App() {
@@ -47,6 +48,7 @@ function App() {
 
 
   const onCloseOrderDetailsModal = () => {
+    dispatch(clearConstructor())
     history.push('/');
   }
 

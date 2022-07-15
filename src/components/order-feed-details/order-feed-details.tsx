@@ -7,6 +7,7 @@ import {useParams} from "react-router-dom";
 import {useDispatch,useSelector} from "../../hooks/redux-hooks";
 import {wsConnectionClose, wsConnectionStart} from "../../services/actions/wsOrderActions";
 import {TOrder} from "../../utils/types";
+import {v4 as uuidv4} from "uuid";
 
 export const OrderFeedDetails = () => {
 
@@ -31,6 +32,25 @@ export const OrderFeedDetails = () => {
 
     }, [wsConnected, order]);
 
+    const statusName = (status: string) : JSX.Element | undefined => {
+        let text;
+
+        switch (status) {
+            case 'done':
+                text = (<span className={styles.done}>Выполнен</span>);
+                break;
+            case 'created':
+                text = (<span className={styles.created}>Создан</span>);
+                break;
+            case 'pending':
+                text = (<span className={styles.process}>Готовится</span>);
+                break;
+            default:
+        }
+
+        return text;
+    };
+
     return (
         <section className={styles.feedDetailsWrap}>
             {
@@ -38,7 +58,7 @@ export const OrderFeedDetails = () => {
                     <>
                         <p className={`${styles.orderId} text text_type_digits-default`}>#{order.number}</p>
                         <p className="text text_type_main-medium">{order.name}</p>
-                        <p className={`${styles.status} text text_type_main-small`}>{order.status}</p>
+                        <p className={`${styles.status} text text_type_main-small`}>{statusName(order.status)}</p>
 
                         <p className={`${styles.comps} text text_type_main-medium`}>Состав:</p>
 
@@ -49,7 +69,7 @@ export const OrderFeedDetails = () => {
 
                                     const ingrToShow = allIngredients.find(ingr => {return ingr._id === ingredient})
                                     return (
-                                        <section className={styles.component}>
+                                        <section className={styles.component} key={uuidv4()}>
                                             <OrderItemAvatar ingredientId={ingrToShow?._id}/>
                                             <div className={`${styles.name} text text_type_main-small`}>{ingrToShow?.name}</div>
                                             <div className={`${styles.price} text text_type_digits-default`}>2 x 20 <CurrencyIcon type="primary"/></div>
