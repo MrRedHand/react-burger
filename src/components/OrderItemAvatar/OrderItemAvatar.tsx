@@ -3,7 +3,7 @@ import styles from './OrderItemAvatar.module.css'
 import {useSelector} from '../../hooks/redux-hooks';
 
 type TOrderItemAvatar = {
-    ingredientId : string,
+    ingredientId : string | undefined,
     style? : React.CSSProperties,
     type? : 'end',
     hiddenIngredients? : number

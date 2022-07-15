@@ -135,20 +135,11 @@ function App() {
                               <Route path="/feed/:id" children={
                                 <Modal
                                     activity={true}
-                                    heading={'Детали ингредиента'}
-                                    children={<IngredientDetails/>}
+                                    children={<OrderFeedDetails/>}
                                     onCloseEvent={onCloseFeedModal}
                                 />
                               }/>
 
-                              <Route path="/feed/:id" children={
-                                <Modal
-                                    activity={true}
-                                    heading={'Детали ингредиента'}
-                                    children={<IngredientDetails/>}
-                                    onCloseEvent={onCloseFeedProfileModal}
-                                />
-                              }/>
                             </>
                         )}
                     </>

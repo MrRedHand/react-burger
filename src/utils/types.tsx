@@ -152,8 +152,8 @@ export type TOrder = {
     status : 'created' | 'done' | 'pending'
     ingredients : Array<string>
     name : string
-    createdAt : Date
-    updatedAt : Date
+    createdAt : string
+    updatedAt : string
     number : number
 }
 

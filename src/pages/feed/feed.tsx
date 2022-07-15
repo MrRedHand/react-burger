@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useMemo} from "react";
 import styles from './feed.module.css'
 import OverflowSection from "../../components/overflow-section/overflow-section";
 import {OrderItem} from "../../components/OrderItem/OrderItem";
@@ -13,13 +13,15 @@ export const OrderFeedPage = () => {
     const { wsConnected,orders, total, totalToday } = useSelector(store => store.websocket)
 
     useEffect(() => {
-        !wsConnected && dispatch(wsConnectionStart('wss://norma.nomoreparties.space/orders/all'))
+
+        dispatch(wsConnectionStart('wss://norma.nomoreparties.space/orders/all'))
 
         return () => {
             dispatch(wsConnectionClose)
         };
 
-    }, [wsConnected]);
+    }, []);
+
     return (
         <>
             <h1 className={`${styles.heading} text text_type_main-large mb-5`}>Лента заказов</h1>
@@ -58,10 +60,14 @@ export const OrderFeedPage = () => {
                             <p className="text text_type_main-default">В работе:</p>
                             <OverflowSection height={200}>
                             <ul className="text text_type_digits-default">
-                                <li>034533</li>
-                                <li>034533</li>
-                                <li>034533</li>
-                                <li>034533</li>
+                                {
+                                    orders?.map((order : TOrder) => {
+                                        return (
+                                            (order.status !== "done")
+                                            && (<li key={uuidv4()}>{order.number}</li>)
+                                        )
+                                    })
+                                }
                             </ul>
                             </OverflowSection>
                         </div>

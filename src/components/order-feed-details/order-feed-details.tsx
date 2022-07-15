@@ -6,25 +6,30 @@ import OverflowSection from "../overflow-section/overflow-section";
 import {useParams} from "react-router-dom";
 import {useDispatch,useSelector} from "../../hooks/redux-hooks";
 import {wsConnectionClose, wsConnectionStart} from "../../services/actions/wsOrderActions";
+import {TOrder} from "../../utils/types";
 
 export const OrderFeedDetails = () => {
 
     const params = useParams<{id : string}>()
 
+    const {allIngredients} = useSelector(store => store.main)
+
     const { orders, wsConnected } = useSelector(store => store.websocket)
 
-    const order = orders?.find(order => { return order._id === params.id})
+    const order : TOrder | undefined = orders?.find(order => { return order._id === params.id})
 
     const dispatch = useDispatch()
 
     useEffect(() => {
         !wsConnected && dispatch(wsConnectionStart('wss://norma.nomoreparties.space/orders/all'))
 
+        console.log('order.ingredients', order?.ingredients)
+
         return () => {
             dispatch(wsConnectionClose)
         };
 
-    }, [wsConnected]);
+    }, [wsConnected, order]);
 
     return (
         <section className={styles.feedDetailsWrap}>
@@ -38,33 +43,25 @@ export const OrderFeedDetails = () => {
                         <p className={`${styles.comps} text text_type_main-medium`}>Состав:</p>
 
                         <OverflowSection height={300}>
-                            <section className={styles.component}>
-                                {/*<OrderItemAvatar/>*/}
-                                <div className={`${styles.name} text text_type_main-small`}>Флюоресцентная булка R2-D3</div>
-                                <div className={`${styles.price} text text_type_digits-default`}>2 x 20 <CurrencyIcon type="primary"/></div>
-                            </section>
 
-                            <section className={styles.component}>
-                                {/*<OrderItemAvatar/>*/}
-                                <div className={`${styles.name} text text_type_main-small`}>Флюоресцентная булка R2-D3</div>
-                                <div className={`${styles.price} text text_type_digits-default`}>2 x 20 <CurrencyIcon type="primary"/></div>
-                            </section>
+                            {
+                                order.ingredients?.map(ingredient => {
 
-                            <section className={styles.component}>
-                                {/*<OrderItemAvatar/>*/}
-                                <div className={`${styles.name} text text_type_main-small`}>Флюоресцентная булка R2-D3</div>
-                                <div className={`${styles.price} text text_type_digits-default`}>2 x 20 <CurrencyIcon type="primary"/></div>
-                            </section>
+                                    const ingrToShow = allIngredients.find(ingr => {return ingr._id === ingredient})
+                                    return (
+                                        <section className={styles.component}>
+                                            <OrderItemAvatar ingredientId={ingrToShow?._id}/>
+                                            <div className={`${styles.name} text text_type_main-small`}>{ingrToShow?.name}</div>
+                                            <div className={`${styles.price} text text_type_digits-default`}>2 x 20 <CurrencyIcon type="primary"/></div>
+                                        </section>
+                                    )
+                                })
+                            }
 
-                            <section className={styles.component}>
-                                {/*<OrderItemAvatar/>*/}
-                                <div className={`${styles.name} text text_type_main-small`}>Флюоресцентная булка R2-D3</div>
-                                <div className={`${styles.price} text text_type_digits-default`}>2 x 20 <CurrencyIcon type="primary"/></div>
-                            </section>
                         </OverflowSection>
 
                         <div className={styles.total}>
-                            <p className="text text_type_main-default text_color_inactive">Сегодня, 16:20 i-GMT+3</p>
+                            <p className="text text_type_main-default text_color_inactive">{order.updatedAt}</p>
                             <p className="text text_type_digits-medium">512 <CurrencyIcon type="primary"/></p>
                         </div>
                     </>
