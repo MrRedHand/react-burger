@@ -2,7 +2,7 @@ import React, {FC, useEffect, useState} from "react";
 import styles from './OrderItem.module.css'
 import {OrderItemAvatar} from "../OrderItemAvatar/OrderItemAvatar";
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {useHistory} from 'react-router-dom';
+import {useHistory, useLocation} from 'react-router-dom';
 import {TOrder, TOrderIngredient} from "../../utils/types";
 import {useSelector} from "../../hooks/redux-hooks";
 import {v4 as uuidv4} from "uuid";
@@ -10,6 +10,8 @@ import {v4 as uuidv4} from "uuid";
 export const OrderItem : FC<TOrder> = ({_id, number, name, createdAt, ingredients, status, updatedAt}) => {
 
     const [price, setPrice] = useState(0)
+
+    const location = useLocation()
 
     const history = useHistory();
 
@@ -26,11 +28,12 @@ export const OrderItem : FC<TOrder> = ({_id, number, name, createdAt, ingredient
         })
     }, [])
 
+
     return (
-        <section className={styles.orderItemWrap} onClick={() => {history.push('/feed/123')}}>
+        <section className={styles.orderItemWrap} onClick={() => {history.push(`/feed/${_id}`, {background : location})}}>
 
             <div className={styles.orderHeader}>
-                <p className="text text_type_digits-default"># {number}</p>
+                <p className="text text_type_digits-default">#{number}</p>
                 <p className="text text_type_main-default text_color_inactive">{createdAt.toString()}</p>
             </div>
 

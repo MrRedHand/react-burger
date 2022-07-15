@@ -126,6 +126,7 @@ const BurgerIngredients = () => {
                                         text={elem.name}
                                         key={elem._id}
                                         id={elem._id}
+                                        price={elem.price}
                                         onClick={() => showModal(elem)}
                                     />
                                 )   
@@ -148,6 +149,7 @@ const BurgerIngredients = () => {
                                         text={elem.name}
                                         key={elem._id}
                                         id={elem._id}
+                                        price={elem.price}
                                         onClick={() => showModal(elem)}
                                     />
                                 )  

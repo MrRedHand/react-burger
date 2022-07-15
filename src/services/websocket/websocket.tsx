@@ -50,6 +50,7 @@ export const socketMiddleware = (wsActions: wsActions): Middleware =>
                                 },
                             });
                         }
+                        console.log('data', data)
                     };
 
                     socket.onclose = (event) => {

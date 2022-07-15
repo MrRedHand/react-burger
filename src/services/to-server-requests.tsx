@@ -37,6 +37,7 @@ import {
 } from "../utils/types"
 import {Dispatch} from "redux";
 import {store} from "./store";
+import {wsConnectionStart} from "./actions/wsOrderActions";
 
 export const apiUrl = 'https://norma.nomoreparties.space/api/'
 
@@ -245,9 +246,27 @@ export  const fetchOrder = (ingredientsArr : Array<string>) => {
 
         dispatch(getOrderRequest())
 
-        fetch(apiUrl + 'orders/', {
-            headers: {
-                'Content-Type' : 'application/json'},
+        const token = localStorage.getItem('accessToken')
+
+        let curHeaders = {}
+
+        token !== null
+        ? (
+                curHeaders = {
+                    'Content-Type' : 'application/json',
+                    Authorization : `Bearer ${token}`
+                }
+            )
+        : (
+                curHeaders = {
+                    'Content-Type' : 'application/json'
+                }
+            )
+
+        console.log('curHeaders', curHeaders)
+
+        fetch(apiUrl + `orders/`, {
+            headers: curHeaders,
             method: 'POST',
             body: JSON.stringify({ingredients : ingredientsArr})
         })

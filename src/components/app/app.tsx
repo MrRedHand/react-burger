@@ -18,8 +18,7 @@ import * as H from 'history';
 import {OrderFeedPage} from "../../pages/feed/feed";
 import {MainLayout} from "../main-layout/main-layout";
 import ProfileOrdersPage from "../../pages/profile/orders/orders";
-import {OrderDetailsPage} from "../../pages/order-details/order-details";
-import {wsConnectionStart, wsConnectionSuccess, wsSendMessage} from "../../services/actions/wsOrderActions";
+import {OrderFeedDetails} from "../order-feed-details/order-feed-details";
 
 
 function App() {
@@ -47,13 +46,23 @@ function App() {
 
 
 
-    const returnToMain = () => {
-      setTimeout(() => {history.replace('/')}, 50)
-    }
+  const onCloseOrderDetailsModal = () => {
+    history.push('/');
+  }
 
-    const onCloseModal = () => {
-      history.push('/')
-    }
+  const onCloseIngredientModal = () => {
+    setTimeout(() => {history.replace('/')}, 50)
+  }
+
+  const onCloseFeedModal = () => {
+    history.push('/feed');
+  }
+
+  const onCloseFeedProfileModal = () => {
+    history.push('/profile/orders/');
+  }
+
+
   return (
     <>
         <AppHeader />
@@ -89,17 +98,17 @@ function App() {
                           <ProtectedRoute onlyAuth={true} path="/profile/orders" exact>
                             <ProfileOrdersPage/>
                           </ProtectedRoute>
-                          <ProtectedRoute onlyAuth={true} path="/profile/orders/:id" exact={true}>
-                            <OrderDetailsPage/>
-                          </ProtectedRoute>
+                          {/*<ProtectedRoute onlyAuth={true} path="/profile/orders/:id" exact={true}>*/}
+                          {/*  <OrderDetailsPage/>*/}
+                          {/*</ProtectedRoute>*/}
                             <ProtectedRoute path="/ingredients/:id" exact={true}>
                                 <IngredientDetails/>
                             </ProtectedRoute>
                             <ProtectedRoute path="/feed" exact={true}>
                               <OrderFeedPage/>
                             </ProtectedRoute>
-                          <ProtectedRoute onlyAuth={true} path="/feed/:id" exact={true}>
-                            <OrderDetailsPage/>
+                          <ProtectedRoute path="/feed/:id" exact={true}>
+                            <OrderFeedDetails/>
                           </ProtectedRoute>
                             <ProtectedRoute path="*">
                                 <WrongPage/>
@@ -109,19 +118,38 @@ function App() {
                             <Modal
                                 activity={true}
                                 children={<OrderDetails/>}
-                                onCloseEvent={onCloseModal}
+                                onCloseEvent={onCloseOrderDetailsModal}
                             />
                         }/>
                         {background && (
-                            <Route path="/ingredients/:id" children={
+                            <>
+                              <Route path="/ingredients/:id" children={
                                 <Modal
                                     activity={true}
                                     heading={'Детали ингредиента'}
                                     children={<IngredientDetails/>}
-                                    onCloseEvent={returnToMain}
+                                    onCloseEvent={onCloseIngredientModal}
                                 />
 
-                            }/>
+                              }/>
+                              <Route path="/feed/:id" children={
+                                <Modal
+                                    activity={true}
+                                    heading={'Детали ингредиента'}
+                                    children={<IngredientDetails/>}
+                                    onCloseEvent={onCloseFeedModal}
+                                />
+                              }/>
+
+                              <Route path="/feed/:id" children={
+                                <Modal
+                                    activity={true}
+                                    heading={'Детали ингредиента'}
+                                    children={<IngredientDetails/>}
+                                    onCloseEvent={onCloseFeedProfileModal}
+                                />
+                              }/>
+                            </>
                         )}
                     </>
                 )

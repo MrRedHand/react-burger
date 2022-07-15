@@ -10,6 +10,8 @@ import {wsConnectionClose, wsConnectionStart} from "../../../services/actions/ws
 
 const ProfileOrdersPage = () => {
 
+    const { wsConnected,orders, total, totalToday } = useSelector(store => store.websocket)
+
     const dispatch = useDispatch()
 
     const history = useHistory();
@@ -36,6 +38,7 @@ const ProfileOrdersPage = () => {
     );
 
     const token = localStorage.getItem('accessToken')
+
     const userOrders = `wss://norma.nomoreparties.space/orders?token=${token}`
 
     useEffect(() => {
