@@ -1,12 +1,12 @@
 import React, {useCallback, useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
 import RegisterForm from "../components/forms/register";
-import {useSelector} from "react-redux";
+import {useSelector} from "../hooks/redux-hooks";
 
 
 const RegisterPage = () => {
 
-    const {isAuthenticated} = useSelector<any>(state => state.user) as  any
+    const {isAuthenticated} = useSelector(state => state.user)
 
     const history = useHistory();
 

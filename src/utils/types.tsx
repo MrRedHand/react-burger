@@ -3,6 +3,7 @@ import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {TAppActions} from "../services/actions/action-types";
 import {store} from "../services/store";
 import {TwsOrderActions} from "../services/actions/ws/types";
+import {Dispatch} from "redux";
 
 export type TModal = {
     activity : boolean;
@@ -169,13 +170,21 @@ export  type TStoreType = TServerData | TUserData
 
 export type TRootState = ReturnType<typeof store.getState>;
 
+export type TAppDispatch = ThunkDispatch<TRootState, typeof store.dispatch, TAppActions | TwsOrderActions>;
 
-export type TAppDispatch = ThunkDispatch<TRootState, never, TAppActions | TwsOrderActions>;
+// export type TAppThunk<ReturnType = void> = ThunkAction<
+//     ReturnType,
+//     TRootState,
+//     typeof store.dispatch,
+//     TAppActions
+//     >;
+
 
 export type TAppThunk<ReturnType = void> = ThunkAction<
     ReturnType,
     TRootState,
-    never,
+    typeof store.dispatch,
     TAppActions
-    >;
+    >
+
 

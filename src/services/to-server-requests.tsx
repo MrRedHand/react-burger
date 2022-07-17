@@ -109,7 +109,7 @@ export const getUser = () => {
 //     })
 // }
 
-export const loginUser  = ( form : TLoginFormFields ) => {
+export const loginUser  = ( form : TLoginFormFields ) : TAppThunk  => {
     return function (dispatch : Dispatch) {
 
         dispatch(loginRequest())
@@ -156,7 +156,7 @@ export const loginUser  = ( form : TLoginFormFields ) => {
     }
 }
 
-export const registerUser = (form : TRegisterFormFields) => {
+export const registerUser = (form : TRegisterFormFields) : TAppThunk  => {
     return function (dispatch : Dispatch) {
 
         dispatch(registerRequest())
@@ -180,7 +180,7 @@ export const registerUser = (form : TRegisterFormFields) => {
 }
 
 
-export  const forgotPassword = (data : TForgotFormFields) => {
+export  const forgotPassword = (data : TForgotFormFields) : TAppThunk  => {
     return function (dispatch : Dispatch) {
         dispatch(userResetPasswordRequest())
 
@@ -202,7 +202,7 @@ export  const forgotPassword = (data : TForgotFormFields) => {
 }
 
 
-export  const resetPassword  = (data : TResetFormFields) => {
+export  const resetPassword  = (data : TResetFormFields)  : TAppThunk => {
     return function (dispatch : Dispatch) {
         fetch(apiUrl + 'password-reset/reset', {
             method: 'POST',
@@ -239,7 +239,7 @@ export  const  getFullData = () => (dispatch : Dispatch) => {
         });
 }
 
-export  const fetchOrder = (ingredientsArr : Array<string>) => {
+export  const fetchOrder = (ingredientsArr : Array<string>) : TAppThunk => {
     return function (dispatch : Dispatch) {
 
         console.log(ingredientsArr)

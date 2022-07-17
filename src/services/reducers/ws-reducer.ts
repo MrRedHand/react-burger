@@ -37,10 +37,7 @@ export const wsReducer = (state : TWsState = initialState, action : TwsOrderActi
             };
 
         case wsActionTypes.WS_CONNECTION_END:
-            return {
-                ...state,
-                orders : null
-            }
+            return state;
 
         case wsActionTypes.WS_GET_MESSAGE:
             return {

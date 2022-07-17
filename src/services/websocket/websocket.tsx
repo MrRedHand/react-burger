@@ -1,5 +1,9 @@
 import { Middleware, MiddlewareAPI } from 'redux';
-import {wsActions} from "../actions/ws/types";
+import {TwsOrderActions, wsActions} from "../actions/ws/types";
+import {TAppDispatch, TRootState} from "../../utils/types";
+import {TAppActions} from "../actions/action-types";
+
+type TUnion = TwsOrderActions | TRootState
 
 export const socketMiddleware = (wsActions: wsActions): Middleware =>
         (store: MiddlewareAPI) => {

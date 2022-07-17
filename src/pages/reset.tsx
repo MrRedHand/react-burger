@@ -1,12 +1,12 @@
 import React, {useCallback, useEffect} from "react";
 import {useHistory} from "react-router-dom";
 import ResetForm from "../components/forms/reset";
-import {useSelector} from "react-redux";
+import {useSelector} from "../hooks/redux-hooks";
 
 
 const ResetPage = () => {
 
-    const {requestedForgotPassword} = useSelector<any>(state => state.user) as any
+    const {requestedForgotPassword} = useSelector(state => state.user)
 
     const history = useHistory();
 

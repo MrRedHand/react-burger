@@ -17,10 +17,11 @@ export const OrderFeedPage = () => {
         dispatch(wsConnectionStart('wss://norma.nomoreparties.space/orders/all'))
 
         return () => {
-            dispatch(wsConnectionClose)
+            dispatch(wsConnectionClose())
         };
 
     }, []);
+
 
     return (
         <>

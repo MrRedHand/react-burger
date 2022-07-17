@@ -61,7 +61,7 @@ function App() {
   }
 
   const onCloseFeedProfileModal = () => {
-    history.push('/profile/orders/');
+    history.push('/profile/orders');
   }
 
 
@@ -99,6 +99,9 @@ function App() {
                             </ProtectedRoute>
                           <ProtectedRoute onlyAuth={true} path="/profile/orders" exact>
                             <ProfileOrdersPage/>
+                          </ProtectedRoute>
+                          <ProtectedRoute onlyAuth={true} path="/profile/orders/:id" exact>
+                            <OrderFeedDetails/>
                           </ProtectedRoute>
                           {/*<ProtectedRoute onlyAuth={true} path="/profile/orders/:id" exact={true}>*/}
                           {/*  <OrderDetailsPage/>*/}
@@ -139,6 +142,14 @@ function App() {
                                     activity={true}
                                     children={<OrderFeedDetails/>}
                                     onCloseEvent={onCloseFeedModal}
+                                />
+                              }/>
+
+                              <Route path="/profile/orders/:id" children={
+                                <Modal
+                                    activity={true}
+                                    children={<OrderFeedDetails/>}
+                                    onCloseEvent={onCloseFeedProfileModal}
                                 />
                               }/>
 

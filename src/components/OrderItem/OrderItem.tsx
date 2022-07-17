@@ -6,6 +6,7 @@ import {useHistory, useLocation} from 'react-router-dom';
 import {TOrder, TOrderIngredient} from "../../utils/types";
 import {useSelector} from "../../hooks/redux-hooks";
 import {v4 as uuidv4} from "uuid";
+import {convertDate} from "../../services/convert-date";
 
 export const OrderItem : FC<TOrder> = ({_id, number, name, createdAt, ingredients, status, updatedAt}) => {
 
@@ -29,12 +30,22 @@ export const OrderItem : FC<TOrder> = ({_id, number, name, createdAt, ingredient
     }, [])
 
 
+    const onOpenItem = () => {
+        if (location.pathname === "/feed") {
+            history.push(`/feed/${_id}`, {background : location})
+        } else if (location.pathname === "/profile/orders") {
+            history.push(`/profile/orders/${_id}`, {background : location})
+        }
+    }
+
+    console.log("location.pathname", location.pathname)
+
     return (
-        <section className={styles.orderItemWrap} onClick={() => {history.push(`/feed/${_id}`, {background : location})}}>
+        <section className={styles.orderItemWrap} onClick={() => {onOpenItem()}}>
 
             <div className={styles.orderHeader}>
                 <p className="text text_type_digits-default">#{number}</p>
-                <p className="text text_type_main-default text_color_inactive">{createdAt.toString()}</p>
+                <p className="text text_type_main-default text_color_inactive">{convertDate(createdAt)}</p>
             </div>
 
             <div className={`${styles.orderTitle} text text_type_main-medium`}>{name}</div>

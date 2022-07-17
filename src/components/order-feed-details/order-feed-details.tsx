@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {FC, useEffect} from "react";
 import styles from './order-feed-details.module.css'
 import {OrderItemAvatar} from "../OrderItemAvatar/OrderItemAvatar";
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
@@ -8,6 +8,7 @@ import {useDispatch,useSelector} from "../../hooks/redux-hooks";
 import {wsConnectionClose, wsConnectionStart} from "../../services/actions/wsOrderActions";
 import {TOrder} from "../../utils/types";
 import {v4 as uuidv4} from "uuid";
+import {convertDate} from "../../services/convert-date";
 
 export const OrderFeedDetails = () => {
 
@@ -27,7 +28,7 @@ export const OrderFeedDetails = () => {
         console.log('order.ingredients', order?.ingredients)
 
         return () => {
-            dispatch(wsConnectionClose)
+            dispatch(wsConnectionClose())
         };
 
     }, [wsConnected, order]);
@@ -81,7 +82,7 @@ export const OrderFeedDetails = () => {
                         </OverflowSection>
 
                         <div className={styles.total}>
-                            <p className="text text_type_main-default text_color_inactive">{order.updatedAt}</p>
+                            <p className="text text_type_main-default text_color_inactive">{convertDate(order.updatedAt)}</p>
                             <p className="text text_type_digits-medium">512 <CurrencyIcon type="primary"/></p>
                         </div>
                     </>
