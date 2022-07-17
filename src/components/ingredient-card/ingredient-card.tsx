@@ -86,7 +86,7 @@ const IngredientCard : FC<TIngredientCard> = ({id, ingredientType,  text, thumbn
             ? setCount(2)
             : setCount(0)
         } else {
-            setCount(constructorIngredients.filter((ingredient  : TIngredient)=> ingredient._id === id).length)
+            setCount(constructorIngredients.filter(ingredient => ingredient._id === id).length)
         }
     }, [constructorIngredients, currentBun])
 

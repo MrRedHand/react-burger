@@ -59,7 +59,7 @@ const BurgerConstructor = () => {
         let ingredientsPrice = 0;
 
         constructorIngredients.length > 0
-        && constructorIngredients.map((elem : TIngredient) => {
+        && constructorIngredients.map(elem => {
             elem.price && (ingredientsPrice += elem.price)
         })
 
@@ -118,7 +118,7 @@ const BurgerConstructor = () => {
             <OverflowSection height={420}>
                 {
                     constructorIngredients
-                        .map((elem : TIngredient, index : number) => {
+                        .map((elem, index : number) => {
                             return (<IngredientCard
                                     key={elem.uuid}
                                     isLocked={false}

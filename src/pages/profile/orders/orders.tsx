@@ -62,7 +62,7 @@ const ProfileOrdersPage = () => {
                         {
                             orders
                             ? (
-                                    orders.map((order : TOrder, index : number) => {
+                                    orders.map((order, index : number) => {
                                         return (
                                             <OrderItem key={uuidv4()} {...order}/>
                                         )

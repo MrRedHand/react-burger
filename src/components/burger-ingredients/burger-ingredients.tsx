@@ -94,7 +94,7 @@ const BurgerIngredients = () => {
 
                 <IngredientsGrid className={styles.ingredients__grid}>
                     {
-                        allIngredients.map((elem : TIngredient) => {
+                        allIngredients.map(elem => {
                             if (elem.type === 'bun') {
                                 return ( <IngredientCard
                                             price={elem.price}
@@ -118,7 +118,7 @@ const BurgerIngredients = () => {
 
                 <IngredientsGrid className={styles.ingredients__grid}>
                     {
-                        allIngredients.map((elem : TIngredient) => {
+                        allIngredients.map(elem => {
                             if (elem.type === 'sauce') {
                                 return ( <IngredientCard
                                         board={'default'}
@@ -141,7 +141,7 @@ const BurgerIngredients = () => {
 
                 <IngredientsGrid className={styles.ingredients__grid}>
                     {
-                        allIngredients.map((elem : TIngredient) => {
+                        allIngredients.map(elem=> {
                             if (elem.type === 'main') {
                                 return ( <IngredientCard
                                         board={'default'}

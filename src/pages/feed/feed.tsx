@@ -30,7 +30,7 @@ export const OrderFeedPage = () => {
                 <div className={styles.ordersList}>
                     <OverflowSection height={500}>
                         {
-                            orders?.map((order : TOrder, index : number) => {
+                            orders?.map((order, index : number) => {
                                 return (
                                     <OrderItem key={uuidv4()} {...order}/>
                                 )
@@ -46,7 +46,7 @@ export const OrderFeedPage = () => {
                             <OverflowSection height={200}>
                             <ul className={`${styles.green} text text_type_digits-default`}>
                                 {
-                                    orders?.map((order : TOrder, index : number) => {
+                                    orders?.map((order, index : number) => {
                                         if (index % 10 === 0) {}
                                         return (
                                                 order.status === "done"
@@ -62,7 +62,7 @@ export const OrderFeedPage = () => {
                             <OverflowSection height={200}>
                             <ul className="text text_type_digits-default">
                                 {
-                                    orders?.map((order : TOrder) => {
+                                    orders?.map(order => {
                                         return (
                                             (order.status !== "done")
                                             && (<li key={uuidv4()}>{order.number}</li>)

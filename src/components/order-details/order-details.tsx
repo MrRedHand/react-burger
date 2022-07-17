@@ -20,7 +20,7 @@ const OrderDetails = () => {
 
             let ingredientsArr : Array<string> = []
 
-            constructorIngredients.map((ingredient : TIngredient) => {
+            constructorIngredients.map(ingredient => {
                 ingredientsArr = [...ingredientsArr, ingredient._id]
                 return ingredientsArr
             })

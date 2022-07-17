@@ -13,7 +13,7 @@ const IngredientDetails = () => {
 
     const {allIngredients, fullDataRecieved} = useSelector(state => state.main)
 
-    const viewIngredient = allIngredients.find((ingredient : TIngredient) => { return ingredient._id === params.id})
+    const viewIngredient = allIngredients.find(ingredient => { return ingredient._id === params.id})
 
     console.log('viewIngredient', viewIngredient)
 
