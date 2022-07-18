@@ -40,7 +40,10 @@ const Modal : FC<TModal> = ({activity, children, heading, onCloseEvent}) => {
 
         document.addEventListener('keydown', closeOnEsc)
 
-        return () => document.removeEventListener('keydown', closeOnEsc)
+        return () => {
+            body?.classList.remove('modal-active')
+            document.removeEventListener('keydown', closeOnEsc)
+        }
 
 
     }, [active])
