@@ -38,7 +38,6 @@ export const OrderItem : FC<TOrder> = ({_id, number, name, createdAt, ingredient
         }
     }
 
-    console.log("location.pathname", location.pathname)
 
     return (
         <section className={styles.orderItemWrap} onClick={() => {onOpenItem()}}>

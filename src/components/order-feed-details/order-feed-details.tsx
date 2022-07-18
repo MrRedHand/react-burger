@@ -1,9 +1,9 @@
-import React, {FC, useEffect} from "react";
+import React, {FC, useEffect, useMemo, useState} from "react";
 import styles from './order-feed-details.module.css'
 import {OrderItemAvatar} from "../OrderItemAvatar/OrderItemAvatar";
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import OverflowSection from "../overflow-section/overflow-section";
-import {useParams} from "react-router-dom";
+import {useLocation, useParams, useRouteMatch} from "react-router-dom";
 import {useDispatch,useSelector} from "../../hooks/redux-hooks";
 import {wsConnectionClose, wsConnectionStart} from "../../services/actions/wsOrderActions";
 import {TOrder} from "../../utils/types";
@@ -12,26 +12,47 @@ import {convertDate} from "../../services/convert-date";
 
 export const OrderFeedDetails = () => {
 
+    const [order, setOrder] = useState<TOrder>()
+
     const params = useParams<{id : string}>()
+
+    const location = useLocation()
+
+    const isProfile = useRouteMatch("/profile/orders/:id" || '/profile/orders/')
 
     const {allIngredients} = useSelector(store => store.main)
 
     const { orders, wsConnected } = useSelector(store => store.websocket)
 
-    const order : TOrder | undefined = orders?.find(order => { return order._id === params.id})
-
     const dispatch = useDispatch()
 
     useEffect(() => {
-        !wsConnected && dispatch(wsConnectionStart('wss://norma.nomoreparties.space/orders/all'))
 
-        console.log('order.ingredients', order?.ingredients)
+        if (!wsConnected || orders === null) {
+            if (isProfile?.isExact) {
+                const token = localStorage.getItem('accessToken')
+
+                const userOrders = `wss://norma.nomoreparties.space/orders?token=${token}`
+                dispatch(wsConnectionStart(userOrders))
+            } else {
+                dispatch(wsConnectionStart('wss://norma.nomoreparties.space/orders/all'))
+            }
+        }
+
+        if (wsConnected && orders !== null) {
+            setOrder(orders?.find((order) => order._id === params.id))
+        }
+
 
         return () => {
             dispatch(wsConnectionClose())
         };
 
-    }, [wsConnected, order]);
+    }, [order, orders, wsConnected]);
+
+
+
+
 
     const statusName = (status: string) : JSX.Element | undefined => {
         let text;

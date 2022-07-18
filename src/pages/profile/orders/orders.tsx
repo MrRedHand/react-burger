@@ -45,12 +45,12 @@ const ProfileOrdersPage = () => {
 
     useEffect(() => {
 
-        dispatch(wsConnectionStart(userOrders))
+        (!wsConnected || orders === null) && dispatch(wsConnectionStart(userOrders))
 
         return () => {
             dispatch(wsConnectionClose())
         };
-    }, []);
+    }, [wsConnected, orders]);
 
 
     return (

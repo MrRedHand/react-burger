@@ -37,7 +37,7 @@ const BurgerConstructor = () => {
             isHover: monitor.isOver(),
         }),
         drop: (item : {id : string}) => {
-            const itemToAdd = allIngredients.find((ingredient : TIngredient) => ingredient._id === item.id)
+            const itemToAdd = allIngredients.find(ingredient=> ingredient._id === item.id)
             if (itemToAdd !== undefined) {
                 const clone = {...itemToAdd};
                 clone.uuid = uuidv4()
