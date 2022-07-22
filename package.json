@@ -2,7 +2,7 @@
   "name": "react-burger",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://mrredhand.github.io/react-burger/",
+  "homepage": "./",
   "dependencies": {
     "-": "^0.0.1",
     "@reduxjs/toolkit": "^1.8.1",
