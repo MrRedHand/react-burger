@@ -7,8 +7,8 @@ import IngredientsTitle from "../ingredients-title/ingredients-title";
 import IngredientsGrid from "../ingredients-grid/ingredients-grid";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
-import {useDispatch, useSelector} from "react-redux";
-import {setIngredientInfo} from "../../services/actions/set-ingredient-info";
+import {useDispatch, useSelector} from "../../hooks/redux-hooks";
+import {setIngredientInfo} from "../../services/actions/actions-creators";
 import {useHistory, useLocation} from "react-router-dom";
 import { TIngredient } from "../../utils/types";
 
@@ -26,7 +26,7 @@ const BurgerIngredients = () => {
     const three = useRef<HTMLDivElement>(null);
     const scrollPane = useRef<HTMLDivElement>(null);
 
-    const {allIngredients,viewIngredient} = useSelector<any>(state => state.main) as any
+    const {allIngredients,viewIngredient} = useSelector(state => state.main)
 
     const showModal = (element  : TIngredient) => {
         dispatch(setIngredientInfo(element))
@@ -94,7 +94,7 @@ const BurgerIngredients = () => {
 
                 <IngredientsGrid className={styles.ingredients__grid}>
                     {
-                        allIngredients.map((elem : TIngredient) => {
+                        allIngredients.map(elem => {
                             if (elem.type === 'bun') {
                                 return ( <IngredientCard
                                             price={elem.price}
@@ -118,7 +118,7 @@ const BurgerIngredients = () => {
 
                 <IngredientsGrid className={styles.ingredients__grid}>
                     {
-                        allIngredients.map((elem : TIngredient) => {
+                        allIngredients.map(elem => {
                             if (elem.type === 'sauce') {
                                 return ( <IngredientCard
                                         board={'default'}
@@ -126,6 +126,7 @@ const BurgerIngredients = () => {
                                         text={elem.name}
                                         key={elem._id}
                                         id={elem._id}
+                                        price={elem.price}
                                         onClick={() => showModal(elem)}
                                     />
                                 )   
@@ -140,7 +141,7 @@ const BurgerIngredients = () => {
 
                 <IngredientsGrid className={styles.ingredients__grid}>
                     {
-                        allIngredients.map((elem : TIngredient) => {
+                        allIngredients.map(elem=> {
                             if (elem.type === 'main') {
                                 return ( <IngredientCard
                                         board={'default'}
@@ -148,6 +149,7 @@ const BurgerIngredients = () => {
                                         text={elem.name}
                                         key={elem._id}
                                         id={elem._id}
+                                        price={elem.price}
                                         onClick={() => showModal(elem)}
                                     />
                                 )  

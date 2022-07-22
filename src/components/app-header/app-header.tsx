@@ -3,12 +3,12 @@ import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 import { BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './app-header.module.css';
 import {Link, useHistory} from 'react-router-dom';
-import {useSelector} from "react-redux";
+import {useSelector} from '../../hooks/redux-hooks';
 
 
 export default function AppHeader() {
 
-    const {isAuthenticated, userName} = useSelector<any>(state => state.user) as any
+    const {isAuthenticated, user} = useSelector(state => state.user)
 
     const history = useHistory();
 
@@ -40,6 +40,13 @@ export default function AppHeader() {
         [history]
     );
 
+    const feedPage = useCallback(
+        () => {
+            history.push('/feed');
+        },
+        [history]
+    );
+
 
     return (
         <header className='m-4 mb-0'>
@@ -50,7 +57,7 @@ export default function AppHeader() {
                             <span className={constrClss}>Конструктор</span>
                         </button>
 
-                    <button className={btnOrderClss}>
+                    <button className={btnOrderClss} onClick={() => feedPage()}>
                         <ListIcon type='secondary' />
                         <span className={ordersClss}>Лента заказов</span>
                     </button>
@@ -67,7 +74,7 @@ export default function AppHeader() {
                         <ProfileIcon type='secondary' />
                         {
                             isAuthenticated
-                            ? (<span className={lkClss}>{userName}</span>)
+                            ? (<span className={lkClss}>{user.name}</span>)
                                 : (<span className={lkClss}>Личный кабинет</span>)
                         }
                     </button>

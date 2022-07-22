@@ -8,14 +8,31 @@ import {
     REMOVE_INGREDIENT, RESORT_INGREDIENTS_IN_CONSTRUCTOR,
     SET_INGREDIENT_INFO
 } from "../actions/main";
+import {TIngredient, TIngredientCard} from "../../utils/types";
+import {TMainActions} from "../actions/action-types";
 
+export type TMainStoreState = {
+    allIngredients : Array<TIngredient>,
+    currentBun : TIngredient | null,
+    constructorIngredients: Array<TIngredient>,
+    viewIngredient: TIngredient | null,
+    orderDetails: {
+        name : string,
+        number : number
+    } | null,
+    orderDetailsRecieved: boolean,
+    totalPrice: number,
+    fullDataRecieved : boolean,
+    fullDataError : boolean,
+    fullDataRequest: boolean,
+}
 
-const initialState = {
+const initialState : TMainStoreState = {
     allIngredients : [],
     currentBun : null,
     constructorIngredients: [],
-    viewIngredient: {},
-    orderDetails: [],
+    viewIngredient: null,
+    orderDetails: null,
     orderDetailsRecieved: false,
     totalPrice: 0,
     fullDataRecieved : false,
@@ -23,7 +40,7 @@ const initialState = {
     fullDataRequest: false,
 }
 
-export const mainReducer = (state = initialState, action : any) => {
+export const mainReducer = (state: TMainStoreState = initialState, action : TMainActions) : TMainStoreState => {
     switch (action.type) {
         case CLEAR_CONSTRUCTOR :
             return {
@@ -91,7 +108,10 @@ export const mainReducer = (state = initialState, action : any) => {
         case GET_ORDER_SUCCESS :
             return {
                 ...state,
-                orderDetails : action.payload,
+                orderDetails : {
+                    name : action.payload.name,
+                    number : action.payload.order.number
+                },
                 orderDetailsRecieved : true,
             }
         default: {

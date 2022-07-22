@@ -4,18 +4,40 @@
 // POST https://norma.nomoreparties.space/api/auth/logout - эндпоинт для выхода из системы.
 // POST https://norma.nomoreparties.space/api/auth/token - эндпоинт обновления токена.
 
-import {getOrderFailed, getOrderRequest, getOrderSuccess} from "./actions/get-order";
-import {clearConstructor} from "./actions/clear-constructor";
-import {getDataFailed, getDataSuccess} from "./actions/get-data";
-import {registerFailed, registerRequest, registerSuccess} from "./actions/user-register";
-import {loginFailed, loginRequest, loginSuccess} from "./actions/user-login";
 import {
+    getOrderFailed,
+    getOrderRequest,
+    getOrderSuccess,
+    clearConstructor,
+    getDataFailed,
+    getDataSuccess,
+    registerFailed,
+    registerRequest,
+    registerSuccess,
+    loginFailed,
+    loginRequest,
+    loginSuccess,
     userResetPasswordFailed,
     userResetPasswordRequest,
-    userResetPasswordSuccess
-} from "./actions/user-reset-password";
-import {TLoginFormFields, TRegisterFormFields, TForgotFormFields, TResetFormFields, TServerResponse, TServerData, TServerRequestOptions} from "../utils/types"
+    userResetPasswordSuccess,
+    reloginUserStarted,
+    reloginUserSuccess,
+    reloginUserFail
+} from "./actions/actions-creators";
+
+import {
+    TLoginFormFields,
+    TRegisterFormFields,
+    TForgotFormFields,
+    TResetFormFields,
+    TServerResponse,
+    TServerData,
+    TServerRequestOptions,
+    TAppThunk, TUserData
+} from "../utils/types"
 import {Dispatch} from "redux";
+import {store} from "./store";
+import {wsConnectionStart} from "./actions/wsOrderActions";
 
 export const apiUrl = 'https://norma.nomoreparties.space/api/'
 
@@ -87,7 +109,7 @@ export const getUser = () => {
 //     })
 // }
 
-export const loginUser = ( form : TLoginFormFields ) => {
+export const loginUser  = ( form : TLoginFormFields ) : TAppThunk  => {
     return function (dispatch : Dispatch) {
 
         dispatch(loginRequest())
@@ -134,7 +156,7 @@ export const loginUser = ( form : TLoginFormFields ) => {
     }
 }
 
-export const registerUser = (form : TRegisterFormFields) => {
+export const registerUser = (form : TRegisterFormFields) : TAppThunk  => {
     return function (dispatch : Dispatch) {
 
         dispatch(registerRequest())
@@ -158,7 +180,7 @@ export const registerUser = (form : TRegisterFormFields) => {
 }
 
 
-export  const forgotPassword = (data : TForgotFormFields) => {
+export  const forgotPassword = (data : TForgotFormFields) : TAppThunk  => {
     return function (dispatch : Dispatch) {
         dispatch(userResetPasswordRequest())
 
@@ -180,7 +202,7 @@ export  const forgotPassword = (data : TForgotFormFields) => {
 }
 
 
-export  const resetPassword = (data : TResetFormFields) => {
+export  const resetPassword  = (data : TResetFormFields)  : TAppThunk => {
     return function (dispatch : Dispatch) {
         fetch(apiUrl + 'password-reset/reset', {
             method: 'POST',
@@ -202,37 +224,55 @@ export  const resetPassword = (data : TResetFormFields) => {
 }
 
 
-export  const  getFullData = () => {
-    return function (dispatch : Dispatch) {
-        dispatch(getDataFailed())
+export  const  getFullData = () => (dispatch : Dispatch) => {
+    dispatch(getDataFailed())
 
-        fetch(apiUrl + 'ingredients/')
-            .then(checkResponse)
-            .then((data) => {
-                dispatch(getDataSuccess(data.data))
-            })
-            .catch((error) => {
-                dispatch(getDataFailed())
-                console.log(error)
-            });
-    }
+    fetch(apiUrl + 'ingredients/')
+        .then(checkResponse)
+        .then((data) => {
+            dispatch(getDataSuccess(data.data))
+            console.log("full data", data.data)
+        })
+        .catch((error) => {
+            dispatch(getDataFailed())
+            console.log(error)
+        });
 }
 
-export  const fetchOrder = (ingredientsArr : Array<string>) => {
+export  const fetchOrder = (ingredientsArr : Array<string>) : TAppThunk => {
     return function (dispatch : Dispatch) {
 
         console.log(ingredientsArr)
 
         dispatch(getOrderRequest())
 
-        fetch(apiUrl + 'orders/', {
-            headers: {
-                'Content-Type' : 'application/json'},
+        const token = localStorage.getItem('accessToken')
+
+        let curHeaders = {}
+
+        token !== null
+        ? (
+                curHeaders = {
+                    'Content-Type' : 'application/json',
+                    Authorization : `Bearer ${token}`
+                }
+            )
+        : (
+                curHeaders = {
+                    'Content-Type' : 'application/json'
+                }
+            )
+
+        console.log('curHeaders', curHeaders)
+
+        fetch(apiUrl + `orders/`, {
+            headers: curHeaders,
             method: 'POST',
             body: JSON.stringify({ingredients : ingredientsArr})
         })
             .then(checkResponse)
             .then((data) => {
+                console.log("order: ", data)
                 dispatch(getOrderSuccess(data))
                 dispatch(clearConstructor())
             })
@@ -242,6 +282,38 @@ export  const fetchOrder = (ingredientsArr : Array<string>) => {
             });
     }
 }
+
+
+
+export const reloginCheck = () => {
+
+    if (localStorage.getItem('accessToken')) {
+
+        store.dispatch(reloginUserStarted())
+
+        getUser()
+            .then(res => {
+                if (res.success) {
+                    const user : TUserData = {
+                        user : {
+                            email : res.user.email,
+                            name : res.user.name
+                        }
+                    }
+                    store.dispatch(reloginUserSuccess(user))
+                } else {
+                    store.dispatch(reloginUserFail())
+                }
+            })
+            .catch((error) => {
+                store.dispatch(reloginUserFail())
+            });
+    } else {
+        store.dispatch(reloginUserFail())
+    }
+}
+
+
 
 
 

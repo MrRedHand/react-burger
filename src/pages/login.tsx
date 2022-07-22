@@ -1,12 +1,12 @@
 import React, {useCallback, useEffect} from "react";
 import LoginForm from "../components/forms/login";
 import {useHistory} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {useSelector} from "../hooks/redux-hooks";
 
 
 const LoginPage = () => {
 
-    const {isAuthenticated} = useSelector<any>(state => state.user) as  any
+    const {isAuthenticated} = useSelector(state => state.user)
 
     const history = useHistory();
 

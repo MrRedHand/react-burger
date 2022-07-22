@@ -3,15 +3,15 @@ import st from './order-details.module.css';
 import checkBg from '../../images/order-details-check-bg.svg';
 import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import {fetchOrder} from "../../services/to-server-requests";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "../../hooks/redux-hooks";
 import { TIngredient } from "../../utils/types";
 
 
 const OrderDetails = () => {
 
-    const dispatch = useDispatch<any>();
+    const dispatch = useDispatch();
 
-    const {orderDetails, currentBun, constructorIngredients, orderDetailsRecieved} = useSelector<any>(state => state.main) as any
+    const {orderDetails, currentBun, constructorIngredients, orderDetailsRecieved} = useSelector(state => state.main)
 
 
     useEffect(() => {
@@ -20,7 +20,7 @@ const OrderDetails = () => {
 
             let ingredientsArr : Array<string> = []
 
-            constructorIngredients.map((ingredient : TIngredient) => {
+            constructorIngredients.map(ingredient => {
                 ingredientsArr = [...ingredientsArr, ingredient._id]
                 return ingredientsArr
             })
@@ -40,7 +40,7 @@ const OrderDetails = () => {
                 ? (
                     <>
                         <p className={`${st.order_number} text text_type_digits-large`}>
-                            {orderDetails.order.number}
+                            {orderDetails && orderDetails.number}
                         </p>
                         <p className='text text_type_main-medium mb-15'>идентификатор заказа</p>
                         <div className={`${st.check_wrap}`}>
@@ -50,7 +50,7 @@ const OrderDetails = () => {
                             <img src={checkBg} className={st.check_bg}/>
                         </div>
                         <p className='text text_type_main-default mb-2 mt-15'>
-                            {`Ваш заказ "${orderDetails.name}" начали готовить`}
+                            {`Ваш заказ "${orderDetails && orderDetails.name}" начали готовить`}
                         </p>
                         <p className='text text_type_main-default text_color_inactive mb-10'>
                             Дождитесь готовности на орбитальной станции

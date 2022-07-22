@@ -2,7 +2,7 @@ import React, {useState, FC, FormEvent} from "react";
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import st from './login.module.css'
 import {forgotPassword, loginUser} from "../../services/to-server-requests";
-import {useDispatch} from "react-redux";
+import {useDispatch} from "../../hooks/redux-hooks";
 import {useHistory, useLocation} from "react-router-dom";
 import { TForgotForm } from "../../utils/types";
 
@@ -10,7 +10,7 @@ const ForgotForm : FC<TForgotForm> = ({login}) => {
 
     const history = useHistory()
 
-    const dispatch = useDispatch<any>()
+    const dispatch = useDispatch()
 
     const [userData, setUserData] = useState<{email : string}>({
         email : "",

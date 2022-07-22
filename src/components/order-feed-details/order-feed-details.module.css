@@ -1,0 +1,52 @@
+.feedDetailsWrap {
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.done {
+    color: #00CCCC;
+}
+
+.created {
+    color: #e65d5d;
+}
+
+.process {
+    color: #d79548;
+}
+
+.orderId {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.comps {
+    margin: 60px 0 24px;
+}
+
+.name {
+    margin: auto 16px;
+}
+
+.component {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    margin-right: 20px;
+}
+
+.price {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.total {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    margin-right: 30px;
+    align-items: center;
+}

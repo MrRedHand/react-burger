@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useState, useEffect, useMemo, useCallback} from 'react';
 import ReactDOM from 'react-dom';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import st from './modal.module.css';
@@ -18,12 +18,16 @@ const Modal : FC<TModal> = ({activity, children, heading, onCloseEvent}) => {
 
     const [active, setActive] = useState(activity)
 
+
     const closeModal = () => {
         setActive(false)
+    }
+
+    const onClose = () => {
         onCloseEvent && onCloseEvent()
     }
 
-    React.useEffect(() => {
+    useEffect(() => {
         active ? body?.classList.add('modal-active') : body?.classList.remove('modal-active')
 
         const closeOnEsc = (e: KeyboardEvent) => {
@@ -32,9 +36,15 @@ const Modal : FC<TModal> = ({activity, children, heading, onCloseEvent}) => {
             }
         }
 
+        !active && onClose()
+
         document.addEventListener('keydown', closeOnEsc)
 
-        return () => document.removeEventListener('keydown', closeOnEsc)
+        return () => {
+            body?.classList.remove('modal-active')
+            document.removeEventListener('keydown', closeOnEsc)
+        }
+
 
     }, [active])
 

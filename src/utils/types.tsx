@@ -1,4 +1,9 @@
 import {ReactNode} from "react";
+import {ThunkAction, ThunkDispatch} from "redux-thunk";
+import {TAppActions} from "../services/actions/action-types";
+import {store} from "../services/store";
+import {TwsOrderActions} from "../services/actions/ws/types";
+import {Dispatch} from "redux";
 
 export type TModal = {
     activity : boolean;
@@ -25,14 +30,21 @@ export type TIngredient = {
     _id : string;
     name : string;
     uuid? : string;
-    type? : string;
-    price? : number;
+    type? : "bun" | "main" | "sauce" | undefined;
+    price : number;
     image? : string;
+    image_large?: string;
+    image_mobile?: string;
+    calories?: number;
+    carbohydrates?: number;
+    fat?: number;
+    proteins?: number;
+    __v?: number;
 }
 
 export type TIngredientCard = {
     id? : string;
-    ingredientType? : string;
+    ingredientType? : "bun" | undefined;
     text? : string;
     thumbnail? : string;
     type? : "top" | "bottom" | undefined;
@@ -42,6 +54,7 @@ export type TIngredientCard = {
     onClick? : () => void;
     moveCard? : (dragIndex : number, hoverIndex : number) => void;
     index? : number;
+    uuid? : string;
     [x:string]: any;
 }
 
@@ -127,4 +140,51 @@ export type TServerData = {
     accessToken? : string;
     refreshToken? : string;
 }
+
+export type TUserData = {
+    user : {
+        name : string,
+        email : string
+    }
+}
+
+export type TOrder = {
+    _id : string
+    status : 'created' | 'done' | 'pending'
+    ingredients : Array<string>
+    name : string
+    createdAt : string
+    updatedAt : string
+    number : number
+}
+
+export type TOrderIngredient = {
+    _id : string
+}
+
+export type TOrderItem = {
+
+}
+
+export  type TStoreType = TServerData | TUserData
+
+export type TRootState = ReturnType<typeof store.getState>;
+
+export type TAppDispatch = ThunkDispatch<TRootState, typeof store.dispatch, TAppActions | TwsOrderActions>;
+
+// export type TAppThunk<ReturnType = void> = ThunkAction<
+//     ReturnType,
+//     TRootState,
+//     typeof store.dispatch,
+//     TAppActions
+//     >;
+
+
+export type TAppThunk<ReturnType = void> = ThunkAction<
+    ReturnType,
+    TRootState,
+    typeof store.dispatch,
+    TAppActions
+    >
+
 

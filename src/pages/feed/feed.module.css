@@ -1,0 +1,29 @@
+.orderFeedLayout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+}
+
+.ordersStatuses {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.heading {
+    margin-top: 40px;
+}
+
+.ordersStatuses ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.ordersStatuses ul li {
+    margin-bottom: 7px;
+}
+
+.green {
+    color: #00CCCC;
+}

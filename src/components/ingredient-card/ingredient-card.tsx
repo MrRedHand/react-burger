@@ -2,8 +2,8 @@ import React, {useEffect, useState, useRef, FC} from "react";
 import styles from './ingredient-card.module.css';
 import {ConstructorElement, CurrencyIcon, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import {useDrag, useDrop} from "react-dnd";
-import {useDispatch, useSelector} from "react-redux";
-import {removeIngredient} from "../../services/actions/remove-ingredient";
+import {useDispatch, useSelector} from "../../hooks/redux-hooks";
+import {removeIngredient} from "../../services/actions/actions-creators";
 import {TIngredient , TIngredientCard} from "../../utils/types";
 
 const IngredientCard : FC<TIngredientCard> = ({id, ingredientType,  text, thumbnail, type, isLocked, price, board, onClick, moveCard, index}) => {
@@ -14,7 +14,7 @@ const IngredientCard : FC<TIngredientCard> = ({id, ingredientType,  text, thumbn
 
     const currentBoard = board;
 
-    const {constructorIngredients, currentBun} = useSelector<any>(state => state.main) as any
+    const {constructorIngredients, currentBun} = useSelector(state => state.main)
 
     const ref = useRef<HTMLDivElement>(null)
 
@@ -77,7 +77,7 @@ const IngredientCard : FC<TIngredientCard> = ({id, ingredientType,  text, thumbn
 
 
     const deleteIngredient = () => {
-       dispatch(removeIngredient(index))
+        (index !== undefined) && dispatch(removeIngredient(index))
     }
 
     useEffect(() => {
@@ -86,7 +86,7 @@ const IngredientCard : FC<TIngredientCard> = ({id, ingredientType,  text, thumbn
             ? setCount(2)
             : setCount(0)
         } else {
-            setCount(constructorIngredients.filter((ingredient  : TIngredient)=> ingredient._id === id).length)
+            setCount(constructorIngredients.filter(ingredient => ingredient._id === id).length)
         }
     }, [constructorIngredients, currentBun])
 

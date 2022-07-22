@@ -5,15 +5,12 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientCard from "../ingredient-card/ingredient-card";
 import OrderDetails from "../order-details/order-details";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "../../hooks/redux-hooks";
 import {useDrop} from "react-dnd";
-import {addBunToConstructor} from "../../services/actions/add-bun-to-constructor";
-import {addIngredientToConstructor} from "../../services/actions/add-ingredient-to-constructor";
-import {resortIngredients} from "../../services/actions/resort-ingredients";
+import {addBunToConstructor, addIngredientToConstructor, resortIngredients, refreshTotal} from "../../services/actions/actions-creators";
 import {v4 as uuidv4} from "uuid";
-import {refreshTotal} from "../../services/actions/refresh-total";
 import {Redirect, useHistory, useLocation} from "react-router-dom";
-import {TIngredient, TModalState} from "../../utils/types";
+import {TIngredient, TIngredientCard, TModalState} from "../../utils/types";
 
 const BurgerConstructor = () => {
 
@@ -23,8 +20,8 @@ const BurgerConstructor = () => {
 
     const history = useHistory();
 
-    const {constructorIngredients, currentBun, allIngredients, totalPrice} = useSelector<any>(state => state.main) as any
-    const { isAuthenticated } = useSelector<any>(state => state.user) as any
+    const {constructorIngredients, currentBun, allIngredients, totalPrice} = useSelector(state => state.main)
+    const { isAuthenticated } = useSelector(state => state.user)
 
     const asdad = false
 
@@ -40,12 +37,14 @@ const BurgerConstructor = () => {
             isHover: monitor.isOver(),
         }),
         drop: (item : {id : string}) => {
-            const itemToAdd = allIngredients.find((ingredient : TIngredient) => ingredient._id === item.id)
-            const clone = {...itemToAdd};
-            clone.uuid = uuidv4()
-            clone.type === 'bun'
-            ? dispatch(addBunToConstructor(clone))
-            : dispatch(addIngredientToConstructor(clone))
+            const itemToAdd = allIngredients.find(ingredient=> ingredient._id === item.id)
+            if (itemToAdd !== undefined) {
+                const clone = {...itemToAdd};
+                clone.uuid = uuidv4()
+                clone.type === 'bun'
+                    ? dispatch(addBunToConstructor(clone))
+                    : dispatch(addIngredientToConstructor(clone))
+            }
         },
     });
 
@@ -60,7 +59,7 @@ const BurgerConstructor = () => {
         let ingredientsPrice = 0;
 
         constructorIngredients.length > 0
-        && constructorIngredients.map((elem : TIngredient) => {
+        && constructorIngredients.map(elem => {
             elem.price && (ingredientsPrice += elem.price)
         })
 
@@ -119,7 +118,7 @@ const BurgerConstructor = () => {
             <OverflowSection height={420}>
                 {
                     constructorIngredients
-                        .map((elem : TIngredient, index : number) => {
+                        .map((elem, index : number) => {
                             return (<IngredientCard
                                     key={elem.uuid}
                                     isLocked={false}

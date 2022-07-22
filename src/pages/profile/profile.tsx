@@ -1,8 +1,7 @@
 import React, {useCallback, useEffect} from "react";
-import UserProfile from "../components/forms/user-profile";
-import ProfileNav from "../components/profile-nav/profile-nav";
+import UserProfile from "../../components/forms/user-profile";
+import ProfileNav from "../../components/profile-nav/profile-nav";
 import {useHistory} from "react-router-dom";
-import {useSelector} from "react-redux";
 
 const ProfilePage = () => {
 
