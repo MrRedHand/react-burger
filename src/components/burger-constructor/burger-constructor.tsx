@@ -132,6 +132,12 @@ const BurgerConstructor = () => {
                         })
                 }
 
+                {
+                    constructorIngredients.length === 0 && currentBun === null && (
+                        <div className={`${styles.emptyConstructor} text text_type_main-medium`}>Кидайте сюда ингредиенты!</div>
+                    )
+                }
+
             </OverflowSection>
             </div>
 
