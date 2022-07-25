@@ -55,7 +55,9 @@ const LoginForm : FC<TLoginForm> = ({register, forgot}) => {
             <form onSubmit={(e) => handleSubmit(e)}>
                 <Input type="email" placeholder="E-mail"  value={userData.email} onChange={(e) => setEmail(e.target.value)}/>
                 <Input type="password" placeholder="Пароль" value={userData.password} onChange={(e) => setPassword(e.target.value)}/>
-                <Button>Войти</Button>
+                <div className='buttonSumbit'>
+                    <Button>Войти</Button>
+                </div>
             </form>
             <div className={`${st.form__footer} mt-20`}>
                 <div className="d-flex mb-4">

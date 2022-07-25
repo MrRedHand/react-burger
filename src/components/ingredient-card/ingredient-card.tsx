@@ -91,7 +91,7 @@ const IngredientCard : FC<TIngredientCard> = ({id, ingredientType,  text, thumbn
     }, [constructorIngredients, currentBun])
 
     const inIngredientsView = (
-        <section style={{opacity : ingrDragging ? '0.5' : '1'}} className={`${styles.ingredient_card} mt-6`} onClick={onClick} ref={dragIngr}>
+        <section data-test="ingredient" style={{opacity : ingrDragging ? '0.5' : '1'}} className={`${styles.ingredient_card} mt-6`} onClick={onClick} ref={dragIngr}>
             {
                 count > 0
                 && (

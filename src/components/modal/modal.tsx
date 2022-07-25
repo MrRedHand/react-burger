@@ -50,10 +50,10 @@ const Modal : FC<TModal> = ({activity, children, heading, onCloseEvent}) => {
 
     return ReactDOM.createPortal ( 
     <>
-        <div className={`${st.modal} ${active ? st.active : ''}`}>
+        <div className={`${st.modal} ${active ? st.active : ''}`} data-test="modal-body">
             <ModalHeader>
                 {heading ? <p className='text text_type_main-large'>{heading}</p> : ''}
-                <button className={st.close} onClick={() => closeModal()}>
+                <button className={st.close} onClick={() => closeModal()} data-test="modal-close">
                     <CloseIcon type="primary"/>
                 </button>
             </ModalHeader>
