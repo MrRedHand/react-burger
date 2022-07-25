@@ -9,7 +9,7 @@ type TWsState = {
 
 }
 
-const initialState = {
+export const initialState = {
     wsConnected: false,
     orders : null,
     total : 0,

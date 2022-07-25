@@ -21,7 +21,7 @@ export type TUserStoreState = {
     requestedForgotPassword : boolean,
 }
 
-const initialState : TUserStoreState= {
+export const initialState : TUserStoreState= {
     needToCheckUser : true,
     isAuthenticated : false,
     registered : false,
