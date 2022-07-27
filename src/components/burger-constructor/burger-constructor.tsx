@@ -99,7 +99,7 @@ const BurgerConstructor = () => {
         <section className="relative-filler">
 
         </section>
-        <section className={styles.constructor_area}>
+        <section className={styles.constructor_area} data-test="constructor">
             <section className={`${styles.top_locked}`}>
                 {
                     currentBun !== null
@@ -159,7 +159,7 @@ const BurgerConstructor = () => {
         
         
 
-        <section className={styles.total}>
+        <section className={styles.total} data-test="order-button-wrap">
             <div className={`${styles.total__price} mr-10`}>
                 <p className="text text_type_digits-medium">
                     {totalPrice}

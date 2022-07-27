@@ -27,7 +27,7 @@ export type TMainStoreState = {
     fullDataRequest: boolean,
 }
 
-const initialState : TMainStoreState = {
+export const initialState : TMainStoreState = {
     allIngredients : [],
     currentBun : null,
     constructorIngredients: [],
