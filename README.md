@@ -1,6 +1,6 @@
 # Stellar Burgers
 
-Учебный проект на курсе Яндекс.Практикума | React-разработчик
+Pet-project for Redux, TypeScript and routing learning
 ## [DEMO](https://mrredhand.github.io/react-burger/)
 
 ## Stack
@@ -12,12 +12,12 @@
 
 ## Libraries
 
-- Библиотека react-dnd
-- Библиотека uuid
+- React-dnd
+- uuid
 - Redux DevTools
 - CSS Modules
-- Библиотека react-router-dom
-- Инструменты тестирования jest, cypress
+- React-router-dom
+- jest, cypress
 
 ## Download
 
@@ -25,7 +25,7 @@
 
 ## Start
 
-`npm run start` — сборка и запуск локального сервера для разработки на порту 3000
+`npm run start` localhost:3000
 
 ## Build
 
@@ -33,4 +33,4 @@
 
 ## Deploy
 
-`npm run deploy` - сборка проекта и отправка папки build на сервер
+`npm run deploy` - deploy and build on server
